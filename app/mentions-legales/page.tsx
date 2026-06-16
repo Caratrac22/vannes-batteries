@@ -66,7 +66,7 @@ export default function MentionsLegales() {
           </p>
 
           <p className="text-sm text-dark-400 mt-8">
-            Dernière mise à jour : juin 2025
+            Dernière mise à jour : juin 2026
           </p>
         </div>
       </div>

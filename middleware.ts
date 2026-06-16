@@ -11,9 +11,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301) // 301 is crucial for SEO
   }
 
-  // Potential mapping for old Wix URLs if any are discovered post-launch
+  // Old Wix URLs with accented characters → new clean URLs
   const redirects: Record<string, string> = {
-    // '/old-wix-url': '/new-next-url',
+    "/mentions-légales": "/mentions-legales",
+    "/politique-de-confidentialité": "/politique-de-confidentialite",
   }
 
   if (redirects[url.pathname]) {

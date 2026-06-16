@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import redis from "@/lib/redis";
+import { redisGet, redisSet } from "@/lib/redis";
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
@@ -12,13 +12,9 @@ export async function GET() {
     return NextResponse.json({ error: "Not configured" }, { status: 503 });
   }
 
-  try {
-    const cached = await redis.get(CACHE_KEY);
-    if (cached) {
-      return NextResponse.json(JSON.parse(cached));
-    }
-  } catch {
-    // Redis unavailable — continue without cache
+  const cached = await redisGet(CACHE_KEY);
+  if (cached) {
+    return NextResponse.json(JSON.parse(cached));
   }
 
   try {
@@ -43,22 +39,14 @@ export async function GET() {
       businessStatus: data.businessStatus ?? "OPERATIONAL",
     };
 
-    try {
-      await redis.set(CACHE_KEY, JSON.stringify(result), "EX", CACHE_TTL);
-    } catch {
-      // Redis write failed — non-critical
-    }
+    await redisSet(CACHE_KEY, JSON.stringify(result), "EX", CACHE_TTL);
 
     return NextResponse.json(result);
   } catch (error) {
     console.error("Google Hours API error:", error);
 
-    try {
-      const stale = await redis.get(CACHE_KEY);
-      if (stale) return NextResponse.json(JSON.parse(stale));
-    } catch {
-      // Redis unavailable
-    }
+    const stale = await redisGet(CACHE_KEY);
+    if (stale) return NextResponse.json(JSON.parse(stale));
 
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }

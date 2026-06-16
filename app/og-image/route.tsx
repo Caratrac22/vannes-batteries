@@ -1,225 +1,198 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
 export async function GET() {
-  const rajdhaniBold = await fetch(
-    "https://raw.githubusercontent.com/google/fonts/main/ofl/rajdhani/Rajdhani-Bold.ttf"
-  ).then((r) => r.arrayBuffer());
-
   return new ImageResponse(
     (
       <div
         style={{
-          width: "100%",
-          height: "100%",
+          width: "1200px",
+          height: "630px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          background: "linear-gradient(135deg, #0B132B 0%, #1E3A8A 50%, #1E40AF 100%)",
           position: "relative",
           overflow: "hidden",
-          background: "linear-gradient(135deg, #0B132B 0%, #1E40AF 45%, #0B132B 100%)",
-          fontFamily: `Inter, "Noto Sans", system-ui, sans-serif`,
         }}
       >
-        {/* Glow orbs */}
+        {/* Decorative circles */}
         <div
           style={{
             position: "absolute",
-            top: "-100px",
-            right: "-60px",
-            width: "380px",
-            height: "380px",
+            top: "-80px",
+            right: "-80px",
+            width: "400px",
+            height: "400px",
             borderRadius: "50%",
-            background: "rgba(220, 38, 38, 0.18)",
-            filter: "blur(80px)",
+            background: "radial-gradient(circle, rgba(220,38,38,0.15) 0%, transparent 70%)",
           }}
         />
         <div
           style={{
             position: "absolute",
             bottom: "-120px",
-            left: "-80px",
-            width: "450px",
-            height: "450px",
+            left: "-60px",
+            width: "500px",
+            height: "500px",
             borderRadius: "50%",
-            background: "rgba(30, 64, 175, 0.20)",
-            filter: "blur(90px)",
+            background: "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)",
           }}
         />
 
-        {/* Decorative lightning bolt */}
-        <svg
-          width="80"
-          height="120"
-          viewBox="0 0 80 120"
-          fill="none"
-          style={{ position: "absolute", top: "30px", left: "55px", opacity: 0.12 }}
-        >
-          <path
-            d="M45 5L10 65h25L20 115l50-70H45l5-40z"
-            fill="#DC2626"
-          />
-        </svg>
-
-        {/* Top accent line */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "4px",
-            background: "linear-gradient(90deg, #DC2626, #1E40AF)",
-          }}
-        />
-
-        {/* Main title */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: "14px",
-            marginBottom: "10px",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "90px",
-              fontWeight: 700,
-              color: "#60A5FA",
-              fontFamily: "Rajdhani",
-              letterSpacing: "6px",
-              textShadow: "0 0 40px rgba(96,165,250,0.3)",
-              lineHeight: 1,
-            }}
-          >
-            VANNES
-          </span>
-          <span
-            style={{
-              fontSize: "90px",
-              fontWeight: 700,
-              color: "#EF4444",
-              fontFamily: "Rajdhani",
-              letterSpacing: "6px",
-              textShadow: "0 0 40px rgba(239,68,68,0.3)",
-              lineHeight: 1,
-            }}
-          >
-            BATTERIES
-          </span>
-        </div>
-
-        {/* Separator */}
+        {/* Battery icon */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "16px",
-            marginBottom: "18px",
+            marginBottom: "24px",
+            zIndex: 1,
           }}
         >
           <div
             style={{
-              width: "60px",
-              height: "2px",
-              background: "linear-gradient(90deg, transparent, #DC2626)",
+              width: "64px",
+              height: "32px",
+              border: "4px solid rgba(255,255,255,0.9)",
+              borderRadius: "6px",
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              padding: "4px",
             }}
-          />
-          <div
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: "#DC2626",
-              boxShadow: "0 0 20px rgba(220,38,38,0.5)",
-            }}
-          />
-          <div
-            style={{
-              width: "60px",
-              height: "2px",
-              background: "linear-gradient(90deg, #DC2626, transparent)",
-            }}
-          />
+          >
+            <div
+              style={{
+                width: "70%",
+                height: "100%",
+                background: "linear-gradient(90deg, #DC2626, #EF4444)",
+                borderRadius: "2px",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: "-10px",
+                width: "8px",
+                height: "16px",
+                background: "rgba(255,255,255,0.9)",
+                borderRadius: "0 3px 3px 0",
+              }}
+            />
+          </div>
         </div>
 
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: "22px",
-            fontWeight: 600,
-            color: "#94A3B8",
-            letterSpacing: "3px",
-            textTransform: "uppercase",
-            marginBottom: "6px",
-          }}
-        >
-          PROFESSIONNEL DE LA BATTERIE
-        </div>
-        <div
-          style={{
-            fontSize: "16px",
-            fontWeight: 400,
-            color: "#64748B",
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            marginBottom: "36px",
-          }}
-        >
-          Depuis plus de 30 ans — Vannes
-        </div>
-
-        {/* Contact strip */}
+        {/* Title */}
         <div
           style={{
             display: "flex",
-            gap: "48px",
-            padding: "16px 32px",
-            borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.06)",
-            background: "rgba(255,255,255,0.03)",
+            flexDirection: "column",
+            alignItems: "center",
+            zIndex: 1,
           }}
         >
-          <span style={{ fontSize: "16px", color: "#CBD5E1", letterSpacing: "0.5px" }}>
-            📍 Z.A. de Kerniol — 56000 Vannes
-          </span>
-          <span style={{ fontSize: "16px", color: "#CBD5E1", letterSpacing: "0.5px" }}>
-            📞 02 97 49 20 19
-          </span>
+          <div
+            style={{
+              fontSize: "72px",
+              fontWeight: "800",
+              fontFamily: "sans-serif",
+              letterSpacing: "-1px",
+              color: "white",
+              textShadow: "0 4px 30px rgba(0,0,0,0.4)",
+              lineHeight: "1",
+            }}
+          >
+            VANNES BATTERIES
+          </div>
+          <div
+            style={{
+              fontSize: "24px",
+              fontWeight: "600",
+              fontFamily: "sans-serif",
+              color: "rgba(255,255,255,0.7)",
+              marginTop: "16px",
+              letterSpacing: "6px",
+              textTransform: "uppercase",
+            }}
+          >
+            Spécialiste Batterie à Vannes
+          </div>
         </div>
 
-        {/* URL */}
+        {/* Bottom bar */}
         <div
           style={{
-            fontSize: "14px",
-            fontWeight: 400,
-            color: "#475569",
-            letterSpacing: "2px",
-            marginTop: "28px",
-            textTransform: "uppercase",
+            position: "absolute",
+            bottom: "40px",
+            display: "flex",
+            alignItems: "center",
+            gap: "32px",
+            zIndex: 1,
           }}
         >
-          www.vannes-batteries.fr
+          <div
+            style={{
+              fontSize: "18px",
+              fontFamily: "sans-serif",
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
+            +300 modèles en stock
+          </div>
+          <div
+            style={{
+              width: "4px",
+              height: "4px",
+              borderRadius: "50%",
+              background: "rgba(220,38,38,0.8)",
+            }}
+          />
+          <div
+            style={{
+              fontSize: "18px",
+              fontFamily: "sans-serif",
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
+            Pose en magasin
+          </div>
+          <div
+            style={{
+              width: "4px",
+              height: "4px",
+              borderRadius: "50%",
+              background: "rgba(220,38,38,0.8)",
+            }}
+          />
+          <div
+            style={{
+              fontSize: "18px",
+              fontFamily: "sans-serif",
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
+            02 97 49 20 19
+          </div>
         </div>
+
+        {/* Red accent line */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            height: "4px",
+            background: "linear-gradient(90deg, #DC2626, #EF4444, #DC2626)",
+          }}
+        />
       </div>
     ),
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: "Rajdhani",
-          data: rajdhaniBold,
-          weight: 700,
-          style: "normal",
-        },
-      ],
-      headers: {
-        "Cache-Control": "public, max-age=31536000, immutable",
-      },
     }
   );
 }
