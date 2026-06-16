@@ -7,7 +7,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Camera, MapPin, Eye } from "lucide-react";
+import { MapPin, Eye } from "lucide-react";
 import { staggerContainerFast, fadeInUp } from "@/lib/animations";
 import Lightbox from "@/components/ui/Lightbox";
 
@@ -19,7 +19,6 @@ interface GalleryImage {
 interface Category {
   title: string;
   images: GalleryImage[];
-  placeholderCount?: number;
 }
 
 const categories: Category[] = [
@@ -39,21 +38,18 @@ const categories: Category[] = [
       { src: "/media/pose batterie.jpg", alt: "Installation d'une batterie voiture sous le capot" },
       { src: "/media/pose batterie .2.jpg", alt: "Remplacement de batterie par un technicien qualifié" },
     ],
-    placeholderCount: 1, // Ready frame for future shop photos
   },
   {
     title: "Pose de batteries camping-car",
     images: [
       { src: "/media/camping car mercedes.png", alt: "Camping-car équipé d'un parc de batteries auxiliaires" },
     ],
-    placeholderCount: 2, // Space dedicated for future installations
   },
   {
     title: "Batterie moto",
     images: [
       { src: "/media/moto.png", alt: "Moto équipée de batteries professionnelles" },
     ],
-    placeholderCount: 2,
   },
   {
     title: "Batterie Poids-Lourds · TP · Agricole",
@@ -183,23 +179,6 @@ export default function AProposPage() {
                       </motion.div>
                     );
                   })}
-
-                  {/* Dedicated Placeholder Frames for future photos */}
-                  {[...Array(category.placeholderCount || 0)].map((_, i) => (
-                    <motion.div
-                      key={`place-${i}`}
-                      variants={fadeInUp}
-                      className="relative aspect-square bg-white border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-400 hover:text-orange hover:border-orange/50 hover:bg-orange/5 transition-all duration-300 group cursor-pointer"
-                    >
-                      <Camera className="w-8 h-8 mb-2 group-hover:scale-110 transition-transform" />
-                      <span className="text-xs font-semibold uppercase tracking-wider font-rajdhani">
-                        Cadre Dédié
-                      </span>
-                      <span className="text-[10px] opacity-75">
-                        Emplacement Photo {category.images.length + i + 1}
-                      </span>
-                    </motion.div>
-                  ))}
                 </motion.div>
               </div>
             ))}
