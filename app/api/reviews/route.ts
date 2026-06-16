@@ -19,26 +19,29 @@ export async function GET() {
   }
 
   try {
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=rating,user_ratings_total,reviews&key=${API_KEY}&reviews_sort=most_relevant`;
+    const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?key=${API_KEY}`;
     const res = await fetch(url, {
+      headers: {
+        "X-Goog-FieldMask": "rating,userRatingCount,reviews",
+      },
       next: { revalidate: 3600 },
     });
 
-    const json = await res.json();
+    const data = await res.json();
 
-    if (json.status !== "OK") {
-      throw new Error(`Google API error: ${json.status}`);
+    if (!res.ok) {
+      throw new Error(`Google API error: ${data.error?.status ?? res.status}`);
     }
 
     const result = {
-      rating: json.result.rating ?? 0,
-      totalReviews: json.result.user_ratings_total ?? 0,
-      reviews: (json.result.reviews ?? []).slice(0, 5).map((r: any) => ({
-        name: r.author_name ?? "Anonyme",
-        text: r.text ?? "",
+      rating: data.rating ?? 0,
+      totalReviews: data.userRatingCount ?? 0,
+      reviews: (data.reviews ?? []).slice(0, 5).map((r: any) => ({
+        name: r.authorAttribution?.displayName ?? "Anonyme",
+        text: r.text?.text ?? "",
         rating: r.rating ?? 5,
-        time: r.relative_time_description ?? "",
-        profilePhoto: r.profile_photo_url ?? "",
+        time: r.relativePublishTimeDescription ?? "",
+        profilePhoto: r.authorAttribution?.photoUri ?? "",
       })),
     };
 
