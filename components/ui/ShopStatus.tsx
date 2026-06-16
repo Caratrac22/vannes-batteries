@@ -287,7 +287,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
 
   const badge = (
     <>
-      {showIcon && <span className={`w-2 h-2 rounded-full ${c.dot} ${status === "open" ? "animate-pulse" : ""}`} />}
+      {showIcon && <span className={`w-2 h-2 rounded-full ${c.dot} ${status !== "closed" ? "animate-pulse" : ""}`} />}
       <span className={`text-xs font-semibold ${c.text}`}>{message}</span>
       {reopens && status === "closed" && (
         <span className="text-[10px] text-gray-500 hidden sm:inline">({reopens})</span>
@@ -295,6 +295,8 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
       <ChevronDown className={`w-3 h-3 ${c.text} transition-transform ${isOpen ? "rotate-180" : ""}`} />
     </>
   );
+
+  const pulseClass = status !== "closed" ? "animate-pulse-glow" : "";
 
   const hoursDropdown = (
     <AnimatePresence>
@@ -347,7 +349,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
       <div ref={ref} className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${c.bg} ${c.border} border ${c.text} cursor-pointer hover:brightness-110 transition-all`}
+          className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${c.bg} ${c.border} border ${c.text} cursor-pointer hover:brightness-110 transition-all ${pulseClass}`}
         >
           {badge}
         </button>
@@ -360,7 +362,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
     <div ref={ref} className="relative inline-block">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border ${c.border} ${c.bg} cursor-pointer hover:brightness-110 transition-all`}
+        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border ${c.border} ${c.bg} cursor-pointer hover:brightness-110 transition-all ${pulseClass}`}
       >
         {badge}
       </button>
