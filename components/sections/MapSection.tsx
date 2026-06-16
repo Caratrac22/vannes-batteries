@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Navigation, ExternalLink } from "lucide-react";
 import { fadeInUp } from "@/lib/animations";
 
-const MAP_URL = "https://www.google.com/maps?q=47.679327,-2.771305+(VANNES+BATTERIES)&output=embed&hl=fr&z=18";
+const MAP_EMBED_URL = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ?? ""}&q=47.679327,-2.771305&zoom=18&language=fr`;
+const MAP_STATIC_URL = "https://www.google.com/maps?q=47.679327,-2.771305+(VANNES+BATTERIES)&output=embed&hl=fr&z=18";
 
 export default function MapSection() {
   return (
@@ -41,7 +42,7 @@ export default function MapSection() {
         >
           <div className="relative w-full h-[350px] sm:h-[400px] md:h-[480px]">
             <iframe
-              src={MAP_URL}
+              src={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ? MAP_EMBED_URL : MAP_STATIC_URL}
               width="100%"
               height="100%"
               style={{ border: 0, filter: "grayscale(30%) sepia(5%) hue-rotate(200deg) saturate(50%) brightness(1.1)" }}
