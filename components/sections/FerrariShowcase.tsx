@@ -27,7 +27,7 @@ export default function FerrariShowcase() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-contain object-center"
         />
       </motion.div>
 

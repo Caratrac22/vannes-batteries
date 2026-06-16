@@ -43,7 +43,7 @@ export default function Hero() {
                        rounded-full"
           >
             <Zap className="w-4 h-4" />
-            +300 modèles en stock — pose incluse
+            +300 modèles en stock — spécialiste batteries
           </span>
         </motion.div>
 

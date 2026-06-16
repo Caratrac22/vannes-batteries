@@ -49,7 +49,7 @@ const categories = [
   },
   {
     icon: BoatIcon,
-    title: "Bateau & Voilier",
+    title: "Bateau Moteur & Voilier",
     description:
       "Décharge lente, étanches, haute durabilité pour voiliers et moteurs.",
     count: "30+",

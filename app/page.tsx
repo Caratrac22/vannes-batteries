@@ -26,8 +26,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <BatteryCategories />
       <FerrariShowcase />
+      <BatteryCategories />
       <Stats />
       <Services />
       <WhyUs />
