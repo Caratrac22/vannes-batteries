@@ -53,7 +53,13 @@ export default function MapSection() {
   }, []);
 
   const getDirections = useCallback(() => {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      window.open(
+        `https://www.google.com/maps/dir/?api=1&destination=${CENTER.lat},${CENTER.lng}`,
+        "_blank"
+      );
+      return;
+    }
     setLoadingDir(true);
 
     navigator.geolocation.getCurrentPosition(
@@ -73,11 +79,22 @@ export default function MapSection() {
               setDirections(`${leg.distance?.text} · ${leg.duration?.text}`);
               mapRef.current?.panTo(origin);
               mapRef.current?.setZoom(12);
+            } else {
+              window.open(
+                `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${CENTER.lat},${CENTER.lng}`,
+                "_blank"
+              );
             }
           }
         );
       },
-      () => setLoadingDir(false),
+      () => {
+        setLoadingDir(false);
+        window.open(
+          `https://www.google.com/maps/dir/?api=1&destination=${CENTER.lat},${CENTER.lng}`,
+          "_blank"
+        );
+      },
       { enableHighAccuracy: true, timeout: 5000 }
     );
   }, []);

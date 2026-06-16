@@ -46,6 +46,13 @@ export const metadata: Metadata = {
   verification: {
     google: "bDSWZlnB7Y6jJvWG0OxxI5Ff55yozynkOUUW7LFZXeI",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.jpg", sizes: "192x192", type: "image/jpeg" },
+      { url: "/favicon.jpg", sizes: "32x32", type: "image/jpeg" },
+    ],
+    apple: { url: "/favicon.jpg", sizes: "180x180", type: "image/jpeg" },
+  },
   openGraph: {
     siteName: "VANNES BATTERIES",
     locale: "fr_FR",
