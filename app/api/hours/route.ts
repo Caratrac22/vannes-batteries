@@ -16,7 +16,7 @@ export async function GET() {
   }
 
   try {
-    const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?key=${API_KEY}`;
+    const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?key=${API_KEY}&languageCode=fr`;
     const res = await fetch(url, {
       headers: {
         "X-Goog-FieldMask": "currentOpeningHours,regularOpeningHours,businessStatus",

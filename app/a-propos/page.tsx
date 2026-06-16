@@ -48,7 +48,7 @@ const categories: Category[] = [
   {
     title: "Batterie moto",
     images: [
-      { src: "/media/moto.png", alt: "Moto équipée de batteries professionnelles" },
+      { src: "/media/moto.png", alt: "Moto équipée de batteries Vannes Batteries" },
     ],
   },
   {

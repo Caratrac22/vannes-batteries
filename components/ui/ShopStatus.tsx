@@ -61,14 +61,37 @@ const GOOGLE_DAY_MAP = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vend
 function parseGoogleHours(descriptions: string[]): Record<number, string> {
   const result: Record<number, string> = {};
   descriptions.forEach((desc) => {
+    const lower = desc.toLowerCase();
     for (let i = 0; i < GOOGLE_DAY_MAP.length; i++) {
-      if (desc.startsWith(GOOGLE_DAY_MAP[i])) {
-        const hours = desc.replace(`${GOOGLE_DAY_MAP[i]}: `, "").trim();
+      if (lower.startsWith(GOOGLE_DAY_MAP[i].toLowerCase())) {
+        const hours = desc.replace(/^[^:]+:\s*/, "").trim();
         result[i] = hours === "Fermé" ? "Fermé" : hours;
       }
     }
   });
   return result;
+}
+
+function getClosingMinutes(regularHours: Record<number, string>): number | null {
+  const now = new Date();
+  const today = now.getDay();
+  const currentMin = now.getHours() * 60 + now.getMinutes();
+  const hours = regularHours[today];
+  if (!hours || hours === "Fermé") return null;
+
+  const periods = hours.split(/,\s*/);
+  for (const period of periods) {
+    const times = period.match(/(\d{1,2}:\d{2})\s*[\u2013\u2014\-–]\s*(\d{1,2}:\d{2})/);
+    if (!times) continue;
+    const [sh, sm] = times[1].split(":").map(Number);
+    const [eh, em] = times[2].split(":").map(Number);
+    const start = sh * 60 + sm;
+    const end = eh * 60 + em;
+    if (currentMin >= start && currentMin < end) {
+      return end - currentMin;
+    }
+  }
+  return null;
 }
 
 function getNextOpenTimeInfo(regularHours: Record<number, string>, dayNames: string[]): { opensAt?: string; day?: string } | null {
@@ -81,7 +104,7 @@ function getNextOpenTimeInfo(regularHours: Record<number, string>, dayNames: str
     const hours = regularHours[dayIndex];
     if (!hours || hours === "Fermé") continue;
 
-    const periods = hours.split(", ");
+    const periods = hours.split(/,\s*/);
     for (const period of periods) {
       const match = period.match(/(\d{1,2}:\d{2})/);
       if (match) {
@@ -99,7 +122,7 @@ function getNextOpenTimeInfo(regularHours: Record<number, string>, dayNames: str
   return null;
 }
 
-function getStatusFromGoogle(data: HoursData): { status: Status; isHoliday: boolean; nextOpen: { opensAt?: string; day?: string } | null } {
+function getStatusFromGoogle(data: HoursData): { status: Status; isHoliday: boolean; closingMinutes?: number; nextOpen: { opensAt?: string; day?: string } | null } {
   if (data.businessStatus !== "OPERATIONAL") {
     return { status: "closed", isHoliday: false, nextOpen: null };
   }
@@ -109,6 +132,11 @@ function getStatusFromGoogle(data: HoursData): { status: Status; isHoliday: bool
   }
 
   if (data.isOpenNow === true) {
+    const regularParsed = parseGoogleHours(data.regularHours);
+    const closingMinutes = getClosingMinutes(regularParsed) ?? undefined;
+    if (closingMinutes !== undefined && closingMinutes <= 45) {
+      return { status: "closing-soon", isHoliday: false, closingMinutes, nextOpen: null };
+    }
     return { status: "open", isHoliday: false, nextOpen: null };
   }
 
@@ -202,7 +230,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
             const result = getStatusFromGoogle(parsed.data);
             setStatus(result.status);
             setIsHoliday(result.isHoliday);
-            setMessage(formatMessage(result.status, undefined, result.nextOpen, result.isHoliday));
+            setMessage(formatMessage(result.status, result.closingMinutes, result.nextOpen, result.isHoliday));
             setReopens(formatReopens(result.nextOpen));
             setGoogleHours(parseGoogleHours(parsed.data.regularHours));
             return;
@@ -218,7 +246,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
           const result = getStatusFromGoogle(data);
           setStatus(result.status);
           setIsHoliday(result.isHoliday);
-          setMessage(formatMessage(result.status, undefined, result.nextOpen, result.isHoliday));
+          setMessage(formatMessage(result.status, result.closingMinutes, result.nextOpen, result.isHoliday));
           setReopens(formatReopens(result.nextOpen));
           setGoogleHours(parseGoogleHours(data.regularHours));
         })
