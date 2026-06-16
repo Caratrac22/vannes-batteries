@@ -1,0 +1,116 @@
+{
+  "site": {
+    "name": "VANNES BATTERIES",
+    "phone": "02 97 49 20 19"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "+300 models in stock",
+    "title1": "THE BATTERY",
+    "title2": "YOU NEED",
+    "subtitle": "Car, motorcycle, motorhome, truck, tractor, boat. Find your battery from 300+ references. In-store fitting and free check included.",
+    "cta_call": "Call — 02 97 49 20 19",
+    "cta_see": "See our batteries",
+    "address": "Z.A. de Kerniol, Vannes",
+    "hours": "Mon–Fri 8:30am–6:30pm · Sat 9am–12pm"
+  },
+  "categories": {
+    "badge": "Our specialty",
+    "title": "Find your battery",
+    "subtitle": "From cars to tractors, boats to alarms — we have the battery you need.",
+    "items": {
+      "car": { "title": "Car Battery", "desc": "AGM, Gel, Start & Stop, classic cars. All technologies available." },
+      "moto": { "title": "Motorcycle Battery", "desc": "From scooters to sport bikes, all engine sizes. Waterproof high performance." },
+      "camper": { "title": "Motorhome", "desc": "Maintenance-free, waterproof, European standards. Solar panel kits available." },
+      "boat": { "title": "Motorboat & Sailing", "desc": "Deep-cycle, waterproof, high durability for sailboats and engines." },
+      "truck": { "title": "Trucks & Construction", "desc": "Trucks, construction equipment. High capacity long-life batteries." },
+      "tractor": { "title": "Agricultural", "desc": "Tractors, harvesters. Built for intensive use conditions." },
+      "alarm": { "title": "Alarm & Industrial", "desc": "UPS, alarms, forklifts, off-grid sites. Reliable stationery batteries." }
+    },
+    "models": "models",
+    "refs": "references",
+    "not_found": "Can't find your battery? Contact us.",
+    "call_us": "Call us — 02 97 49 20 19"
+  },
+  "stats": {
+    "stock": { "value": "300+", "label": "Models", "sub": "in stock" },
+    "moto": { "value": "180", "label": "Moto refs", "sub": "all sizes" },
+    "reviews": { "value": "95%", "label": "Reviews", "sub": "5 stars" },
+    "wait": { "value": "0", "label": "Wait", "sub": "leave same day" }
+  },
+  "services": {
+    "badge": "Our services",
+    "title": "A complete service",
+    "items": {
+      "diag": { "title": "Battery diagnostics", "desc": "Free battery and charging system test in 5 minutes." },
+      "install": { "title": "In-store fitting", "desc": "Our technicians install your battery and check the entire electrical system." },
+      "delivery": { "title": "Home service", "desc": "We come to you to replace your battery. Mobile service available." },
+      "pro": { "title": "Professional equipment", "desc": "Fleet, construction, agricultural solutions. Fast quotes and volume discounts." },
+      "solar": { "title": "Solar panels", "desc": "Complete kits for motorhomes and off-grid vehicles. Custom studies." },
+      "alarm": { "title": "Security & UPS", "desc": "Stationery batteries for alarms, UPS and backup systems." }
+    },
+    "stock_badge": "In stock"
+  },
+  "whyUs": {
+    "title": "Why Vannes Batteries?",
+    "items": {
+      "stock": { "title": "+300 models in stock", "desc": "No ordering, no waiting. Leave with your battery the same day." },
+      "install": { "title": "Fitting included", "desc": "Our technicians install your battery and check the charging system. Free." },
+      "price": { "title": "Competitive prices guaranteed", "desc": "Among the best prices on the market, with no compromise on quality." },
+      "advice": { "title": "Expert advice", "desc": "We identify the exact battery compatible with your vehicle. Zero errors possible." }
+    }
+  },
+  "map": {
+    "badge": "Find us",
+    "title": "COME VISIT US",
+    "subtitle": "Kerniol Business Park, near the centre of Vannes",
+    "address": "19 rue Denis Papin, Z.A. de Kerniol",
+    "addressFull": "19 rue Denis Papin · 56000 Vannes",
+    "directions": "Get directions"
+  },
+  "reviews": {
+    "badge": "Google Reviews",
+    "title": "What our customers say",
+    "rating": "out of 5",
+    "reviews_lower": "reviews"
+  },
+  "contact": {
+    "badge": "Contact us",
+    "title": "Need a battery?",
+    "subtitle": "Call us or visit the store. We also reply by email.",
+    "name": "Your name",
+    "email": "Your email",
+    "phone": "Phone",
+    "subject": "Subject",
+    "message": "Your message",
+    "send": "Send",
+    "sending": "Sending...",
+    "success": "Message sent! We will reply shortly.",
+    "error": "Send error. Try again or call us.",
+    "shop": {
+      "title": "Our Store",
+      "address": "19 rue Denis Papin",
+      "city": "Z.A. de Kerniol, 56000 Vannes",
+      "phone": "02 97 49 20 19"
+    }
+  },
+  "about": {
+    "title": "ABOUT US",
+    "location": "Z.A. de Kerniol, near Océane clinic"
+  },
+  "footer": {
+    "description": "Battery specialist in Vannes. Motorcycle, car, motorhome, truck, agricultural, boat, alarm batteries.",
+    "hours_title": "Opening hours",
+    "hours_week": "Mon–Fri: 8:30am–6:30pm",
+    "hours_sat": "Sat: 9am–12pm",
+    "hours_sun": "Sun: Closed",
+    "contact_title": "Contact",
+    "legal_title": "Legal notices",
+    "rights": "All rights reserved."
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "site": {
+    "name": "VANNES BATTERIES",
+    "phone": "02 97 49 20 19"
+  },
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "+300 modèles en stock",
+    "title1": "LA BATTERIE",
+    "title2": "QU'IL VOUS FAUT",
+    "subtitle": "Voiture, moto, camping-car, bateau, poids lourd, agricole. Trouvez votre batterie parmi +300 références. Pose en magasin et contrôle offert.",
+    "cta_call": "Appeler — 02 97 49 20 19",
+    "cta_see": "Voir nos batteries",
+    "address": "Z.A. de Kerniol, Vannes",
+    "hours": "Lun–Ven 8h30–18h30 · Sam 9h–12h"
+  },
+  "categories": {
+    "badge": "Notre spécialité",
+    "title": "Trouvez votre batterie",
+    "subtitle": "De la voiture au tracteur, du bateau à l'alarme — nous avons la batterie qu'il vous faut.",
+    "items": {
+      "car": { "title": "Batterie Voiture", "desc": "AGM, Gel, Start & Stop, véhicules de collection. Toutes technologies." },
+      "moto": { "title": "Batterie Moto", "desc": "Du scooter à la moto sportive, toutes cylindrées. Étanches haute performance." },
+      "camper": { "title": "Camping-Car", "desc": "Sans entretien, étanches, normes européennes. Kits panneaux solaires." },
+      "boat": { "title": "Bateau Moteur & Voilier", "desc": "Décharge lente, étanches, haute durabilité pour voiliers et moteurs." },
+      "truck": { "title": "Poids Lourds & TP", "desc": "Camions, engins de chantier. Batteries haute capacité longue durée." },
+      "tractor": { "title": "Agricole", "desc": "Tracteurs, moissonneuses. Conçues pour utilisation intensive." },
+      "alarm": { "title": "Alarme & Industriel", "desc": "Onduleurs, alarmes, chariots élévateurs, sites isolés. Fiables." }
+    },
+    "models": "modèles",
+    "refs": "références",
+    "not_found": "Vous ne trouvez pas votre batterie ? Contactez-nous.",
+    "call_us": "Appelez-nous — 02 97 49 20 19"
+  },
+  "stats": {
+    "stock": { "value": "300+", "label": "Modèles", "sub": "en stock" },
+    "moto": { "value": "180", "label": "Réf. motos", "sub": "toutes cylindrées" },
+    "reviews": { "value": "95%", "label": "Avis", "sub": "5 étoiles" },
+    "wait": { "value": "0", "label": "Attente", "sub": "partez le jour même" }
+  },
+  "services": {
+    "badge": "Nos prestations",
+    "title": "Un service complet",
+    "items": {
+      "diag": { "title": "Diagnostic batterie", "desc": "Test gratuit de votre batterie et circuit de charge en 5 minutes." },
+      "install": { "title": "Pose en magasin", "desc": "Nos techniciens installent votre batterie et vérifient l'ensemble du circuit." },
+      "delivery": { "title": "Déplacement à domicile", "desc": "On vient chez vous pour remplacer votre batterie. Service mobile disponible." },
+      "pro": { "title": "Matériel professionnel", "desc": "Solutions pour flottes, TP, agricole. Devis rapide et tarifs dégressifs." },
+      "solar": { "title": "Panneaux solaires", "desc": "Kits complets pour camping-cars et véhicules isolés. Études personnalisées." },
+      "alarm": { "title": "Sécurité & onduleurs", "desc": "Batteries stationnaires pour alarmes, onduleurs et systèmes de secours." }
+    },
+    "stock_badge": "En stock"
+  },
+  "whyUs": {
+    "title": "Pourquoi Vannes Batteries ?",
+    "items": {
+      "stock": { "title": "+300 modèles en stock immédiat", "desc": "Pas de commande, pas d'attente. Vous repartez avec votre batterie le jour même." },
+      "install": { "title": "Pose en magasin incluse", "desc": "Nos techniciens installent votre batterie et vérifient le circuit de charge. Gratuit." },
+      "price": { "title": "Prix compétitifs garantis", "desc": "Des tarifs parmi les meilleurs du marché, sans compromis sur la qualité." },
+      "advice": { "title": "Conseil d'experts", "desc": "Nous identifions la batterie exacte compatible avec votre véhicule. Zéro erreur possible." }
+    }
+  },
+  "map": {
+    "badge": "Nous trouver",
+    "title": "VENEZ NOUS RENCONTRER",
+    "subtitle": "Zone de Kerniol, à deux pas du centre de Vannes",
+    "address": "19 rue Denis Papin, Z.A. de Kerniol",
+    "addressFull": "19 rue Denis Papin · 56000 Vannes",
+    "directions": "Y aller"
+  },
+  "reviews": {
+    "badge": "Avis Google",
+    "title": "Ce que disent nos clients",
+    "rating": "sur 5",
+    "reviews_lower": "avis"
+  },
+  "contact": {
+    "badge": "Contactez-nous",
+    "title": "Besoin d'une batterie ?",
+    "subtitle": "Appelez-nous ou passez au magasin. Nous répondons aussi par mail.",
+    "name": "Votre nom",
+    "email": "Votre email",
+    "phone": "Téléphone",
+    "subject": "Sujet",
+    "message": "Votre message",
+    "send": "Envoyer",
+    "sending": "Envoi...",
+    "success": "Message envoyé ! Nous vous répondrons rapidement.",
+    "error": "Erreur d'envoi. Réessayez ou appelez-nous.",
+    "shop": {
+      "title": "Notre Magasin",
+      "address": "19 rue Denis Papin",
+      "city": "Z.A. de Kerniol, 56000 Vannes",
+      "phone": "02 97 49 20 19"
+    }
+  },
+  "about": {
+    "title": "À PROPOS DE NOUS",
+    "location": "Z.A. de Kerniol, proche clinique Océane"
+  },
+  "footer": {
+    "description": "Spécialiste batterie à Vannes. Batterie moto, voiture, camping-car, TP, agricole, bateau, alarme.",
+    "hours_title": "Horaires",
+    "hours_week": "Lun–Ven : 8h30–18h30",
+    "hours_sat": "Sam : 9h–12h",
+    "hours_sun": "Dim : Fermé",
+    "contact_title": "Contact",
+    "legal_title": "Mentions légales",
+    "rights": "Tous droits réservés."
+  }
+}

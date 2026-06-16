@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, Globe } from "lucide-react";
 import {
   navbarVariants,
   mobileMenuVariants,

@@ -10,6 +10,7 @@ import { localBusinessSchema } from "@/lib/schema";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import { I18nProvider } from "@/lib/i18n/context";
 import "./globals.css";
 
 // ── Fonts ────────────────────────────────────────────────────
@@ -109,17 +110,19 @@ export default function RootLayout({
         />
       </head>
       <body className="font-inter bg-dark-950 text-white antialiased">
-        <GoogleTagManager gtmId="GTM-T9QDSJSL" />
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-orange focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
-        >
-          Aller au contenu principal
-        </a>
-        <Navbar />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <ScrollToTop />
+        <I18nProvider>
+          <GoogleTagManager gtmId="GTM-T9QDSJSL" />
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-orange focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
+          >
+            Aller au contenu principal
+          </a>
+          <Navbar />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <ScrollToTop />
+        </I18nProvider>
       </body>
     </html>
   );
