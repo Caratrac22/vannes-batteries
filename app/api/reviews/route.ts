@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import redis from "@/lib/redis";
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
 
-let cache: { data: unknown; timestamp: number } | null = null;
-const CACHE_TTL = 60 * 60 * 1000;
+const CACHE_KEY = "vb:reviews";
+const CACHE_TTL = 60 * 60; // 1h in seconds
 
 export async function GET() {
   if (!API_KEY || !PLACE_ID) {
@@ -14,8 +15,13 @@ export async function GET() {
     );
   }
 
-  if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
-    return NextResponse.json(cache.data);
+  try {
+    const cached = await redis.get(CACHE_KEY);
+    if (cached) {
+      return NextResponse.json(JSON.parse(cached));
+    }
+  } catch {
+    // Redis unavailable — continue without cache
   }
 
   try {
@@ -45,14 +51,21 @@ export async function GET() {
       })),
     };
 
-    cache = { data: result, timestamp: Date.now() };
+    try {
+      await redis.set(CACHE_KEY, JSON.stringify(result), "EX", CACHE_TTL);
+    } catch {
+      // Redis write failed — non-critical
+    }
 
     return NextResponse.json(result);
   } catch (error) {
     console.error("Google Places API error:", error);
 
-    if (cache) {
-      return NextResponse.json(cache.data);
+    try {
+      const stale = await redis.get(CACHE_KEY);
+      if (stale) return NextResponse.json(JSON.parse(stale));
+    } catch {
+      // Redis unavailable
     }
 
     return NextResponse.json(

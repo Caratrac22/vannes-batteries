@@ -1,4 +1,14 @@
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: vannes-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+
   vannes-batteries:
     build: .
     container_name: vannes-batteries
@@ -7,3 +17,8 @@ services:
       - "3000:3000"
     env_file:
       - .env.local
+    depends_on:
+      - redis
+
+volumes:
+  redis-data:
