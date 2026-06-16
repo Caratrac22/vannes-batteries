@@ -72,7 +72,7 @@ const categories = [
       "Tracteurs, moissonneuses. Conçues pour utilisation intensive.",
     count: "20+",
     label: "modèles",
-    image: "/media/facade.1.jpg",
+    image: "/media/tracteur.jpg",
   },
   {
     icon: BatteryIcon,

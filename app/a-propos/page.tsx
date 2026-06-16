@@ -57,6 +57,7 @@ const categories: Category[] = [
     title: "Batterie Poids-Lourds · TP · Agricole",
     images: [
       { src: "/media/photo TP.jpg", alt: "Pelle mécanique de chantier (TP)" },
+      { src: "/media/tracteur.jpg", alt: "Tracteur agricole équipé de batteries professionnelles" },
       { src: "/media/AP-AGM50-900.jpg", alt: "Batterie professionnelle de démarrage TP AP-AGM50" },
       { src: "/media/AGML5 (2).jpg", alt: "Batterie AGM pour matériel agricole" },
     ],
