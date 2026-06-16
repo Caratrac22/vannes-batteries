@@ -13,8 +13,11 @@ import {
   scaleIn,
   staggerContainer,
 } from "@/lib/animations";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function Hero() {
+  const { t } = useI18n();
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center
@@ -43,7 +46,7 @@ export default function Hero() {
                        rounded-full"
           >
             <Zap className="w-4 h-4" />
-            +300 modèles en stock — spécialiste batteries
+            {t.hero.badge}
           </span>
         </motion.div>
 
@@ -54,9 +57,9 @@ export default function Hero() {
                      text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
                      text-white leading-[0.95] mb-6"
         >
-          LA BATTERIE
+          {t.hero.title1}
           <br />
-          <span className="text-gradient-orange">QU&apos;IL VOUS FAUT</span>
+          <span className="text-gradient-orange">{t.hero.title2}</span>
         </motion.h1>
 
         {/* Accroche */}
@@ -65,9 +68,7 @@ export default function Hero() {
           className="text-muted text-base sm:text-lg md:text-xl
                      max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Voiture, moto, camping-car, bateau, poids lourd, agricole.
-          <br className="hidden sm:block" />
-          Trouvez votre batterie parmi +300 références. Pose en magasin et contrôle offert.
+          {t.hero.subtitle}
         </motion.p>
 
         {/* CTAs */}
@@ -81,10 +82,10 @@ export default function Hero() {
             aria-label="Appeler VANNES BATTERIES au 02 97 49 20 19"
           >
             <Zap className="w-5 h-5" />
-            Appeler — 02 97 49 20 19
+            {t.hero.cta_call}
           </a>
           <a href="#categories" className="btn-secondary text-base">
-            Voir nos batteries
+            {t.hero.cta_see}
           </a>
         </motion.div>
 
@@ -96,11 +97,11 @@ export default function Hero() {
         >
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-orange" />
-            <span>Z.A. de Kerniol, Vannes</span>
+            <span>{t.hero.address}</span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-orange" />
-            <span>Lun–Ven 8h30–18h30 · Sam 9h–12h</span>
+            <span>{t.hero.hours}</span>
           </div>
         </motion.div>
       </motion.div>

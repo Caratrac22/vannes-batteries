@@ -1,38 +1,36 @@
-// ============================================================
-// VANNES BATTERIES — ContactSection
-// Light 3-column contact section before footer
-// ============================================================
-
 "use client";
 
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { staggerContainerFast, fadeInUp } from "@/lib/animations";
 import ShopStatus from "@/components/ui/ShopStatus";
-
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "02 97 49 20 19",
-    actionText: "Appeler",
-    href: "tel:+33297492019",
-  },
-  {
-    icon: Mail,
-    title: "batterie56@hotmail.com",
-    actionText: "Écrire",
-    href: "mailto:batterie56@hotmail.com?subject=Demande%20de%20renseignement",
-  },
-  {
-    icon: MapPin,
-    title: "19 rue Denis Papin\nZ.A. de Kerniol, 56000 Vannes",
-    actionText: "Y aller",
-    href: "https://maps.app.goo.gl/9UDu2AUPtbS4d1au7",
-    target: "_blank",
-  },
-];
+import { useI18n } from "@/lib/i18n/context";
 
 export default function ContactSection() {
+  const { t } = useI18n();
+
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: "02 97 49 20 19",
+      actionText: t.contactSection.call,
+      href: "tel:+33297492019",
+    },
+    {
+      icon: Mail,
+      title: "batterie56@hotmail.com",
+      actionText: t.contactSection.write,
+      href: "mailto:batterie56@hotmail.com?subject=Demande%20de%20renseignement",
+    },
+    {
+      icon: MapPin,
+      title: "19 rue Denis Papin\nZ.A. de Kerniol, 56000 Vannes",
+      actionText: t.contactSection.getDirections,
+      href: "https://maps.app.goo.gl/9UDu2AUPtbS4d1au7",
+      target: "_blank",
+    },
+  ];
+
   return (
     <section className="bg-light-100 py-16 border-t border-gray-200" aria-label="Contact rapide">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

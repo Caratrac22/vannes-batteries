@@ -8,6 +8,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import { useI18n } from "@/lib/i18n/context";
 import {
   MapPin,
   Phone,
@@ -39,6 +40,7 @@ const DARK_MAP_STYLE = [
 const mapContainerStyle = { width: "100%", height: "100%" };
 
 export default function MapSection() {
+  const { t } = useI18n();
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ?? "",
   });
@@ -124,13 +126,13 @@ export default function MapSection() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-xs font-semibold uppercase tracking-wider text-orange bg-orange/10 border border-orange/30 rounded-full">
             <MapPin className="w-3.5 h-3.5" />
-            Nous trouver
+            {t.map.badge}
           </span>
           <h2 className="font-rajdhani font-bold uppercase tracking-tight text-3xl md:text-4xl lg:text-5xl text-white mb-4">
-            VENEZ NOUS RENCONTRER
+            {t.map.title}
           </h2>
           <p className="text-muted text-lg max-w-2xl mx-auto">
-            Zone de Kerniol, à deux pas du centre de Vannes
+            {t.map.subtitle}
           </p>
         </motion.div>
 
@@ -219,7 +221,7 @@ export default function MapSection() {
             <div className="absolute top-4 left-4 md:top-6 md:left-6 pointer-events-auto">
               <div className="px-3 py-1.5 bg-dark-950/70 backdrop-blur-md border border-white/10 rounded-full text-xs text-white/80 flex items-center gap-1.5">
                 <MapPin className="w-3 h-3 text-orange" />
-                <span>19 rue Denis Papin, Z.A. de Kerniol</span>
+                <span>{t.map.address}</span>
               </div>
             </div>
           </div>
@@ -233,7 +235,7 @@ export default function MapSection() {
                 </div>
                 <div>
                   <p className="text-white text-sm font-semibold">Vannes Batteries</p>
-                  <p className="text-muted text-xs">19 rue Denis Papin · 56000 Vannes</p>
+                  <p className="text-muted text-xs">{t.map.addressFull}</p>
                 </div>
               </div>
 
@@ -252,7 +254,7 @@ export default function MapSection() {
                   ) : (
                     <Route className="w-4 h-4" />
                   )}
-                  <span className="hidden sm:inline">Y aller</span>
+                  <span className="hidden sm:inline">{t.map.directions}</span>
                 </button>
                 <a
                   href="tel:+33297492019"

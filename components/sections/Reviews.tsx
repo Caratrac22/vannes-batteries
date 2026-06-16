@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { StarIcon } from "@/components/ui/icons";
 import { staggerContainerFast, fadeInUp } from "@/lib/animations";
+import { useI18n } from "@/lib/i18n/context";
 
 interface Review {
   name: string;
@@ -60,6 +61,7 @@ const fallbackReviews: Review[] = [
 ];
 
 export default function Reviews() {
+  const { t } = useI18n();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -97,9 +99,9 @@ export default function Reviews() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionTitle
-          badge={`${data.totalReviews} avis vérifiés`}
+          badge={`${data.totalReviews} ${t.reviews.reviews_lower}`}
           badgeIcon={StarIcon}
-          title="Ce que disent nos clients"
+          title={t.reviews.title}
         />
 
         <motion.div

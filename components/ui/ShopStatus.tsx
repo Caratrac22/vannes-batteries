@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, ChevronDown } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 type Status = "open" | "closing-soon" | "closed";
 
@@ -13,8 +14,6 @@ interface HoursData {
   businessStatus: string;
   error?: string;
 }
-
-const DAY_LABELS_FR = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
 const FALLBACK_HOURS: Record<number, { morning: [string, string]; afternoon?: [string, string] } | null> = {
   0: null,
@@ -57,23 +56,22 @@ function isHolidayToday(): boolean {
   );
 }
 
+const GOOGLE_DAY_MAP = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+
 function parseGoogleHours(descriptions: string[]): Record<number, string> {
   const result: Record<number, string> = {};
-  const dayMap = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-
   descriptions.forEach((desc) => {
-    for (let i = 0; i < dayMap.length; i++) {
-      if (desc.startsWith(dayMap[i])) {
-        const hours = desc.replace(`${dayMap[i]}: `, "").trim();
+    for (let i = 0; i < GOOGLE_DAY_MAP.length; i++) {
+      if (desc.startsWith(GOOGLE_DAY_MAP[i])) {
+        const hours = desc.replace(`${GOOGLE_DAY_MAP[i]}: `, "").trim();
         result[i] = hours === "Fermé" ? "Fermé" : hours;
       }
     }
   });
-
   return result;
 }
 
-function getNextOpenTimeGoogle(regularHours: Record<number, string>): string {
+function getNextOpenTimeInfo(regularHours: Record<number, string>, dayNames: string[]): { opensAt?: string; day?: string } | null {
   const now = new Date();
   const currentMin = now.getHours() * 60 + now.getMinutes();
   const today = now.getDay();
@@ -90,49 +88,48 @@ function getNextOpenTimeGoogle(regularHours: Record<number, string>): string {
         const [h, m] = match[1].split(":").map(Number);
         const startMin = h * 60 + m;
         if (offset === 0 && currentMin < startMin) {
-          return `ouvre à ${match[1]}`;
+          return { opensAt: match[1] };
         }
         if (offset > 0) {
-          const label = offset === 1 ? "demain" : DAY_LABELS_FR[dayIndex].toLowerCase();
-          return `ouvre ${label} à ${match[1]}`;
+          return { opensAt: match[1], day: offset === 1 ? "tomorrow" : dayNames[dayIndex].toLowerCase() };
         }
       }
     }
   }
-  return "";
+  return null;
 }
 
-function getStatusFromGoogle(data: HoursData): { status: Status; message: string; reopens: string } {
+function getStatusFromGoogle(data: HoursData): { status: Status; isHoliday: boolean; nextOpen: { opensAt?: string; day?: string } | null } {
   if (data.businessStatus !== "OPERATIONAL") {
-    return { status: "closed", message: "Fermé", reopens: "" };
+    return { status: "closed", isHoliday: false, nextOpen: null };
   }
 
   if (isHolidayToday()) {
-    return { status: "closed", message: "Fermé (jour férié)", reopens: "" };
+    return { status: "closed", isHoliday: true, nextOpen: null };
   }
 
   if (data.isOpenNow === true) {
-    return { status: "open", message: "Ouvert", reopens: "" };
+    return { status: "open", isHoliday: false, nextOpen: null };
   }
 
   if (data.isOpenNow === false) {
     const regularParsed = parseGoogleHours(data.regularHours);
-    const reopens = getNextOpenTimeGoogle(regularParsed);
-    return { status: "closed", message: "Fermé", reopens };
+    const nextOpen = getNextOpenTimeInfo(regularParsed, GOOGLE_DAY_MAP);
+    return { status: "closed", isHoliday: false, nextOpen };
   }
 
-  return { status: "closed", message: "Fermé", reopens: "" };
+  return { status: "closed", isHoliday: false, nextOpen: null };
 }
 
-function getFallbackStatus(): { status: Status; message: string; reopens: string } {
+function getFallbackStatus(): { status: Status; closingMinutes?: number; nextOpen: { opensAt?: string; day?: string } | null } {
   const now = new Date();
   const today = now.getDay();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
-  if (isHolidayToday()) return { status: "closed", message: "Fermé (jour férié)", reopens: "" };
+  if (isHolidayToday()) return { status: "closed", nextOpen: null };
 
   const schedule = FALLBACK_HOURS[today];
-  if (!schedule) return { status: "closed", message: "Fermé", reopens: "ouvre demain à 08:30" };
+  if (!schedule) return { status: "closed", nextOpen: { opensAt: "08:30", day: "tomorrow" } };
 
   const [mH, mM] = schedule.morning[0].split(":").map(Number);
   const [mEH, mEM] = schedule.morning[1].split(":").map(Number);
@@ -142,8 +139,8 @@ function getFallbackStatus(): { status: Status; message: string; reopens: string
   if (currentMin >= morningStart && currentMin < morningEnd) {
     const remaining = morningEnd - currentMin;
     return remaining <= 45
-      ? { status: "closing-soon", message: `Ferme dans ${remaining} min`, reopens: "" }
-      : { status: "open", message: "Ouvert", reopens: "" };
+      ? { status: "closing-soon", closingMinutes: remaining, nextOpen: null }
+      : { status: "open", nextOpen: null };
   }
 
   if (schedule.afternoon) {
@@ -155,12 +152,12 @@ function getFallbackStatus(): { status: Status; message: string; reopens: string
     if (currentMin >= afternoonStart && currentMin < afternoonEnd) {
       const remaining = afternoonEnd - currentMin;
       return remaining <= 45
-        ? { status: "closing-soon", message: `Ferme dans ${remaining} min`, reopens: "" }
-        : { status: "open", message: "Ouvert", reopens: "" };
+        ? { status: "closing-soon", closingMinutes: remaining, nextOpen: null }
+        : { status: "open", nextOpen: null };
     }
   }
 
-  return { status: "closed", message: "Fermé", reopens: "ouvre demain à 08:30" };
+  return { status: "closed", nextOpen: { opensAt: "08:30", day: "tomorrow" } };
 }
 
 interface ShopStatusProps {
@@ -169,12 +166,31 @@ interface ShopStatusProps {
 }
 
 export default function ShopStatus({ compact = false, showIcon = true }: ShopStatusProps) {
+  const { t } = useI18n();
+  const ts = t.shopStatus;
+  const dayNames = ts.dayNames;
+
   const [status, setStatus] = useState<Status>("closed");
-  const [message, setMessage] = useState("Fermé");
+  const [message, setMessage] = useState(ts.closed);
   const [reopens, setReopens] = useState("");
+  const [isHoliday, setIsHoliday] = useState(false);
   const [googleHours, setGoogleHours] = useState<Record<number, string> | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const formatMessage = (s: Status, closingMinutes?: number, nextOpen?: { opensAt?: string; day?: string } | null, holiday?: boolean) => {
+    if (holiday) return ts.closedHoliday;
+    if (s === "closing-soon" && closingMinutes) return ts.closingSoon.replace("{min}", String(closingMinutes));
+    if (s === "open") return ts.open;
+    return ts.closed;
+  };
+
+  const formatReopens = (nextOpen: { opensAt?: string; day?: string } | null) => {
+    if (!nextOpen) return "";
+    if (!nextOpen.day) return ts.opensAt.replace("{time}", nextOpen.opensAt || "");
+    if (nextOpen.day === "tomorrow") return ts.opensTomorrow.replace("{time}", nextOpen.opensAt || "");
+    return ts.opensDay.replace("{day}", nextOpen.day).replace("{time}", nextOpen.opensAt || "");
+  };
 
   useEffect(() => {
     const update = () => {
@@ -185,8 +201,9 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
           if (Date.now() - parsed.ts < 30 * 60 * 1000) {
             const result = getStatusFromGoogle(parsed.data);
             setStatus(result.status);
-            setMessage(result.message);
-            setReopens(result.reopens);
+            setIsHoliday(result.isHoliday);
+            setMessage(formatMessage(result.status, undefined, result.nextOpen, result.isHoliday));
+            setReopens(formatReopens(result.nextOpen));
             setGoogleHours(parseGoogleHours(parsed.data.regularHours));
             return;
           }
@@ -200,22 +217,23 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
           localStorage.setItem("vb-hours-cache", JSON.stringify({ data, ts: Date.now() }));
           const result = getStatusFromGoogle(data);
           setStatus(result.status);
-          setMessage(result.message);
-          setReopens(result.reopens);
+          setIsHoliday(result.isHoliday);
+          setMessage(formatMessage(result.status, undefined, result.nextOpen, result.isHoliday));
+          setReopens(formatReopens(result.nextOpen));
           setGoogleHours(parseGoogleHours(data.regularHours));
         })
         .catch(() => {
           const fb = getFallbackStatus();
           setStatus(fb.status);
-          setMessage(fb.message);
-          setReopens(fb.reopens);
+          setMessage(formatMessage(fb.status, fb.closingMinutes, fb.nextOpen, false));
+          setReopens(formatReopens(fb.nextOpen));
         });
     };
 
     update();
     const interval = setInterval(update, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [ts.open, ts.closed, ts.closedHoliday, ts.closingSoon, ts.opensAt, ts.opensTomorrow, ts.opensDay]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -234,8 +252,8 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
   const c = colors[status];
   const today = new Date().getDay();
 
-  const formatDay = (dayIndex: number, hours: string): string => {
-    if (hours === "Fermé" || !hours) return "Fermé";
+  const formatDay = (hours: string): string => {
+    if (hours === "Fermé" || !hours) return ts.closedShort;
     return hours.replace(" – ", "–").replace(" – ", "–");
   };
 
@@ -263,11 +281,12 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
           <div className="bg-dark-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden">
             <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
               <Clock className="w-4 h-4 text-orange" />
-              <span className="text-white text-xs font-semibold uppercase tracking-wide">Horaires d&apos;ouverture</span>
+              <span className="text-white text-xs font-semibold uppercase tracking-wide">{ts.hoursTitle}</span>
             </div>
             <div className="p-3 space-y-0.5">
-              {DAY_LABELS_FR.map((label, i) => {
-                const hours = googleHours?.[i] ?? formatDay(i, "");
+              {dayNames.map((label, i) => {
+                const hours = googleHours?.[i] ?? "";
+                const display = formatDay(hours);
                 const isToday = i === today;
                 return (
                   <div
@@ -278,7 +297,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
                   >
                     <span className={`font-medium ${isToday ? "text-orange" : "text-gray-400"}`}>{label}</span>
                     <span className={`${isToday ? "text-orange font-semibold" : "text-gray-500"}`}>
-                      {hours || "Fermé"}
+                      {display}
                     </span>
                   </div>
                 );
@@ -286,7 +305,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
             </div>
             {isHolidayToday() && (
               <div className="px-4 py-2 bg-red-500/10 border-t border-red-500/20 text-red-400 text-[10px] font-semibold text-center uppercase">
-                Jour férié aujourd&apos;hui
+                {ts.holidayToday}
               </div>
             )}
           </div>

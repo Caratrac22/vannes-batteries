@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect } from "react";
 import { flipIn, staggerContainer } from "@/lib/animations";
+import { useI18n } from "@/lib/i18n/context";
 
 interface CounterProps {
   value: number;
@@ -57,14 +58,16 @@ function Counter({ value, suffix = "", label, sublabel }: CounterProps) {
   );
 }
 
-const stats = [
-  { value: 300, suffix: "+", label: "Modèles", sublabel: "en stock" },
-  { value: 180, suffix: "", label: "Réf. motos", sublabel: "toutes cylindrées" },
-  { value: 95, suffix: "%", label: "Avis", sublabel: "5 étoiles" },
-  { value: 0, suffix: "", label: "Attente", sublabel: "partez le jour même" },
-];
-
 export default function Stats() {
+  const { t } = useI18n();
+
+  const stats = [
+    { value: 300, suffix: "+", label: t.stats.stock.label, sublabel: t.stats.stock.sub },
+    { value: 180, suffix: "", label: t.stats.moto.label, sublabel: t.stats.moto.sub },
+    { value: 95, suffix: "%", label: t.stats.reviews.label, sublabel: t.stats.reviews.sub },
+    { value: 0, suffix: "", label: t.stats.wait.label, sublabel: t.stats.wait.sub },
+  ];
+
   return (
     <section
       id="stats"

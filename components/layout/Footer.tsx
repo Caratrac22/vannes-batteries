@@ -1,21 +1,14 @@
 // ============================================================
 // VANNES BATTERIES — Footer
-// 3 columns: brand, navigation, contact + legal links
 // ============================================================
+
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SocialLinks from "@/components/ui/SocialLinks";
-
-const footerNav = [
-  { name: "Accueil", href: "/" },
-  { name: "Nos batteries", href: "/#batteries" },
-  { name: "Services", href: "/services" },
-  { name: "À propos", href: "/a-propos" },
-  { name: "Avis clients", href: "/#avis" },
-  { name: "Contact", href: "/contact" },
-];
+import { useI18n } from "@/lib/i18n/context";
 
 const legalLinks = [
   { name: "Mentions légales", href: "/mentions-legales" },
@@ -25,6 +18,17 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useI18n();
+
+  const footerNav = [
+    { name: t.nav.home, href: "/" },
+    { name: t.nav.batteries || "Nos batteries", href: "/#batteries" },
+    { name: t.nav.services, href: "/services" },
+    { name: t.nav.about, href: "/a-propos" },
+    { name: "Avis", href: "/#avis" },
+    { name: t.nav.contact, href: "/contact" },
+  ];
+
   return (
     <footer className="bg-dark-700 border-t border-orange/15" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -50,7 +54,7 @@ export default function Footer() {
               MA BATTERIE AU MEILLEUR PRIX
             </p>
             <p className="text-muted text-sm leading-relaxed mb-6">
-              Votre spécialiste batterie à Vannes depuis plus de 30 ans.
+              {t.footer.description}
             </p>
             <SocialLinks />
           </div>
@@ -77,7 +81,7 @@ export default function Footer() {
           {/* ── Col 3: Contact ────────────────────────────── */}
           <div>
             <h3 className="font-rajdhani font-bold text-lg uppercase tracking-wide mb-6">
-              Contact
+              {t.footer.contact_title}
             </h3>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
@@ -111,9 +115,11 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-orange mt-0.5 shrink-0" />
                 <span className="text-muted">
-                  Lun–Ven 8h30–18h30
+                  {t.footer.hours_week}
                   <br />
-                  Sam 9h–12h
+                  {t.footer.hours_sat}
+                  <br />
+                  {t.footer.hours_sun}
                 </span>
               </li>
             </ul>

@@ -5,9 +5,14 @@
   },
   "nav": {
     "home": "Home",
+    "batteries": "Our Batteries",
     "services": "Services",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "reviews": "Reviews",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "skipToContent": "Skip to main content"
   },
   "hero": {
     "badge": "+300 models in stock",
@@ -44,17 +49,19 @@
     "wait": { "value": "0", "label": "Wait", "sub": "leave same day" }
   },
   "services": {
-    "badge": "Our services",
-    "title": "A complete service",
+    "badge": "Our expertise",
+    "title": "WHAT BATTERY DO YOU NEED?",
+    "subtitle": "Everything is done in-store only. Visit us at Kerniol Business Park, Vannes.",
+    "in_store": "All our services are carried out exclusively in-store",
+    "in_store_address": "19 rue Denis Papin, Z.A. de Kerniol — 56000 Vannes",
     "items": {
-      "diag": { "title": "Battery diagnostics", "desc": "Free battery and charging system test in 5 minutes." },
-      "install": { "title": "In-store fitting", "desc": "Our technicians install your battery and check the entire electrical system." },
-      "delivery": { "title": "Home service", "desc": "We come to you to replace your battery. Mobile service available." },
-      "pro": { "title": "Professional equipment", "desc": "Fleet, construction, agricultural solutions. Fast quotes and volume discounts." },
-      "solar": { "title": "Solar panels", "desc": "Complete kits for motorhomes and off-grid vehicles. Custom studies." },
-      "alarm": { "title": "Security & UPS", "desc": "Stationery batteries for alarms, UPS and backup systems." }
-    },
-    "stock_badge": "In stock"
+      "advice": { "title": "PERSONALISED ADVICE", "desc": "Our team analyses your needs and guides you to the exact battery for your vehicle and usage. Specialised batteries available for all uses: industrial, marine, agricultural and more." },
+      "stock": { "title": "300+ MODELS IN STOCK", "desc": "An exceptional stock of over 300 references across all technologies. Guaranteed quality, reliable and long-lasting performance. Leave equipped the same day." },
+      "install": { "title": "IN-STORE FITTING", "desc": "Installation of your new battery in our workshop. Our qualified team takes care of everything, offering you a complete and convenient service." },
+      "check": { "title": "FREE CHECK", "desc": "On every visit, we check your charging and starting system free of charge." },
+      "recycle": { "title": "RESPONSIBLE RECYCLING", "desc": "Collection and recycling of all your used batteries as part of our environmental commitment." },
+      "pro": { "title": "PROFESSIONAL SERVICE", "desc": "Quotes, technical advice and personalised support for professionals. Contact us for your specific requirements." }
+    }
   },
   "whyUs": {
     "title": "Why Vannes Batteries?",
@@ -99,9 +106,27 @@
       "phone": "02 97 49 20 19"
     }
   },
+  "contactSection": {
+    "call": "Call",
+    "write": "Email",
+    "getDirections": "Get directions"
+  },
   "about": {
     "title": "ABOUT US",
     "location": "Z.A. de Kerniol, near Océane clinic"
+  },
+  "shopStatus": {
+    "open": "Open",
+    "closed": "Closed",
+    "closedHoliday": "Closed (public holiday)",
+    "closingSoon": "Closing in {min} min",
+    "opensAt": "opens at {time}",
+    "opensTomorrow": "opens tomorrow at {time}",
+    "opensDay": "opens {day} at {time}",
+    "hoursTitle": "Opening hours",
+    "holidayToday": "Public holiday today",
+    "closedShort": "Closed",
+    "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   },
   "footer": {
     "description": "Battery specialist in Vannes. Motorcycle, car, motorhome, truck, agricultural, boat, alarm batteries.",

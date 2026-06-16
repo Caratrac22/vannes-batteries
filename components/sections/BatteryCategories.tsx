@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { fadeInUp, staggerContainerFast } from "@/lib/animations";
 import SectionTitle from "@/components/ui/SectionTitle";
+import { useI18n } from "@/lib/i18n/context";
 import {
   CarIcon,
   MotorcycleIcon,
@@ -19,73 +20,21 @@ import {
   BatteryIcon,
 } from "@/components/ui/icons";
 
-const categories = [
-  {
-    icon: CarIcon,
-    title: "Batterie Voiture",
-    description:
-      "AGM, Gel, Start & Stop, véhicules de collection. Toutes technologies.",
-    count: "60+",
-    label: "modèles",
-    image: "/media/ferrari california.jpg",
-  },
-  {
-    icon: MotorcycleIcon,
-    title: "Batterie Moto",
-    description:
-      "Du scooter à la moto sportive, toutes cylindrées. Étanches haute performance.",
-    count: "180",
-    label: "références",
-    image: "/media/moto.png",
-  },
-  {
-    icon: CamperIcon,
-    title: "Camping-Car",
-    description:
-      "Sans entretien, étanches, normes européennes. Kits panneaux solaires.",
-    count: "40+",
-    label: "modèles",
-    image: "/media/camping car mercedes.png",
-  },
-  {
-    icon: BoatIcon,
-    title: "Bateau Moteur & Voilier",
-    description:
-      "Décharge lente, étanches, haute durabilité pour voiliers et moteurs.",
-    count: "30+",
-    label: "modèles",
-    image: "/media/voilier.jpg",
-  },
-  {
-    icon: TruckIcon,
-    title: "Poids Lourds & TP",
-    description:
-      "Camions, engins de chantier. Batteries haute capacité longue durée.",
-    count: "25+",
-    label: "modèles",
-    image: "/media/photo TP.jpg",
-  },
-  {
-    icon: TractorIcon,
-    title: "Agricole",
-    description:
-      "Tracteurs, moissonneuses. Conçues pour utilisation intensive.",
-    count: "20+",
-    label: "modèles",
-    image: "/media/tracteur.jpg",
-  },
-  {
-    icon: BatteryIcon,
-    title: "Alarme & Industriel",
-    description:
-      "Onduleurs, alarmes, chariots élévateurs, sites isolés. Fiables.",
-    count: "40+",
-    label: "modèles",
-    image: "/media/AGM 120.png",
-  },
-];
+const categoryKeys = ["car", "moto", "camper", "boat", "truck", "tractor", "alarm"] as const;
+
+const categoryMeta: Record<string, { icon: typeof CarIcon; count: string; labelKey: string; image: string }> = {
+  car:    { icon: CarIcon,        count: "60+",  labelKey: "models", image: "/media/ferrari california.jpg" },
+  moto:   { icon: MotorcycleIcon, count: "180",  labelKey: "refs",   image: "/media/moto.png" },
+  camper: { icon: CamperIcon,     count: "40+",  labelKey: "models", image: "/media/camping car mercedes.png" },
+  boat:   { icon: BoatIcon,       count: "30+",  labelKey: "models", image: "/media/voilier.jpg" },
+  truck:  { icon: TruckIcon,      count: "25+",  labelKey: "models", image: "/media/photo TP.jpg" },
+  tractor:{ icon: TractorIcon,    count: "20+",  labelKey: "models", image: "/media/tracteur.jpg" },
+  alarm:  { icon: BatteryIcon,    count: "40+",  labelKey: "models", image: "/media/AGM 120.png" },
+};
 
 export default function BatteryCategories() {
+  const { t } = useI18n();
+
   return (
     <section
       id="categories"
@@ -94,10 +43,10 @@ export default function BatteryCategories() {
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle
-          badge="Notre spécialité"
+          badge={t.categories.badge}
           badgeIcon={BatteryIcon}
-          title="Trouvez votre batterie"
-          subtitle="De la voiture au tracteur, du bateau à l'alarme — nous avons la batterie qu'il vous faut."
+          title={t.categories.title}
+          subtitle={t.categories.subtitle}
         />
 
         <motion.div
@@ -107,68 +56,51 @@ export default function BatteryCategories() {
           viewport={{ once: true, margin: "-80px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6"
         >
-          {categories.map((cat) => (
-            <motion.div
-              key={cat.title}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.03, y: -6 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="group relative rounded-2xl overflow-hidden
-                         h-72 sm:h-80 cursor-default"
-            >
-              {/* Background image */}
-              <Image
-                src={cat.image}
-                alt={cat.title}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500
-                           group-hover:scale-110"
-              />
+          {categoryKeys.map((key) => {
+            const cat = t.categories.items[key];
+            const meta = categoryMeta[key];
+            const Icon = meta.icon;
+            const label = meta.labelKey === "models" ? t.categories.models : t.categories.refs;
 
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20
-                              group-hover:from-black/95 group-hover:via-black/60 transition-colors duration-300" />
-
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                {/* Icon */}
-                <motion.div
-                  className="w-10 h-10 text-orange mb-3"
-                  whileHover={{ rotate: 8, scale: 1.15 }}
-                >
-                  <cat.icon className="w-full h-full" />
-                </motion.div>
-
-                {/* Title */}
-                <h3 className="font-rajdhani font-bold text-white text-xl md:text-2xl uppercase tracking-wide mb-2">
-                  {cat.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-2">
-                  {cat.description}
-                </p>
-
-                {/* Count */}
-                <div className="flex items-baseline gap-1.5">
-                  <span className="font-bebas text-3xl md:text-4xl text-orange">
-                    {cat.count}
-                  </span>
-                  <span className="text-white/50 text-sm uppercase tracking-wider">
-                    {cat.label}
-                  </span>
+            return (
+              <motion.div
+                key={key}
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03, y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="group relative rounded-2xl overflow-hidden h-72 sm:h-80 cursor-default"
+              >
+                <Image
+                  src={meta.image}
+                  alt={cat.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20
+                                group-hover:from-black/95 group-hover:via-black/60 transition-colors duration-300" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                  <motion.div className="w-10 h-10 text-orange mb-3" whileHover={{ rotate: 8, scale: 1.15 }}>
+                    <Icon className="w-full h-full" />
+                  </motion.div>
+                  <h3 className="font-rajdhani font-bold text-white text-xl md:text-2xl uppercase tracking-wide mb-2">
+                    {cat.title}
+                  </h3>
+                  <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {cat.desc}
+                  </p>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-bebas text-3xl md:text-4xl text-orange">{meta.count}</span>
+                    <span className="text-white/50 text-sm uppercase tracking-wider">{label}</span>
+                  </div>
                 </div>
-              </div>
-
-              {/* Hover border glow */}
-              <div className="absolute inset-0 rounded-2xl border border-white/0 group-hover:border-orange/30
-                              transition-colors duration-300 pointer-events-none" />
-            </motion.div>
-          ))}
+                <div className="absolute inset-0 rounded-2xl border border-white/0 group-hover:border-orange/30
+                                transition-colors duration-300 pointer-events-none" />
+              </motion.div>
+            );
+          })}
         </motion.div>
 
-        {/* Bottom CTA */}
         <motion.div
           variants={fadeInUp}
           initial="hidden"
@@ -176,9 +108,7 @@ export default function BatteryCategories() {
           viewport={{ once: true }}
           className="mt-12 text-center"
         >
-          <p className="text-white/40 text-sm mb-4">
-            Vous ne trouvez pas votre batterie ? Contactez-nous.
-          </p>
+          <p className="text-white/40 text-sm mb-4">{t.categories.not_found}</p>
           <a
             href="tel:+33297492019"
             className="inline-flex items-center gap-2 px-6 py-3
@@ -186,7 +116,7 @@ export default function BatteryCategories() {
                        text-white bg-white/10 border border-white/20
                        rounded-full hover:bg-white/20 transition-colors"
           >
-            Appelez-nous — 02 97 49 20 19
+            {t.categories.call_us}
           </a>
         </motion.div>
       </div>

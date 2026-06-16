@@ -5,9 +5,14 @@
   },
   "nav": {
     "home": "Accueil",
+    "batteries": "Nos Batteries",
     "services": "Services",
     "about": "À propos",
-    "contact": "Contact"
+    "contact": "Contact",
+    "reviews": "Avis",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "skipToContent": "Aller au contenu principal"
   },
   "hero": {
     "badge": "+300 modèles en stock",
@@ -44,17 +49,19 @@
     "wait": { "value": "0", "label": "Attente", "sub": "partez le jour même" }
   },
   "services": {
-    "badge": "Nos prestations",
-    "title": "Un service complet",
+    "badge": "Nos expertises",
+    "title": "QUEL BESOIN DE BATTERIE AVEZ-VOUS ?",
+    "subtitle": "Tout se fait exclusivement en magasin. Venez nous voir Zone de Kerniol, Vannes.",
+    "in_store": "Tous nos services sont réalisés exclusivement en magasin",
+    "in_store_address": "19 rue Denis Papin, Z.A. de Kerniol — 56000 Vannes",
     "items": {
-      "diag": { "title": "Diagnostic batterie", "desc": "Test gratuit de votre batterie et circuit de charge en 5 minutes." },
-      "install": { "title": "Pose en magasin", "desc": "Nos techniciens installent votre batterie et vérifient l'ensemble du circuit." },
-      "delivery": { "title": "Déplacement à domicile", "desc": "On vient chez vous pour remplacer votre batterie. Service mobile disponible." },
-      "pro": { "title": "Matériel professionnel", "desc": "Solutions pour flottes, TP, agricole. Devis rapide et tarifs dégressifs." },
-      "solar": { "title": "Panneaux solaires", "desc": "Kits complets pour camping-cars et véhicules isolés. Études personnalisées." },
-      "alarm": { "title": "Sécurité & onduleurs", "desc": "Batteries stationnaires pour alarmes, onduleurs et systèmes de secours." }
-    },
-    "stock_badge": "En stock"
+      "advice": { "title": "CONSEIL PERSONNALISÉ", "desc": "Notre équipe analyse votre besoin et vous guide vers la batterie exactement adaptée à votre véhicule et usage. Batteries spécialisées disponibles pour tous usages : industriels, marines, agricoles ou autres." },
+      "stock": { "title": "VENTE +300 MODÈLES", "desc": "Un stock exceptionnel de plus de 300 références toutes technologies. Qualité garantie, performances fiables et durables. Vous repartez équipé le jour même." },
+      "install": { "title": "POSE EN MAGASIN", "desc": "Installation de votre nouvelle batterie dans notre atelier. Notre équipe qualifiée s'occupe de tout, vous offrant un service complet et pratique." },
+      "check": { "title": "CONTRÔLE GRATUIT", "desc": "À chaque visite, nous contrôlons gratuitement votre circuit de charge et de démarrage." },
+      "recycle": { "title": "RECYCLAGE RESPONSABLE", "desc": "Reprise et recyclage de toutes vos batteries usagées dans une démarche de préservation de l'environnement." },
+      "pro": { "title": "SERVICE PROFESSIONNEL", "desc": "Devis, conseil technique et accompagnement personnalisé pour les professionnels. Contactez-nous pour vos besoins spécifiques." }
+    }
   },
   "whyUs": {
     "title": "Pourquoi Vannes Batteries ?",
@@ -99,9 +106,27 @@
       "phone": "02 97 49 20 19"
     }
   },
+  "contactSection": {
+    "call": "Appeler",
+    "write": "Écrire",
+    "getDirections": "Y aller"
+  },
   "about": {
     "title": "À PROPOS DE NOUS",
     "location": "Z.A. de Kerniol, proche clinique Océane"
+  },
+  "shopStatus": {
+    "open": "Ouvert",
+    "closed": "Fermé",
+    "closedHoliday": "Fermé (jour férié)",
+    "closingSoon": "Ferme dans {min} min",
+    "opensAt": "ouvre à {time}",
+    "opensTomorrow": "ouvre demain à {time}",
+    "opensDay": "ouvre {day} à {time}",
+    "hoursTitle": "Horaires d\u2019ouverture",
+    "holidayToday": "Jour f\u2019ferié aujourd\u2019hui",
+    "closedShort": "Ferm\u00e9",
+    "dayNames": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
   },
   "footer": {
     "description": "Spécialiste batterie à Vannes. Batterie moto, voiture, camping-car, TP, agricole, bateau, alarme.",

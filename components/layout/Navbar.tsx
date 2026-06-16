@@ -18,13 +18,14 @@ import {
 } from "@/lib/animations";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ShopStatus from "@/components/ui/ShopStatus";
+import { useI18n } from "@/lib/i18n/context";
 
 const navLinks = [
-  { name: "Nos Batteries", href: "/#batteries" },
-  { name: "Services", href: "/services" },
-  { name: "À Propos", href: "/a-propos" },
-  { name: "Avis", href: "/#avis" },
-  { name: "Contact", href: "/contact" },
+  { name: "Nos Batteries", href: "/#batteries", key: "nav.batteries" },
+  { name: "Services", href: "/services", key: "nav.services" },
+  { name: "À Propos", href: "/a-propos", key: "nav.about" },
+  { name: "Avis", href: "/#avis", key: "nav.reviews" },
+  { name: "Contact", href: "/contact", key: "nav.contact" },
 ];
 
 export default function Navbar() {
@@ -32,6 +33,15 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
+  const { t, locale, toggleLocale } = useI18n();
+
+  const translatedLinks = [
+    { name: t.nav.batteries || "Nos Batteries", href: "/#batteries" },
+    { name: t.nav.services, href: "/services" },
+    { name: t.nav.about, href: "/a-propos" },
+    { name: "Avis", href: "/#avis" },
+    { name: t.nav.contact, href: "/contact" },
+  ];
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -93,9 +103,9 @@ export default function Navbar() {
 
           {/* ── Desktop Nav Links ────────────────────────── */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {translatedLinks.map((link) => (
               <Link
-                key={link.name}
+                key={link.href}
                 href={link.href}
                 className="relative px-4 py-2 text-sm font-medium
                            text-muted hover:text-white transition-colors duration-200"
@@ -116,9 +126,20 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* ── CTA Phone ────────────────────────────────── */}
+          {/* ── CTA Phone + Lang ──────────────────────────── */}
           <div className="hidden md:flex items-center gap-3">
             <ShopStatus compact />
+            <button
+              onClick={toggleLocale}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full
+                         text-[11px] font-bold uppercase tracking-wider
+                         text-white/60 bg-white/5 border border-white/10
+                         hover:text-white hover:bg-white/10 transition-all"
+              aria-label={`Switch to ${locale === "fr" ? "English" : "Français"}`}
+            >
+              <Globe className="w-3 h-3" />
+              {locale === "fr" ? "EN" : "FR"}
+            </button>
             <a
               href="tel:+33297492019"
               className="btn-primary text-sm !py-2.5 !px-5"
@@ -134,7 +155,7 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden flex items-center justify-center
                        w-12 h-12 text-white"
-            aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={isOpen ? t.nav.menuClose : t.nav.menuOpen}
             aria-expanded={isOpen}
           >
             <AnimatePresence mode="wait">
@@ -176,8 +197,8 @@ export default function Navbar() {
                          border-t border-orange/15 rounded-b-2xl"
             >
               <div className="px-4 py-6 space-y-1">
-                {navLinks.map((link) => (
-                  <motion.div key={link.name} variants={mobileMenuItemVariants}>
+                {translatedLinks.map((link) => (
+                  <motion.div key={link.href} variants={mobileMenuItemVariants}>
                     <Link
                       href={link.href}
                       className={`block px-4 py-3 rounded-xl text-base font-medium
@@ -208,6 +229,19 @@ export default function Navbar() {
                 {/* Social Links */}
                 <motion.div variants={mobileMenuItemVariants} className="pt-4 flex justify-center">
                   <SocialLinks />
+                </motion.div>
+
+                {/* Language Switcher */}
+                <motion.div variants={mobileMenuItemVariants} className="pt-2 flex justify-center">
+                  <button
+                    onClick={toggleLocale}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl
+                               text-sm font-semibold text-white/60 bg-white/5
+                               border border-white/10 hover:text-white hover:bg-white/10 transition-all"
+                  >
+                    <Globe className="w-4 h-4" />
+                    {locale === "fr" ? "English" : "Français"}
+                  </button>
                 </motion.div>
               </div>
             </motion.div>
