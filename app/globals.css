@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   VANNES BATTERIES — Global Styles
+   Brand Red, Blue & White theme
+   ============================================================ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    background-color: #0B132B;
+    color: #ffffff;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Focus visible — red outline for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid #DC2626;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(220, 38, 38, 0.3);
+    color: #ffffff;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0B132B;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.5);
+  }
+}
+
+@layer components {
+  /* ── Glassmorphism Card ──────────────────────────────────── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(30, 64, 175, 0.2);
+    border-radius: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(220, 38, 38, 0.5);
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.15);
+  }
+
+  /* ── Section Separator ──────────────────────────────────── */
+  .section-separator {
+    border-top: 1px solid rgba(30, 64, 175, 0.15);
+  }
+
+  /* ── Red gradient overlay ────────────────────────────── */
+  .gradient-overlay {
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 0%,
+      rgba(220, 38, 38, 0.07) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ── Button Primary ─────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5
+           bg-orange text-white font-rajdhani font-semibold
+           uppercase tracking-wide text-sm
+           rounded-xl shadow-orange-glow
+           transition-all duration-300 ease-out;
+  }
+
+  .btn-primary:hover {
+    @apply bg-orange-600 scale-[1.02];
+    box-shadow: 0 12px 40px rgba(220, 38, 38, 0.5);
+  }
+
+  .btn-primary:active {
+    @apply scale-[0.98];
+  }
+
+  /* ── Button Secondary ───────────────────────────────────── */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5
+           bg-transparent text-orange font-rajdhani font-semibold
+           uppercase tracking-wide text-sm
+           rounded-xl border-2 border-orange
+           transition-all duration-300 ease-out;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-orange/10 scale-[1.02];
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.2);
+  }
+
+  /* ── Info Banner ────────────────────────────────────────── */
+  .info-banner {
+    @apply bg-orange/10 border border-orange/30 rounded-xl
+           px-6 py-4 text-center;
+  }
+
+  /* ── Star Rating ────────────────────────────────────────── */
+  .star {
+    @apply text-yellow inline-block;
+  }
+}
+
+@layer utilities {
+  /* ── Text gradient (Blue → Red) ──────────────────────────── */
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #1E40AF 0%, #DC2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Reduced motion ─────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ── Lightning particle background (CSS-only) ─────────────── */
+.lightning-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lightning-bg::before,
+.lightning-bg::after {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23DC2626'%3E%3Cpath d='M13 2L4 14h7l-1 8 9-12h-7l1-8z'/%3E%3C/svg%3E");
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  opacity: 0.04;
+  animation: float-lightning 8s ease-in-out infinite;
+}
+
+.lightning-bg::before {
+  top: 10%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.lightning-bg::after {
+  top: 30%;
+  right: 10%;
+  animation-delay: 4s;
+  width: 80px;
+  height: 80px;
+}
+
+@keyframes float-lightning {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.04;
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.08;
+  }
+}

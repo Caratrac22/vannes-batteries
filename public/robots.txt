@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.vannes-batteries.fr
+
+# Sitemaps
+Sitemap: https://www.vannes-batteries.fr/sitemap.xml
