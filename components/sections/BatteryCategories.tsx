@@ -36,7 +36,7 @@ const categories = [
       "Du scooter à la moto sportive, toutes cylindrées. Étanches haute performance.",
     count: "180",
     label: "références",
-    image: "/media/HR48.jpg",
+    image: "/media/moto.png",
   },
   {
     icon: CamperIcon,

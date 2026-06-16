@@ -50,8 +50,10 @@ const categories: Category[] = [
   },
   {
     title: "Batterie moto",
-    images: [],
-    placeholderCount: 3, // Frames ready for motorcycle batteries
+    images: [
+      { src: "/media/moto.png", alt: "Moto équipée de batteries professionnelles" },
+    ],
+    placeholderCount: 2,
   },
   {
     title: "Batterie Poids-Lourds · TP · Agricole",
