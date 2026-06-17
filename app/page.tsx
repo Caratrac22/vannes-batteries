@@ -1,8 +1,3 @@
-// ============================================================
-// VANNES BATTERIES — Home Page
-// ============================================================
-
-import dynamic from "next/dynamic";
 import { generatePageMetadata } from "@/lib/metadata";
 import Hero from "@/components/sections/Hero";
 import BatteryCategories from "@/components/sections/BatteryCategories";
@@ -11,9 +6,7 @@ import Stats from "@/components/sections/Stats";
 import Services from "@/components/sections/Services";
 import WhyUs from "@/components/sections/WhyUs";
 import ContactSection from "@/components/sections/ContactSection";
-
-const Reviews = dynamic(() => import("@/components/sections/Reviews"), { ssr: false });
-const MapSection = dynamic(() => import("@/components/sections/MapSection"), { ssr: false });
+import LazySections from "@/components/LazySections";
 
 export const metadata = generatePageMetadata({
   title: "VANNES BATTERIES 02.97.49.20.19 | Vannes, France",
@@ -31,8 +24,7 @@ export default function Home() {
       <Stats />
       <Services />
       <WhyUs />
-      <Reviews />
-      <MapSection />
+      <LazySections />
       <ContactSection />
     </>
   );
