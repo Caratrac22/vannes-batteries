@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   GoogleMap,
@@ -49,6 +49,16 @@ export default function MapSection() {
   const [ directions, setDirections ] = useState<string | null>(null);
   const [ loadingDir, setLoadingDir ] = useState(false);
   const mapRef = useRef<google.maps.Map | null>(null);
+
+  useEffect(() => {
+    const original = console.warn;
+    console.warn = (...args: unknown[]) => {
+      const msg = typeof args[0] === "string" ? args[0] : "";
+      if (msg.includes("google.maps.Marker") && msg.includes("deprecated")) return;
+      original.apply(console, args);
+    };
+    return () => { console.warn = original; };
+  }, []);
 
   const onMapLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
