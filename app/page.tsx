@@ -18,8 +18,8 @@ export const metadata = generatePageMetadata({
 export default function Home() {
   return (
     <>
-      <Hero />
       <FerrariShowcase />
+      <Hero />
       <BatteryCategories />
       <Stats />
       <Services />

@@ -20,6 +20,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-padding-top: 80px;
   }
 
   body {
@@ -200,4 +201,25 @@
     transform: translateY(-20px) rotate(5deg);
     opacity: 0.08;
   }
+}
+
+/* ── Modern section transitions ─────────────────────────────── */
+section {
+  will-change: transform;
+}
+
+/* ── Smooth image loading ───────────────────────────────────── */
+img {
+  transition: opacity 0.4s ease;
+}
+
+/* ── Card hover micro-interactions ──────────────────────────── */
+.glass-card,
+.group {
+  will-change: transform, box-shadow;
+}
+
+/* ── Smooth font rendering on scroll ────────────────────────── */
+* {
+  -webkit-tap-highlight-color: transparent;
 }

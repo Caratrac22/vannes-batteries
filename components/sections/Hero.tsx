@@ -1,8 +1,3 @@
-// ============================================================
-// VANNES BATTERIES — Hero Section
-// Focus on batteries, not years of experience
-// ============================================================
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -24,20 +19,15 @@ export default function Hero() {
                  bg-dark-950 overflow-hidden pt-20"
       aria-label="Section héro"
     >
-      {/* ── Gradient overlay ──────────────────────────────── */}
       <div className="gradient-overlay absolute inset-0" />
-
-      {/* ── Lightning particles (CSS only) ────────────────── */}
       <div className="lightning-bg" />
 
-      {/* ── Content ───────────────────────────────────────── */}
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate="show"
         className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center"
       >
-        {/* Badge */}
         <motion.div variants={scaleIn} className="mb-8">
           <span
             className="inline-flex items-center gap-2 px-5 py-2
@@ -50,7 +40,6 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* H1 */}
         <motion.h1
           variants={clipReveal}
           className="font-rajdhani font-bold uppercase tracking-tight
@@ -62,7 +51,6 @@ export default function Hero() {
           <span className="text-gradient-orange">{t.hero.title2}</span>
         </motion.h1>
 
-        {/* Accroche */}
         <motion.p
           variants={fadeInUp}
           className="text-muted text-base sm:text-lg md:text-xl
@@ -71,7 +59,6 @@ export default function Hero() {
           {t.hero.subtitle}
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
@@ -89,7 +76,6 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Infos rapides */}
         <motion.div
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center justify-center
@@ -106,7 +92,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator ──────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
