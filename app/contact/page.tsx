@@ -1,20 +1,46 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, FormEvent } from "react";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ShopStatus from "@/components/ui/ShopStatus";
 import MapSection from "@/components/sections/MapSection";
-import { submitContactForm, type FormState } from "./actions";
-
-const initialState: FormState = { status: "idle", message: "" };
 
 export default function ContactPage() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", "059c28d6-4dc0-4cb5-ab89-0454b9048faa");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setMessage("Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.");
+        form.reset();
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Une erreur est survenue.");
+      }
+    } catch {
+      setStatus("error");
+      setMessage("Impossible de se connecter au serveur.");
+    }
+  }
 
   return (
     <>
-      {/* ── Page Header ───────────────────────────────────── */}
       <section className="bg-dark-950 pt-32 pb-16 relative overflow-hidden">
         <div className="gradient-overlay absolute inset-0 opacity-50" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -29,14 +55,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── Contact Layout ────────────────────────────────── */}
       <section className="bg-light-50 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
             
-            {/* ── Left Column: Contact Info ─────────────────── */}
             <div className="space-y-12 animate-fade-in-up">
-              {/* Address */}
               <div>
                 <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
                   <MapPin className="w-6 h-6 text-orange" />
@@ -59,7 +82,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Direct Contact */}
               <div>
                 <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
                   Contact Direct
@@ -84,7 +106,6 @@ export default function ContactPage() {
                 </ul>
               </div>
 
-              {/* Opening Hours */}
               <div>
                 <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
                   <Clock className="w-6 h-6 text-orange" />
@@ -110,7 +131,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Socials */}
               <div>
                 <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
                   Suivez-nous
@@ -121,14 +141,13 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* ── Right Column: Form (Server Action) ────────── */}
             <div className="animate-fade-in-up">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
                 <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-dark-950 mb-8">
                   Envoyez-nous un message
                 </h3>
 
-                <form action={formAction} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative group">
                       <input type="text" name="prenom" id="prenom" required
@@ -195,26 +214,25 @@ export default function ContactPage() {
                     </label>
                   </div>
 
-                  {/* Form Status Messages */}
-                  {state.status === "success" && (
+                  {status === "success" && (
                     <div className="p-4 bg-green-50 text-green-700 rounded-xl flex items-center gap-3 text-sm">
                       <CheckCircle2 className="w-5 h-5 shrink-0" />
-                      {state.message}
+                      {message}
                     </div>
                   )}
-                  {state.status === "error" && (
+                  {status === "error" && (
                     <div className="p-4 bg-red-50 text-red-700 rounded-xl flex items-center gap-3 text-sm">
                       <AlertCircle className="w-5 h-5 shrink-0" />
-                      {state.message}
+                      {message}
                     </div>
                   )}
 
                   <button
                     type="submit"
-                    disabled={isPending}
+                    disabled={status === "loading"}
                     className="w-full btn-primary !py-4"
                   >
-                    {isPending ? (
+                    {status === "loading" ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
                         Envoi en cours...
