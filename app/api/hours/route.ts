@@ -9,6 +9,16 @@ const CACHE_TTL = 30 * 60;
 
 const DAY_NAMES = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
 
+const FALLBACK_HOURS = [
+  "dimanche: Fermé",
+  "lundi: 09:00 – 19:00",
+  "mardi: 09:00 – 19:00",
+  "mercredi: 09:00 – 19:00",
+  "jeudi: 09:00 – 19:00",
+  "vendredi: 09:00 – 19:00",
+  "samedi: 09:00 – 18:00",
+];
+
 function getFranceNow(): Date {
   const now = new Date();
   const fr = new Intl.DateTimeFormat("fr-FR", {
@@ -48,10 +58,6 @@ function computeIsOpen(descriptions: string[]): { isOpen: boolean; closingMinute
 }
 
 export async function GET() {
-  if (!API_KEY || !PLACE_ID) {
-    return NextResponse.json({ error: "Not configured" }, { status: 503 });
-  }
-
   const cached = await redisGet(CACHE_KEY);
   if (cached) {
     const parsed = JSON.parse(cached);
@@ -59,39 +65,47 @@ export async function GET() {
     return NextResponse.json(parsed);
   }
 
-  try {
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&key=${API_KEY}&language=fr&fields=opening_hours,business_status`;
-    const res = await fetch(url, { next: { revalidate: 1800 } });
-    const data = await res.json();
+  if (API_KEY && PLACE_ID) {
+    try {
+      const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?languageCode=fr&fields=regularOpeningHours,businessStatus`;
+      const res = await fetch(url, {
+        headers: { "X-Goog-Api-Key": API_KEY },
+        next: { revalidate: 1800 },
+      });
+      const data = await res.json();
 
-    if (!res.ok || data.status !== "OK") {
-      throw new Error(data.error_message ?? `Google API error: ${data.status}`);
+      if (res.ok && data.regularOpeningHours) {
+        const oh = data.regularOpeningHours;
+        const rawDescriptions: string[] = oh.weekdayDescriptions ?? [];
+        const { isOpen, closingMinutes } = computeIsOpen(rawDescriptions);
+
+        const result = {
+          isOpenNow: isOpen,
+          closingMinutes,
+          currentDay: rawDescriptions,
+          regularHours: rawDescriptions,
+          businessStatus: data.businessStatus ?? "OPERATIONAL",
+        };
+
+        await redisSet(CACHE_KEY, JSON.stringify(result), "EX", CACHE_TTL);
+        return NextResponse.json(result);
+      }
+      console.warn("Google Places v2 response:", JSON.stringify(data).slice(0, 300));
+    } catch (error) {
+      console.error("Google Hours API error:", error);
     }
-
-    const oh = data.result?.opening_hours ?? {};
-    const rawDescriptions = oh.weekday_text ?? [];
-    const { isOpen, closingMinutes } = computeIsOpen(rawDescriptions);
-
-    const result = {
-      isOpenNow: isOpen,
-      closingMinutes,
-      currentDay: rawDescriptions,
-      regularHours: rawDescriptions,
-      businessStatus: data.result?.business_status ?? "OPERATIONAL",
-    };
-
-    await redisSet(CACHE_KEY, JSON.stringify(result), "EX", CACHE_TTL);
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error("Google Hours API error:", error);
-
-    const stale = await redisGet(CACHE_KEY);
-    if (stale) {
-      const parsed = JSON.parse(stale);
-      parsed.isOpenNow = computeIsOpen(parsed.regularHours).isOpen;
-      return NextResponse.json(parsed);
-    }
-
-    return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
+
+  const { isOpen, closingMinutes } = computeIsOpen(FALLBACK_HOURS);
+  const fallbackResult = {
+    isOpenNow: isOpen,
+    closingMinutes,
+    currentDay: FALLBACK_HOURS,
+    regularHours: FALLBACK_HOURS,
+    businessStatus: "OPERATIONAL",
+    source: "fallback",
+  };
+
+  await redisSet(CACHE_KEY, JSON.stringify(fallbackResult), "EX", 300);
+  return NextResponse.json(fallbackResult);
 }
