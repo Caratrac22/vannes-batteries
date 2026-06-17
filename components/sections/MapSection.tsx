@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
+  APIProvider,
+  Map,
+  AdvancedMarker,
   InfoWindow,
-} from "@react-google-maps/api";
+} from "@vis.gl/react-google-maps";
 import { useI18n } from "@/lib/i18n/context";
 import {
   MapPin,
@@ -37,32 +37,11 @@ const DARK_MAP_STYLE = [
   { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#4e6d70" }] },
 ];
 
-const mapContainerStyle = { width: "100%", height: "100%" };
-
 export default function MapSection() {
   const { t } = useI18n();
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ?? "",
-  });
-
   const [showInfo, setShowInfo] = useState(false);
-  const [ directions, setDirections ] = useState<string | null>(null);
-  const [ loadingDir, setLoadingDir ] = useState(false);
-  const mapRef = useRef<google.maps.Map | null>(null);
-
-  useEffect(() => {
-    const original = console.warn;
-    console.warn = (...args: unknown[]) => {
-      const msg = typeof args[0] === "string" ? args[0] : "";
-      if (msg.includes("google.maps.Marker") && msg.includes("deprecated")) return;
-      original.apply(console, args);
-    };
-    return () => { console.warn = original; };
-  }, []);
-
-  const onMapLoad = useCallback((map: google.maps.Map) => {
-    mapRef.current = map;
-  }, []);
+  const [directions, setDirections] = useState<string | null>(null);
+  const [loadingDir, setLoadingDir] = useState(false);
 
   const getDirections = useCallback(() => {
     if (!navigator.geolocation) {
@@ -77,28 +56,10 @@ export default function MapSection() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        const directionsService = new google.maps.DirectionsService();
-        directionsService.route(
-          {
-            origin,
-            destination: CENTER,
-            travelMode: google.maps.TravelMode.DRIVING,
-          },
-          (result, status) => {
-            setLoadingDir(false);
-            if (status === "OK" && result?.routes[0]) {
-              const leg = result.routes[0].legs[0];
-              setDirections(`${leg.distance?.text} · ${leg.duration?.text}`);
-              mapRef.current?.panTo(origin);
-              mapRef.current?.setZoom(12);
-            } else {
-              window.open(
-                `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${CENTER.lat},${CENTER.lng}`,
-                "_blank"
-              );
-            }
-          }
-        );
+        const destination = CENTER;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}`;
+        window.open(url, "_blank");
+        setLoadingDir(false);
       },
       () => {
         setLoadingDir(false);
@@ -110,16 +71,6 @@ export default function MapSection() {
       { enableHighAccuracy: true, timeout: 5000 }
     );
   }, []);
-
-  if (loadError) {
-    return (
-      <section className="bg-dark-950 py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 text-center text-muted">
-          <p>Erreur de chargement de la carte.</p>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="bg-dark-950 py-20 md:py-28 relative overflow-hidden">
@@ -153,41 +104,35 @@ export default function MapSection() {
           viewport={{ once: true }}
           className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/30"
         >
-          {/* Map */}
           <div className="relative w-full h-[350px] sm:h-[400px] md:h-[480px]">
-            {isLoaded ? (
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                center={CENTER}
-                zoom={16}
-                onLoad={onMapLoad}
-                options={{
-                  styles: DARK_MAP_STYLE,
-                  disableDefaultUI: true,
-                  zoomControl: true,
-                  mapTypeControl: false,
-                  streetViewControl: false,
-                  fullscreenControl: true,
-                  gestureHandling: "greedy",
-                }}
+            <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ?? ""}>
+              <Map
+                defaultCenter={CENTER}
+                defaultZoom={16}
+                mapId="vannes-batteries-dark"
+                styles={DARK_MAP_STYLE}
+                disableDefaultUI
+                zoomControl
+                gestureHandling="greedy"
+                className="w-full h-full"
               >
-                <Marker
+                <AdvancedMarker
                   position={CENTER}
                   onClick={() => setShowInfo(true)}
-                  icon={{
-                    url: "/media/LOGO 56 et miniature.jpg",
-                    scaledSize: new google.maps.Size(48, 48),
-                    anchor: new google.maps.Point(24, 24),
-                  }}
-                />
+                >
+                  <div className="w-12 h-12 -ml-6 -mt-6 cursor-pointer">
+                    <img
+                      src="/media/LOGO 56 et miniature.jpg"
+                      alt="Vannes Batteries"
+                      className="w-full h-full object-contain rounded-full border-2 border-white shadow-lg"
+                    />
+                  </div>
+                </AdvancedMarker>
 
                 {showInfo && (
                   <InfoWindow
                     position={CENTER}
                     onCloseClick={() => setShowInfo(false)}
-                    options={{
-                      pixelOffset: new google.maps.Size(0, -24),
-                    }}
                   >
                     <div className="bg-dark-950 text-white p-4 rounded-xl min-w-[220px] font-sans">
                       <p className="font-bold text-base mb-1">VANNES BATTERIES</p>
@@ -217,17 +162,11 @@ export default function MapSection() {
                     </div>
                   </InfoWindow>
                 )}
-              </GoogleMap>
-            ) : (
-              <div className="absolute inset-0 bg-dark-900 flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-orange animate-spin" />
-              </div>
-            )}
+              </Map>
+            </APIProvider>
 
-            {/* Overlays */}
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-dark-950/60 via-transparent to-dark-950/10" />
 
-            {/* Address badge */}
             <div className="absolute top-4 left-4 md:top-6 md:left-6 pointer-events-auto">
               <div className="px-3 py-1.5 bg-dark-950/70 backdrop-blur-md border border-white/10 rounded-full text-xs text-white/80 flex items-center gap-1.5">
                 <MapPin className="w-3 h-3 text-orange" />
@@ -236,7 +175,6 @@ export default function MapSection() {
             </div>
           </div>
 
-          {/* Bottom bar */}
           <div className="relative bg-dark-950/90 backdrop-blur-md border-t border-white/5 px-4 md:px-8 py-4 md:py-5">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
