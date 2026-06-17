@@ -1,13 +1,19 @@
 import { NextResponse } from "next/server";
 import { redisGet, redisSet } from "@/lib/redis";
+import { rateLimit } from "@/lib/rateLimit";
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
 
 const CACHE_KEY = "vb:reviews";
-const CACHE_TTL = 60 * 60; // 1h in seconds
+const CACHE_TTL = 60 * 60;
 
 export async function GET() {
+  const rl = await rateLimit("reviews", 30, 60);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
   if (!API_KEY || !PLACE_ID) {
     return NextResponse.json(
       { error: "Google Places API not configured" },

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { redisGet, redisSet } from "@/lib/redis";
+import { rateLimit } from "@/lib/rateLimit";
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
@@ -58,6 +59,11 @@ function computeIsOpen(descriptions: string[]): { isOpen: boolean; closingMinute
 }
 
 export async function GET() {
+  const rl = await rateLimit("hours", 60, 60);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
   const cached = await redisGet(CACHE_KEY);
   if (cached) {
     const parsed = JSON.parse(cached);
