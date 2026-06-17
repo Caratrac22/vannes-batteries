@@ -66,6 +66,8 @@ const config: Config = {
         "bounce-y": "bounce-y 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
         "shimmer": "shimmer 2s linear infinite",
+        "fade-in-up": "fade-in-up 0.6s ease-out both",
+        "scale-in": "scale-in 0.4s ease-out both",
       },
       keyframes: {
         "pulse-glow": {
@@ -88,6 +90,14 @@ const config: Config = {
         "shimmer": {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.9)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
         },
       },
       backgroundImage: {

@@ -1,64 +1,16 @@
-// ============================================================
-// VANNES BATTERIES — Contact Page (/contact)
-// ============================================================
-
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useActionState } from "react";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ShopStatus from "@/components/ui/ShopStatus";
 import MapSection from "@/components/sections/MapSection";
-import { fadeInUp } from "@/lib/animations";
+import { submitContactForm, type FormState } from "./actions";
 
-const WEB3FORMS_KEY = "059c28d6-4dc0-4cb5-ab89-0454b9048faa";
+const initialState: FormState = { status: "idle", message: "" };
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormState("loading");
-    setErrorMessage("");
-
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      access_key: WEB3FORMS_KEY,
-      subject: `Nouveau message - VANNES BATTERIES: ${formData.get("objet")}`,
-      from_name: `${formData.get("prenom")} ${formData.get("nom")}`,
-      name: `${formData.get("prenom")} ${formData.get("nom")}`,
-      email: formData.get("email"),
-      replyto: formData.get("email"),
-      telephone: formData.get("telephone") || "Non renseigné",
-      message: `Prénom : ${formData.get("prenom")}\nNom : ${formData.get("nom")}\nEmail : ${formData.get("email")}\nTéléphone : ${formData.get("telephone") || "Non renseigné"}\nObjet : ${formData.get("objet")}\n\n${formData.get("message")}`,
-    };
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setFormState("success");
-        (e.target as HTMLFormElement).reset();
-      } else {
-        setErrorMessage(result.message || "Une erreur est survenue.");
-        setFormState("error");
-      }
-    } catch {
-      setErrorMessage("Impossible de se connecter au serveur.");
-      setFormState("error");
-    }
-  };
+  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
 
   return (
     <>
@@ -83,13 +35,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
             
             {/* ── Left Column: Contact Info ─────────────────── */}
-            <motion.div
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="space-y-12"
-            >
+            <div className="space-y-12 animate-fade-in-up">
               {/* Address */}
               <div>
                 <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
@@ -169,28 +115,21 @@ export default function ContactPage() {
                 <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-dark-950 mb-4">
                   Suivez-nous
                 </h3>
-                {/* SocialLinks defaults to white text. We override text color for light mode via a wrapper class */}
                 <div className="text-dark-700 [&>div>a]:bg-gray-100 [&>div>a]:border-gray-200 [&>div>a]:text-dark-700">
                   <SocialLinks />
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* ── Right Column: Form ────────────────────────── */}
-            <motion.div
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-            >
+            {/* ── Right Column: Form (Server Action) ────────── */}
+            <div className="animate-fade-in-up">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
                 <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-dark-950 mb-8">
                   Envoyez-nous un message
                 </h3>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form action={formAction} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Floating Label Input pattern */}
                     <div className="relative group">
                       <input type="text" name="prenom" id="prenom" required
                         className="block w-full px-4 py-3 pt-6 text-sm text-dark-950 bg-gray-50 border border-gray-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
@@ -229,9 +168,9 @@ export default function ContactPage() {
                   </div>
 
                   <div className="relative">
-                    <select name="objet" id="objet" required
+                    <select name="objet" id="objet" required defaultValue=""
                       className="block w-full px-4 py-3 text-sm text-dark-950 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange transition-all">
-                      <option value="" disabled selected>Objet de votre demande *</option>
+                      <option value="" disabled>Objet de votre demande *</option>
                       <option value="Demande de devis">Demande de devis</option>
                       <option value="Renseignements produit">Renseignements produit</option>
                       <option value="Demande de devis professionnel">Demande de devis professionnel</option>
@@ -257,25 +196,25 @@ export default function ContactPage() {
                   </div>
 
                   {/* Form Status Messages */}
-                  {formState === "success" && (
+                  {state.status === "success" && (
                     <div className="p-4 bg-green-50 text-green-700 rounded-xl flex items-center gap-3 text-sm">
                       <CheckCircle2 className="w-5 h-5 shrink-0" />
-                      Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
+                      {state.message}
                     </div>
                   )}
-                  {formState === "error" && (
+                  {state.status === "error" && (
                     <div className="p-4 bg-red-50 text-red-700 rounded-xl flex items-center gap-3 text-sm">
                       <AlertCircle className="w-5 h-5 shrink-0" />
-                      {errorMessage}
+                      {state.message}
                     </div>
                   )}
 
                   <button
                     type="submit"
-                    disabled={formState === "loading"}
+                    disabled={isPending}
                     className="w-full btn-primary !py-4"
                   >
-                    {formState === "loading" ? (
+                    {isPending ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
                         Envoi en cours...
@@ -289,7 +228,7 @@ export default function ContactPage() {
                   </button>
                 </form>
               </div>
-            </motion.div>
+            </div>
 
           </div>
         </div>

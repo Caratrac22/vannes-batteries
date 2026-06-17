@@ -1,12 +1,3 @@
-// ============================================================
-// VANNES BATTERIES — SocialLinks component
-// Reusable social media links with SVG icons
-// ============================================================
-
-"use client";
-
-import { motion } from "framer-motion";
-
 const socialLinks = [
   {
     name: "Facebook",
@@ -58,7 +49,7 @@ export default function SocialLinks({
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {socialLinks.map((social) => (
-        <motion.a
+        <a
           key={social.name}
           href={social.href}
           target="_blank"
@@ -67,12 +58,12 @@ export default function SocialLinks({
           className={`${iconSize} flex items-center justify-center rounded-full
                      bg-white/5 border border-white/10
                      text-muted hover:text-orange hover:border-orange/50
-                     hover:bg-orange/10 transition-all duration-300`}
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          whileTap={{ scale: 0.95 }}
+                     hover:bg-orange/10 hover:scale-110 hover:rotate-3
+                     active:scale-95
+                     transition-all duration-300`}
         >
           {social.icon}
-        </motion.a>
+        </a>
       ))}
     </div>
   );
