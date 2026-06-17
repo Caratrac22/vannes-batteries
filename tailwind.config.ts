@@ -68,6 +68,7 @@ const config: Config = {
         "shimmer": "shimmer 2s linear infinite",
         "fade-in-up": "fade-in-up 0.6s ease-out both",
         "scale-in": "scale-in 0.4s ease-out both",
+        "neon-pulse": "neon-pulse 3s ease-in-out infinite",
       },
       keyframes: {
         "pulse-glow": {
@@ -98,6 +99,10 @@ const config: Config = {
         "scale-in": {
           "0%": { opacity: "0", transform: "scale(0.9)" },
           "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "neon-pulse": {
+          "0%, 100%": { textShadow: "0 0 4px rgba(0,210,255,0.6), 0 0 12px rgba(0,210,255,0.3)" },
+          "50%": { textShadow: "0 0 8px rgba(0,210,255,0.9), 0 0 24px rgba(0,210,255,0.5), 0 0 40px rgba(0,210,255,0.2)" },
         },
       },
       backgroundImage: {
