@@ -13,32 +13,47 @@ export async function GET() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0B132B 0%, #1E3A8A 50%, #1E40AF 100%)",
+          background: "linear-gradient(135deg, #0B132B 0%, #0D1B3E 40%, #112247 100%)",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        {/* Glow circle behind text */}
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "600px",
+            height: "300px",
+            borderRadius: "50%",
+            background: "radial-gradient(ellipse, rgba(0,210,255,0.12) 0%, transparent 70%)",
+            filter: "blur(40px)",
+          }}
+        />
+
         {/* Decorative circles */}
         <div
           style={{
             position: "absolute",
-            top: "-80px",
-            right: "-80px",
+            top: "-100px",
+            right: "-100px",
             width: "400px",
             height: "400px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(220,38,38,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,210,255,0.08) 0%, transparent 70%)",
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: "-120px",
-            left: "-60px",
+            bottom: "-140px",
+            left: "-80px",
             width: "500px",
             height: "500px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,210,255,0.06) 0%, transparent 70%)",
           }}
         />
 
@@ -47,7 +62,7 @@ export async function GET() {
           style={{
             display: "flex",
             alignItems: "center",
-            marginBottom: "24px",
+            marginBottom: "28px",
             zIndex: 1,
           }}
         >
@@ -61,14 +76,16 @@ export async function GET() {
               display: "flex",
               alignItems: "center",
               padding: "4px",
+              boxShadow: "0 0 16px rgba(0,210,255,0.4)",
             }}
           >
             <div
               style={{
                 width: "70%",
                 height: "100%",
-                background: "linear-gradient(90deg, #DC2626, #EF4444)",
+                background: "linear-gradient(90deg, #00D2FF, #38bdf8)",
                 borderRadius: "2px",
+                boxShadow: "0 0 10px rgba(0,210,255,0.6)",
               }}
             />
             <div
@@ -98,9 +115,10 @@ export async function GET() {
               fontSize: "72px",
               fontWeight: "800",
               fontFamily: "sans-serif",
-              letterSpacing: "-1px",
+              fontStyle: "italic",
+              letterSpacing: "2px",
               color: "white",
-              textShadow: "0 4px 30px rgba(0,0,0,0.4)",
+              textShadow: "0 0 8px rgba(0,210,255,0.7), 0 0 20px rgba(0,210,255,0.4), 0 0 40px rgba(0,210,255,0.15)",
               lineHeight: "1",
             }}
           >
@@ -108,13 +126,14 @@ export async function GET() {
           </div>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "22px",
               fontWeight: "600",
               fontFamily: "sans-serif",
-              color: "rgba(255,255,255,0.7)",
-              marginTop: "16px",
-              letterSpacing: "6px",
+              color: "rgba(0,210,255,0.8)",
+              marginTop: "18px",
+              letterSpacing: "8px",
               textTransform: "uppercase",
+              textShadow: "0 0 10px rgba(0,210,255,0.3)",
             }}
           >
             Spécialiste Batterie à Vannes
@@ -136,7 +155,7 @@ export async function GET() {
             style={{
               fontSize: "18px",
               fontFamily: "sans-serif",
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             +300 modèles en stock
@@ -146,14 +165,14 @@ export async function GET() {
               width: "4px",
               height: "4px",
               borderRadius: "50%",
-              background: "rgba(220,38,38,0.8)",
+              background: "rgba(0,210,255,0.6)",
             }}
           />
           <div
             style={{
               fontSize: "18px",
               fontFamily: "sans-serif",
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             Pose en magasin
@@ -163,21 +182,21 @@ export async function GET() {
               width: "4px",
               height: "4px",
               borderRadius: "50%",
-              background: "rgba(220,38,38,0.8)",
+              background: "rgba(0,210,255,0.6)",
             }}
           />
           <div
             style={{
               fontSize: "18px",
               fontFamily: "sans-serif",
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             02 97 49 20 19
           </div>
         </div>
 
-        {/* Red accent line */}
+        {/* Neon blue accent line */}
         <div
           style={{
             position: "absolute",
@@ -185,7 +204,8 @@ export async function GET() {
             left: "0",
             right: "0",
             height: "4px",
-            background: "linear-gradient(90deg, #DC2626, #EF4444, #DC2626)",
+            background: "linear-gradient(90deg, transparent, #00D2FF, transparent)",
+            boxShadow: "0 0 12px rgba(0,210,255,0.5)",
           }}
         />
       </div>
