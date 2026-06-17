@@ -35,19 +35,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16">
           {/* ── Col 1: Brand ──────────────────────────────── */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4" aria-label="Accueil">
-              <span className="w-10 h-10 shrink-0 relative">
-                <Image
-                  src="/media/LOGO 56 et miniature.jpg"
-                  alt="Logo Vannes Batteries"
-                  fill
-                  sizes="40px"
-                  className="object-contain rounded"
-                />
-              </span>
-              <span className="font-rajdhani text-xl tracking-tight">
-                <span className="font-normal text-blue-400">VANNES</span>{" "}
-                <span className="font-bold text-orange">BATTERIES</span>
+            <Link href="/" className="mb-4" aria-label="Accueil">
+              <span className="font-rajdhani font-bold text-xl tracking-wider text-white italic">
+                VANNES BATTERIES
               </span>
             </Link>
             <p className="font-rajdhani font-semibold text-orange text-sm uppercase tracking-wider mb-3">

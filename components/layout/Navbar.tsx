@@ -81,23 +81,9 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* ── Logo ────────────────────────────────────── */}
-          <Link href="/" className="flex items-center gap-2 group" aria-label="Accueil VANNES BATTERIES">
-            <motion.span
-              className="w-8 h-8 shrink-0 relative"
-              whileHover={{ rotate: 5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 10 }}
-            >
-              <Image
-                src="/media/LOGO 56 et miniature.jpg"
-                alt="Logo Vannes Batteries"
-                fill
-                sizes="32px"
-                className="object-contain rounded"
-              />
-            </motion.span>
-            <span className="font-rajdhani text-lg md:text-xl tracking-tight">
-              <span className="font-normal text-blue-400 group-hover:text-blue-300 transition-colors">VANNES</span>{" "}
-              <span className="font-bold text-orange group-hover:text-red-400 transition-colors">BATTERIES</span>
+          <Link href="/" className="flex items-center group" aria-label="Accueil VANNES BATTERIES">
+            <span className="font-rajdhani font-bold text-xl md:text-2xl tracking-wider text-white italic group-hover:opacity-80 transition-opacity whitespace-nowrap">
+              VANNES BATTERIES
             </span>
           </Link>
 
