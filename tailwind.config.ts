@@ -101,8 +101,8 @@ const config: Config = {
           "100%": { opacity: "1", transform: "scale(1)" },
         },
         "neon-pulse": {
-          "0%, 100%": { textShadow: "0 0 4px rgba(0,210,255,0.6), 0 0 12px rgba(0,210,255,0.3)" },
-          "50%": { textShadow: "0 0 8px rgba(0,210,255,0.9), 0 0 24px rgba(0,210,255,0.5), 0 0 40px rgba(0,210,255,0.2)" },
+          "0%, 100%": { textShadow: "0 0 4px rgba(0,210,255,0.5), 0 0 10px rgba(0,210,255,0.3)" },
+          "50%": { textShadow: "0 0 8px rgba(0,210,255,0.9), 0 0 20px rgba(0,210,255,0.5), 0 0 36px rgba(0,210,255,0.2)" },
         },
       },
       backgroundImage: {

@@ -82,7 +82,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* ── Logo ────────────────────────────────────── */}
           <Link href="/" className="flex items-center group" aria-label="Accueil VANNES BATTERIES">
-            <span className="font-rajdhani font-bold text-xl md:text-2xl tracking-wider italic whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-[#00D2FF] to-cyan-400 drop-shadow-[0_0_8px_rgba(0,210,255,0.6)] group-hover:drop-shadow-[0_0_14px_rgba(0,210,255,0.9)] transition-all duration-300 animate-neon-pulse">
+            <span className="font-rajdhani font-bold text-xl md:text-2xl tracking-wider italic whitespace-nowrap text-white drop-shadow-[0_0_6px_rgba(0,210,255,0.7)] group-hover:drop-shadow-[0_0_14px_rgba(0,210,255,1)] transition-all duration-300 animate-neon-pulse">
               VANNES BATTERIES
             </span>
           </Link>
