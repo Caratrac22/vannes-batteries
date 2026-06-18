@@ -29,11 +29,9 @@ export default function FerrariShowcase() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center brightness-110"
+          className="object-cover object-center brightness-150"
         />
       </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-dark-950 to-transparent" />
     </section>
   );
 }
