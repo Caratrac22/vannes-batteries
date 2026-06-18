@@ -7,7 +7,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Phone, Menu, X, Globe } from "lucide-react";
@@ -74,13 +73,13 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
     >
       <nav
-        className="max-w-7xl mx-auto pr-4 sm:pr-6 lg:pr-8"
+        className="max-w-7xl mx-auto pl-3 sm:pl-5 lg:pl-6 pr-4 sm:pr-6 lg:pr-8"
         aria-label="Navigation principale"
       >
         <div className="flex items-center justify-between h-18 md:h-22">
           {/* ── Logo ────────────────────────────────────── */}
           <Link href="/" className="flex items-center group" aria-label="Accueil VANNES BATTERIES">
-            <span className="font-rajdhani font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider italic whitespace-nowrap text-white drop-shadow-[0_0_8px_rgba(0,210,255,0.8)] group-hover:drop-shadow-[0_0_18px_rgba(0,210,255,1)] transition-all duration-300 animate-neon-pulse">
+            <span className="font-rajdhani font-bold text-3xl md:text-4xl lg:text-5xl tracking-wider italic whitespace-nowrap text-white drop-shadow-[0_0_8px_rgba(0,210,255,0.8)] group-hover:drop-shadow-[0_0_18px_rgba(0,210,255,1)] transition-all duration-300 animate-neon-pulse">
               VANNES BATTERIES
             </span>
           </Link>
