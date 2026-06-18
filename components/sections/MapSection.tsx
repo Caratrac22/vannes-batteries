@@ -110,7 +110,6 @@ export default function MapSection() {
                 defaultCenter={CENTER}
                 defaultZoom={16}
                 mapId="vannes-batteries-dark"
-                styles={DARK_MAP_STYLE}
                 disableDefaultUI
                 zoomControl
                 gestureHandling="greedy"
