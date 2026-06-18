@@ -12,39 +12,53 @@ interface YouTubeEmbedProps {
 declare global {
   interface Window {
     onYouTubeIframeAPIReady?: () => void;
-    YT?: { Player: new (id: string, opts: Record<string, unknown>) => { playVideo: () => void; destroy: () => void } };
+    YT?: {
+      Player: new (
+        id: string,
+        opts: Record<string, unknown>
+      ) => { playVideo: () => void; destroy: () => void };
+    };
   }
 }
 
-export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
+export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEmbedProps) {
   const [loaded, setLoaded] = useState(false);
+  const [videoTitle, setVideoTitle] = useState(defaultTitle || "");
   const containerRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<{ playVideo: () => void; destroy: () => void } | null>(null);
 
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   useEffect(() => {
+    fetch(`/api/youtube/info?id=${videoId}`)
+      .then((r) => r.json())
+      .then((d) => { if (d.title) setVideoTitle(d.title); })
+      .catch(() => {});
+  }, [videoId]);
+
+  useEffect(() => {
     if (!loaded) return;
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScript = document.getElementsByTagName("script")[0];
-    firstScript?.parentNode?.insertBefore(tag, firstScript);
-    let player: { playVideo: () => void; destroy: () => void };
-    window.onYouTubeIframeAPIReady = () => {
-      player = new window.YT!.Player(`youtube-player-${videoId}`, {
+
+    function createPlayer() {
+      playerRef.current = new window.YT!.Player(`youtube-player-${videoId}`, {
         videoId,
-        playerVars: {
-          autoplay: 1,
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-        },
-        events: {
-          onReady: () => player.playVideo(),
-        },
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+        events: { onReady: () => playerRef.current?.playVideo() },
       }) as unknown as { playVideo: () => void; destroy: () => void };
-    };
+    }
+
+    if (window.YT?.Player) {
+      createPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = createPlayer;
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
+
     return () => {
-      player?.destroy();
+      playerRef.current?.destroy();
+      playerRef.current = null;
     };
   }, [loaded, videoId]);
 
@@ -72,7 +86,7 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
             >
               <img
                 src={thumbnailUrl}
-                alt={title || "Vidéo VANNES BATTERIES"}
+                alt={videoTitle || "Vidéo VANNES BATTERIES"}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950/70 via-dark-950/20 to-transparent" />
@@ -104,9 +118,9 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
           )}
         </AnimatePresence>
       </div>
-      {title && (
+      {videoTitle && (
         <div className="px-4 py-3 bg-dark-800/80 backdrop-blur-sm border-t border-white/5">
-          <p className="text-sm text-white/60 font-medium truncate">{title}</p>
+          <p className="text-sm text-white/60 font-medium truncate">{videoTitle}</p>
         </div>
       )}
     </motion.div>
