@@ -64,7 +64,6 @@ export default function Stats() {
   const stats = [
     { value: 300, suffix: "+", label: t.stats.stock.label, sublabel: t.stats.stock.sub },
     { value: 180, suffix: "", label: t.stats.moto.label, sublabel: t.stats.moto.sub },
-    { value: 95, suffix: "%", label: t.stats.reviews.label, sublabel: t.stats.reviews.sub },
     { value: 0, suffix: "", label: t.stats.wait.label, sublabel: t.stats.wait.sub },
   ];
 
@@ -97,7 +96,7 @@ export default function Stats() {
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
         className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6
-                   grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0
+                   grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-0
                    md:divide-x md:divide-white/20"
       >
         {stats.map((stat) => (

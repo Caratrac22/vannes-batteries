@@ -25,7 +25,6 @@ export default function Footer() {
     { name: t.nav.batteries || "Nos batteries", href: "/#batteries" },
     { name: t.nav.services, href: "/services" },
     { name: t.nav.about, href: "/a-propos" },
-    { name: "Avis", href: "/#avis" },
     { name: t.nav.contact, href: "/contact" },
   ];
 

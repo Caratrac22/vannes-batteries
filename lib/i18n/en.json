@@ -9,7 +9,6 @@
     "services": "Services",
     "about": "About",
     "contact": "Contact",
-    "reviews": "Reviews",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "skipToContent": "Skip to main content"
@@ -45,7 +44,6 @@
   "stats": {
     "stock": { "value": "300+", "label": "Models", "sub": "in stock" },
     "moto": { "value": "180", "label": "Moto refs", "sub": "all sizes" },
-    "reviews": { "value": "95%", "label": "Reviews", "sub": "5 stars" },
     "wait": { "value": "0", "label": "Wait", "sub": "leave same day" }
   },
   "services": {
@@ -79,12 +77,6 @@
     "address": "19 rue Denis Papin, Z.A. de Kerniol",
     "addressFull": "19 rue Denis Papin · 56000 Vannes",
     "directions": "Get directions"
-  },
-  "reviews": {
-    "badge": "Google Reviews",
-    "title": "What our customers say",
-    "rating": "out of 5",
-    "reviews_lower": "reviews"
   },
   "contact": {
     "badge": "Contact us",

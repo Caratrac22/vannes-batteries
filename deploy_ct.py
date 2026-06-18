@@ -7,7 +7,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='repla
 
 def run_pct(node, ctid, cmd):
     pct_cmd = f"pct exec {ctid} -- bash -c \"{cmd}\""
-    stdin, stdout, stderr = node.exec_command(pct_cmd, timeout=300)
+    stdin, stdout, stderr = node.exec_command(pct_cmd, timeout=600)
     return stdout.read().decode('utf-8', errors='replace'), stderr.read().decode('utf-8', errors='replace')
 
 node = paramiko.SSHClient()
@@ -15,8 +15,9 @@ node.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 node.connect('100.70.136.90', username='root', password='alex', timeout=15)
 
 steps = [
-    ('PULL', 'cd /opt/vannes-batteries && git pull origin master'),
-    ('BUILD', 'cd /opt/vannes-batteries && npm run build 2>&1 | tail -5'),
+    ('RESET', 'cd /opt/vannes-batteries && git fetch origin && git reset --hard origin/master && git clean -fd'),
+    ('INSTALL', 'cd /opt/vannes-batteries && npm install 2>&1 | tail -5'),
+    ('BUILD', 'cd /opt/vannes-batteries && npm run build 2>&1 | tail -8'),
     ('RESTART', 'cd /opt/vannes-batteries && pm2 restart vannes-batteries && pm2 save'),
 ]
 

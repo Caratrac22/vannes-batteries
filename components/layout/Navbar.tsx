@@ -24,7 +24,6 @@ const navLinks = [
   { name: "Nos Batteries", href: "/#batteries", key: "nav.batteries" },
   { name: "Services", href: "/services", key: "nav.services" },
   { name: "À Propos", href: "/a-propos", key: "nav.about" },
-  { name: "Avis", href: "/#avis", key: "nav.reviews" },
   { name: "Contact", href: "/contact", key: "nav.contact" },
 ];
 
@@ -39,7 +38,6 @@ export default function Navbar() {
     { name: t.nav.batteries || "Nos Batteries", href: "/#batteries" },
     { name: t.nav.services, href: "/services" },
     { name: t.nav.about, href: "/a-propos" },
-    { name: "Avis", href: "/#avis" },
     { name: t.nav.contact, href: "/contact" },
   ];
 
