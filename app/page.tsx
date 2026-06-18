@@ -7,6 +7,7 @@ import Services from "@/components/sections/Services";
 import WhyUs from "@/components/sections/WhyUs";
 import ContactSection from "@/components/sections/ContactSection";
 import LazySections from "@/components/LazySections";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
 export const metadata = generatePageMetadata({
   title: "VANNES BATTERIES 02.97.49.20.19 | Vannes, France",
@@ -20,6 +21,11 @@ export default function Home() {
     <>
       <FerrariShowcase />
       <Hero />
+      <section className="relative bg-dark-950 py-14 md:py-20 overflow-hidden">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YouTubeEmbed videoId="kbaoiROYaB4" title="VANNES BATTERIES — Qui sommes-nous ?" />
+        </div>
+      </section>
       <BatteryCategories />
       <Stats />
       <Services />

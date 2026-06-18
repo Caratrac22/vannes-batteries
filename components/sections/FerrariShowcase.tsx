@@ -31,8 +31,8 @@ export default function FerrariShowcase() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950/40 via-transparent to-dark-950/80" />
+        {/* Light gradient overlay (client wanted brighter) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-950/10 via-transparent to-dark-950/40" />
       </motion.div>
 
       {/* Bottom gradient fade into next section */}
