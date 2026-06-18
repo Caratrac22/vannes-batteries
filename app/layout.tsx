@@ -120,7 +120,7 @@ export default function RootLayout({
             Aller au contenu principal
           </a>
           <Navbar />
-          <main id="main-content" className="pt-18 md:pt-22">{children}</main>
+          <main id="main-content">{children}</main>
           <Footer />
           <ScrollToTop />
         </I18nProvider>

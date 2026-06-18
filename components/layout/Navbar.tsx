@@ -70,7 +70,7 @@ export default function Navbar() {
       variants={navbarVariants}
       animate={scrolled ? "scrolled" : "top"}
       transition={{ duration: 0.3 }}
-      className="fixed top-0 left-0 right-0 z-50"
+      className="relative"
     >
       <nav
         className="px-1 sm:px-1.5 lg:px-2"
