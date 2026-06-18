@@ -12,12 +12,12 @@ const DAY_NAMES = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi"
 
 const FALLBACK_HOURS = [
   "dimanche: Fermé",
-  "lundi: 09:00 – 19:00",
-  "mardi: 09:00 – 19:00",
-  "mercredi: 09:00 – 19:00",
-  "jeudi: 09:00 – 19:00",
-  "vendredi: 09:00 – 19:00",
-  "samedi: 09:00 – 18:00",
+  "lundi: 08:30 – 12:00, 14:00 – 18:30",
+  "mardi: 08:30 – 12:00, 14:00 – 18:30",
+  "mercredi: 08:30 – 12:00, 14:00 – 18:30",
+  "jeudi: 08:30 – 12:00, 14:00 – 18:30",
+  "vendredi: 08:30 – 12:00, 14:00 – 18:30",
+  "samedi: 09:00 – 12:00",
 ];
 
 function getFranceNow(): Date {

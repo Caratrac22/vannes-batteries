@@ -25,6 +25,43 @@ const FALLBACK_HOURS: Record<number, { morning: [string, string]; afternoon?: [s
   6: { morning: ["09:00", "12:00"] },
 };
 
+function getFranceNow(): Date {
+  const now = new Date();
+  const fr = new Intl.DateTimeFormat("fr-FR", {
+    timeZone: "Europe/Paris",
+    year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", minute: "numeric", second: "numeric",
+    hour12: false,
+  }).formatToParts(now);
+  const get = (t: string) => parseInt(fr.find((p) => p.type === t)?.value ?? "0", 10);
+  return new Date(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"), get("second"));
+}
+
+function computeIsOpenNow(descriptions: string[]): boolean {
+  const now = getFranceNow();
+  const day = now.getDay();
+  const currentMin = now.getHours() * 60 + now.getMinutes();
+  const DAY_NAMES = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const dayLabel = DAY_NAMES[day];
+
+  const desc = descriptions.find((d) => d.toLowerCase().startsWith(dayLabel));
+  if (!desc || desc.toLowerCase().includes("fermé")) return false;
+
+  const hours = desc.replace(/^[^:]+:\s*/, "").trim();
+  const periods = hours.split(/,\s*/);
+
+  for (const period of periods) {
+    const match = period.match(/(\d{1,2}:\d{2})\s*[\u2013\u2014\-–]\s*(\d{1,2}:\d{2})/);
+    if (!match) continue;
+    const [sh, sm] = match[1].split(":").map(Number);
+    const [eh, em] = match[2].split(":").map(Number);
+    const start = sh * 60 + sm;
+    const end = eh * 60 + em;
+    if (currentMin >= start && currentMin < end) return true;
+  }
+  return false;
+}
+
 function getFrenchHolidays(year: number): Date[] {
   const easter = getEasterDate(year);
   return [
@@ -49,7 +86,7 @@ function getEasterDate(year: number): Date {
 }
 
 function isHolidayToday(): boolean {
-  const now = new Date();
+  const now = getFranceNow();
   const holidays = getFrenchHolidays(now.getFullYear());
   return holidays.some(
     (h) => h.getDate() === now.getDate() && h.getMonth() === now.getMonth() && h.getFullYear() === now.getFullYear()
@@ -73,7 +110,7 @@ function parseGoogleHours(descriptions: string[]): Record<number, string> {
 }
 
 function getClosingMinutes(regularHours: Record<number, string>): number | null {
-  const now = new Date();
+  const now = getFranceNow();
   const today = now.getDay();
   const currentMin = now.getHours() * 60 + now.getMinutes();
   const hours = regularHours[today];
@@ -95,7 +132,7 @@ function getClosingMinutes(regularHours: Record<number, string>): number | null 
 }
 
 function getNextOpenTimeInfo(regularHours: Record<number, string>, dayNames: string[]): { opensAt?: string; day?: string } | null {
-  const now = new Date();
+  const now = getFranceNow();
   const currentMin = now.getHours() * 60 + now.getMinutes();
   const today = now.getDay();
 
@@ -150,7 +187,7 @@ function getStatusFromGoogle(data: HoursData): { status: Status; isHoliday: bool
 }
 
 function getFallbackStatus(): { status: Status; closingMinutes?: number; nextOpen: { opensAt?: string; day?: string } | null } {
-  const now = new Date();
+  const now = getFranceNow();
   const today = now.getDay();
   const currentMin = now.getHours() * 60 + now.getMinutes();
 
@@ -227,12 +264,13 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
         try {
           const parsed = JSON.parse(saved);
           if (Date.now() - parsed.ts < 30 * 60 * 1000) {
-            const result = getStatusFromGoogle(parsed.data);
+            const data = { ...parsed.data, isOpenNow: computeIsOpenNow(parsed.data.regularHours) };
+            const result = getStatusFromGoogle(data);
             setStatus(result.status);
             setIsHoliday(result.isHoliday);
             setMessage(formatMessage(result.status, result.closingMinutes, result.nextOpen, result.isHoliday));
             setReopens(formatReopens(result.nextOpen));
-            setGoogleHours(parseGoogleHours(parsed.data.regularHours));
+            setGoogleHours(parseGoogleHours(data.regularHours));
             return;
           }
         } catch {}
@@ -282,7 +320,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
 
   const formatDay = (hours: string): string => {
     if (hours === "Fermé" || !hours) return ts.closedShort;
-    return hours.replace(" – ", "–").replace(" – ", "–");
+    return hours.replace(/[\s\u2009]+[\u2013\u2014\-][\s\u2009]+/g, "–");
   };
 
   const badge = (
