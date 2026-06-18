@@ -29,9 +29,22 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [ferrariPast, setFerrariPast] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const { t, locale, toggleLocale } = useI18n();
+
+  // Detect when the Ferrari section is scrolled past
+  useEffect(() => {
+    const el = document.querySelector('[aria-label="Véhicule d\'exception"]');
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setFerrariPast(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const translatedLinks = [
     { name: t.nav.batteries || "Nos Batteries", href: "/#batteries" },
@@ -66,12 +79,14 @@ export default function Navbar() {
   };
 
   return (
-    <motion.header
-      variants={navbarVariants}
-      animate={scrolled ? "scrolled" : "top"}
-      transition={{ duration: 0.3 }}
-      className="relative"
-    >
+    <>
+      {ferrariPast && <div className="h-18 md:h-22" />}
+      <motion.header
+        variants={navbarVariants}
+        animate={scrolled ? "scrolled" : "top"}
+        transition={{ duration: 0.3 }}
+        className={ferrariPast ? "fixed top-0 left-0 right-0 z-50" : "relative"}
+      >
       <nav
         className="px-1 sm:px-1.5 lg:px-2"
         aria-label="Navigation principale"
@@ -232,5 +247,6 @@ export default function Navbar() {
         </AnimatePresence>
       </nav>
     </motion.header>
+    </>
   );
 }
