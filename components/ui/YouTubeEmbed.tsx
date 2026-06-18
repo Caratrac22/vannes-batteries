@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
 
@@ -9,23 +9,9 @@ interface YouTubeEmbedProps {
   title?: string;
 }
 
-declare global {
-  interface Window {
-    onYouTubeIframeAPIReady?: () => void;
-    YT?: {
-      Player: new (
-        id: string,
-        opts: Record<string, unknown>
-      ) => { playVideo: () => void; destroy: () => void };
-    };
-  }
-}
-
 export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEmbedProps) {
-  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const [videoTitle, setVideoTitle] = useState(defaultTitle || "");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const playerRef = useRef<{ playVideo: () => void; destroy: () => void } | null>(null);
 
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
@@ -36,35 +22,8 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
       .catch(() => {});
   }, [videoId]);
 
-  useEffect(() => {
-    if (!loaded) return;
-
-    function createPlayer() {
-      playerRef.current = new window.YT!.Player(`youtube-player-${videoId}`, {
-        videoId,
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
-        events: { onReady: () => playerRef.current?.playVideo() },
-      }) as unknown as { playVideo: () => void; destroy: () => void };
-    }
-
-    if (window.YT?.Player) {
-      createPlayer();
-    } else {
-      window.onYouTubeIframeAPIReady = createPlayer;
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(tag);
-    }
-
-    return () => {
-      playerRef.current?.destroy();
-      playerRef.current = null;
-    };
-  }, [loaded, videoId]);
-
   return (
     <motion.div
-      ref={containerRef}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -75,19 +34,20 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
     >
       <div className="relative aspect-video bg-dark-900">
         <AnimatePresence mode="wait">
-          {!loaded ? (
+          {!playing ? (
             <motion.div
               key="thumb"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 cursor-pointer"
-              onClick={() => setLoaded(true)}
+              onClick={() => setPlaying(true)}
             >
               <img
                 src={thumbnailUrl}
                 alt={videoTitle || "Vidéo VANNES BATTERIES"}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950/70 via-dark-950/20 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -110,9 +70,13 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
               animate={{ opacity: 1 }}
               className="absolute inset-0"
             >
-              <div
-                id={`youtube-player-${videoId}`}
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+                title={videoTitle || "Vidéo VANNES BATTERIES"}
                 className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </motion.div>
           )}

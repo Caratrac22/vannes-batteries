@@ -22,7 +22,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com https://lh3.googleusercontent.com https://maps.google.com https://img.youtube.com https://i.ytimg.com",
       "font-src 'self' https://fonts.gstatic.com",
       "connect-src 'self' https://www.google-analytics.com https://maps.googleapis.com https://places.googleapis.com https://api.web3forms.com",
-      "frame-src https://www.google.com https://maps.google.com",
+      "frame-src https://www.google.com https://maps.google.com https://www.youtube.com https://www.youtube-nocookie.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
