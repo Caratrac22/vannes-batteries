@@ -23,8 +23,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return "fr";
     const saved = localStorage.getItem("vb-lang") as Locale | null;
     if (saved && (saved === "fr" || saved === "en")) return saved;
-    const browserLang = navigator.language.slice(0, 2);
-    return browserLang === "en" ? "en" : "fr";
+    return "fr";
   });
 
   const handleSetLocale = useCallback((l: Locale) => {
