@@ -73,7 +73,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
     >
       <nav
-        className="max-w-7xl mx-auto pl-3 sm:pl-5 lg:pl-6 pr-4 sm:pr-6 lg:pr-8"
+        className="px-4 sm:px-6 lg:px-8"
         aria-label="Navigation principale"
       >
         <div className="flex items-center justify-between h-18 md:h-22">
