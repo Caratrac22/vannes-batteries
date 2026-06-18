@@ -9,6 +9,13 @@ interface YouTubeEmbedProps {
   title?: string;
 }
 
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady?: () => void;
+    YT?: { Player: new (id: string, opts: Record<string, unknown>) => { playVideo: () => void; destroy: () => void } };
+  }
+}
+
 export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
   const [loaded, setLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,9 +28,9 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScript = document.getElementsByTagName("script")[0];
     firstScript?.parentNode?.insertBefore(tag, firstScript);
-    let player: YT.Player;
+    let player: { playVideo: () => void; destroy: () => void };
     window.onYouTubeIframeAPIReady = () => {
-      player = new YT.Player(`youtube-player-${videoId}`, {
+      player = new window.YT!.Player(`youtube-player-${videoId}`, {
         videoId,
         playerVars: {
           autoplay: 1,
@@ -34,7 +41,7 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
         events: {
           onReady: () => player.playVideo(),
         },
-      });
+      }) as unknown as { playVideo: () => void; destroy: () => void };
     };
     return () => {
       player?.destroy();
