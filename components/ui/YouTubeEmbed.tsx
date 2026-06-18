@@ -49,7 +49,7 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden
-                 shadow-[0_0_30px_rgba(0,210,255,0.15)]
+                 shadow-[0_0_15px_rgba(0,210,255,0.1)]
                  border border-white/5 group"
     >
       <div className="relative aspect-video bg-dark-900">
@@ -65,7 +65,7 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full
                              bg-orange/90 backdrop-blur-sm flex items-center justify-center
-                             shadow-[0_0_25px_rgba(220,38,38,0.5)]">
+                             shadow-[0_0_12px_rgba(220,38,38,0.3)]">
                 <Play className="w-7 h-7 md:w-8 md:h-8 text-white ml-1" />
               </div>
             </div>

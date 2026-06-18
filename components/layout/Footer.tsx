@@ -34,7 +34,7 @@ export default function Footer() {
           {/* ── Col 1: Brand ──────────────────────────────── */}
           <div>
             <Link href="/" className="mb-4" aria-label="Accueil">
-              <span className="font-rajdhani font-bold text-xl tracking-wider italic text-white drop-shadow-[0_0_6px_rgba(0,210,255,0.7)] animate-neon-pulse">
+              <span className="font-rajdhani font-bold text-xl tracking-wider italic text-white drop-shadow-[0_0_3px_rgba(0,210,255,0.3)]">
                 VANNES BATTERIES
               </span>
             </Link>

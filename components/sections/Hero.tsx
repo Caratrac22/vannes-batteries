@@ -65,7 +65,7 @@ export default function Hero() {
         >
           <a
             href="tel:+33297492019"
-            className="btn-primary animate-pulse-glow text-base"
+            className="btn-primary text-base"
             aria-label="Appeler VANNES BATTERIES au 02 97 49 20 19"
           >
             <Zap className="w-5 h-5" />

@@ -56,53 +56,53 @@ const config: Config = {
         "2xl": "24px",
       },
       boxShadow: {
-        "orange-glow": "0 8px 30px rgba(220, 38, 38, 0.4)",
-        "orange-hover": "0 0 30px rgba(220, 38, 38, 0.15)",
-        "orange-cta": "0 0 40px rgba(220, 38, 38, 0.3)",
+        "orange-glow": "0 4px 15px rgba(220, 38, 38, 0.2)",
+        "orange-hover": "0 0 20px rgba(220, 38, 38, 0.1)",
+        "orange-cta": "0 0 25px rgba(220, 38, 38, 0.15)",
         glass: "0 8px 32px rgba(0, 0, 0, 0.3)",
       },
       animation: {
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         "bounce-y": "bounce-y 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
         "shimmer": "shimmer 2s linear infinite",
-        "fade-in-up": "fade-in-up 0.6s ease-out both",
-        "scale-in": "scale-in 0.4s ease-out both",
-        "neon-pulse": "neon-pulse 3s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.5s ease-out both",
+        "scale-in": "scale-in 0.3s ease-out both",
+        "neon-pulse": "neon-pulse 4s ease-in-out infinite",
       },
       keyframes: {
         "pulse-glow": {
           "0%, 100%": {
-            boxShadow: "0 0 20px rgba(220, 38, 38, 0.3)",
+            boxShadow: "0 0 10px rgba(220, 38, 38, 0.15)",
           },
           "50%": {
-            boxShadow: "0 0 40px rgba(220, 38, 38, 0.6)",
+            boxShadow: "0 0 20px rgba(220, 38, 38, 0.25)",
           },
         },
         "bounce-y": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-5px)" },
         },
         "float": {
           "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "33%": { transform: "translateY(-10px) rotate(1deg)" },
-          "66%": { transform: "translateY(5px) rotate(-1deg)" },
+          "33%": { transform: "translateY(-5px) rotate(0.5deg)" },
+          "66%": { transform: "translateY(3px) rotate(-0.5deg)" },
         },
         "shimmer": {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
         "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(15px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.9)" },
+          "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
         "neon-pulse": {
-          "0%, 100%": { textShadow: "0 0 4px rgba(0,210,255,0.5), 0 0 10px rgba(0,210,255,0.3)" },
-          "50%": { textShadow: "0 0 8px rgba(0,210,255,0.9), 0 0 20px rgba(0,210,255,0.5), 0 0 36px rgba(0,210,255,0.2)" },
+          "0%, 100%": { textShadow: "0 0 3px rgba(0,210,255,0.3), 0 0 6px rgba(0,210,255,0.15)" },
+          "50%": { textShadow: "0 0 5px rgba(0,210,255,0.4), 0 0 10px rgba(0,210,255,0.2)" },
         },
       },
       backgroundImage: {

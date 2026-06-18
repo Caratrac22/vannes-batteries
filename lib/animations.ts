@@ -8,19 +8,19 @@ import type { Variants, Transition } from "framer-motion";
 // ── Shared spring config ─────────────────────────────────────
 export const springTransition: Transition = {
   type: "spring",
-  stiffness: 100,
-  damping: 15,
+  stiffness: 120,
+  damping: 20,
   mass: 1,
 };
 
 export const smoothTransition: Transition = {
-  duration: 0.6,
+  duration: 0.4,
   ease: [0.25, 0.1, 0.25, 1],
 };
 
 // ── Fade in up ───────────────────────────────────────────────
 export const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
     y: 0,
@@ -30,7 +30,7 @@ export const fadeInUp: Variants = {
 
 // ── Fade in down ─────────────────────────────────────────────
 export const fadeInDown: Variants = {
-  hidden: { opacity: 0, y: -40 },
+  hidden: { opacity: 0, y: -20 },
   show: {
     opacity: 1,
     y: 0,
@@ -40,7 +40,7 @@ export const fadeInDown: Variants = {
 
 // ── Fade in left ─────────────────────────────────────────────
 export const fadeInLeft: Variants = {
-  hidden: { opacity: 0, x: -60 },
+  hidden: { opacity: 0, x: -30 },
   show: {
     opacity: 1,
     x: 0,
@@ -50,7 +50,7 @@ export const fadeInLeft: Variants = {
 
 // ── Fade in right ────────────────────────────────────────────
 export const fadeInRight: Variants = {
-  hidden: { opacity: 0, x: 60 },
+  hidden: { opacity: 0, x: 30 },
   show: {
     opacity: 1,
     x: 0,
@@ -60,22 +60,25 @@ export const fadeInRight: Variants = {
 
 // ── Scale in (badge bounce) ──────────────────────────────────
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.5 },
+  hidden: { opacity: 0, scale: 0.9 },
   show: {
     opacity: 1,
     scale: 1,
-    transition: springTransition,
+    transition: {
+      duration: 0.3,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
   },
 };
 
 // ── Flip card (stats) ────────────────────────────────────────
 export const flipIn: Variants = {
-  hidden: { opacity: 0, rotateY: 90 },
+  hidden: { opacity: 0, rotateY: 45 },
   show: {
     opacity: 1,
     rotateY: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.5,
       ease: [0.25, 0.1, 0.25, 1],
     },
   },
@@ -86,8 +89,8 @@ export const staggerContainer: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
     },
   },
 };
@@ -96,8 +99,8 @@ export const staggerContainerFast: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.05,
+      staggerChildren: 0.04,
+      delayChildren: 0.02,
     },
   },
 };
@@ -112,9 +115,9 @@ export const clipReveal: Variants = {
     clipPath: "inset(0 0% 0 0)",
     opacity: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       ease: [0.25, 0.1, 0.25, 1],
-      delay: 0.2,
+      delay: 0.1,
     },
   },
 };
@@ -127,9 +130,9 @@ export const navbarVariants: Variants = {
     borderBottom: "1px solid rgba(220, 38, 38, 0)",
   },
   scrolled: {
-    backgroundColor: "rgba(28, 28, 46, 0.85)",
-    backdropFilter: "blur(16px)",
-    borderBottom: "1px solid rgba(220, 38, 38, 0.15)",
+    backgroundColor: "rgba(18, 18, 30, 0.95)",
+    backdropFilter: "blur(12px)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
   },
 };
 

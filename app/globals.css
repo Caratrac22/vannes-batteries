@@ -75,8 +75,8 @@
   }
 
   .glass-card:hover {
-    border-color: rgba(220, 38, 38, 0.5);
-    box-shadow: 0 0 30px rgba(220, 38, 38, 0.15);
+    border-color: rgba(220, 38, 38, 0.3);
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
   }
 
   /* ── Section Separator ──────────────────────────────────── */
@@ -103,8 +103,8 @@
   }
 
   .btn-primary:hover {
-    @apply bg-orange-600 scale-[1.02];
-    box-shadow: 0 12px 40px rgba(220, 38, 38, 0.5);
+    @apply bg-orange-600 scale-[1.01];
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
   }
 
   .btn-primary:active {
@@ -121,8 +121,8 @@
   }
 
   .btn-secondary:hover {
-    @apply bg-orange/10 scale-[1.02];
-    box-shadow: 0 0 30px rgba(220, 38, 38, 0.2);
+    @apply bg-orange/10 scale-[1.01];
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.12);
   }
 
   /* ── Info Banner ────────────────────────────────────────── */
@@ -174,8 +174,8 @@
   position: absolute;
   width: 120px;
   height: 120px;
-  opacity: 0.04;
-  animation: float-lightning 8s ease-in-out infinite;
+  opacity: 0.02;
+  animation: float-lightning 10s ease-in-out infinite;
 }
 
 .lightning-bg::before {
@@ -195,11 +195,11 @@
 @keyframes float-lightning {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
-    opacity: 0.04;
+    opacity: 0.02;
   }
   50% {
-    transform: translateY(-20px) rotate(5deg);
-    opacity: 0.08;
+    transform: translateY(-10px) rotate(3deg);
+    opacity: 0.04;
   }
 }
 

@@ -29,14 +29,11 @@ export default function FerrariShowcase() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center brightness-110"
         />
-        {/* Light gradient overlay (client wanted brighter) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-950/10 via-transparent to-dark-950/40" />
       </motion.div>
 
-      {/* Bottom gradient fade into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-950 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-dark-950 to-transparent" />
     </section>
   );
 }
