@@ -42,7 +42,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
-      setScrolled(latest > window.innerHeight * 0.55);
+      setScrolled(latest > 50);
     });
     return () => unsubscribe();
   }, [scrollY]);
