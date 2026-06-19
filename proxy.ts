@@ -4,6 +4,12 @@ import type { NextRequest } from 'next/server'
 export function proxy(request: NextRequest) {
   const url = request.nextUrl.clone()
 
+  // Canonical domain: vannes-batteries.fr (without www)
+  if (url.hostname === 'www.vannes-batteries.fr') {
+    url.hostname = 'vannes-batteries.fr'
+    return NextResponse.redirect(url, 301)
+  }
+
   // Ensure trailing slashes are removed (Next.js default behavior usually handles this,
   // but just to be safe for SEO juice)
   if (url.pathname !== '/' && url.pathname.endsWith('/')) {
