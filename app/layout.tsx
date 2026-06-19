@@ -110,7 +110,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-inter bg-dark-950 text-white antialiased">
+      <body className="font-inter bg-dark-925 text-white antialiased">
         <I18nProvider>
           <GoogleTagManager gtmId="GTM-T9QDSJSL" />
           <a

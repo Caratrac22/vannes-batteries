@@ -26,8 +26,10 @@ const config: Config = {
           DEFAULT: "#FFD700",
         },
         dark: {
-          950: "#0B132B", // Deep Navy Blue
+          950: "#0B132B", // Deep Navy Blue (body bg)
+          925: "#111D42", // Slightly lighter navy (new)
           900: "#1C2541", // Medium Navy Blue
+          850: "#1B2A52", // Light Navy Blue (new)
           800: "#22305C", // Light Navy Blue
           700: "#1E293B", // Dark Slate (Footer background)
           600: "#334155",
