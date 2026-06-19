@@ -15,7 +15,7 @@ export default function FerrariShowcase() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_15%] brightness-105"
+          className="object-cover object-[center_75%] brightness-105"
         />
       </div>
     </section>
