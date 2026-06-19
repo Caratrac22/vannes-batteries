@@ -55,12 +55,12 @@ export default function SocialLinks({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Visiter notre page ${social.name}`}
-          className={`${iconSize} flex items-center justify-center rounded-full
-                     bg-white/5 border border-white/10
-                     text-muted hover:text-orange hover:border-orange/50
-                     hover:bg-orange/10 hover:scale-110 hover:rotate-3
-                     active:scale-95
-                     transition-all duration-300`}
+           className={`${iconSize} flex items-center justify-center rounded-full
+                      bg-white/5 border border-white/20
+                      text-slate-400 hover:text-orange hover:border-orange/50
+                      hover:bg-orange/10 hover:scale-110 hover:rotate-3
+                      active:scale-95
+                      transition-all duration-300`}
         >
           {social.icon}
         </a>

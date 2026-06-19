@@ -32,7 +32,7 @@ export default function ContactSection() {
   ];
 
   return (
-    <section className="bg-light-100 py-16 border-t border-gray-200" aria-label="Contact rapide">
+    <section className="bg-white py-16 border-t border-slate-200" aria-label="Contact rapide">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={staggerContainerFast}
@@ -46,7 +46,7 @@ export default function ContactSection() {
               <div className="w-12 h-12 rounded-full bg-orange/10 flex items-center justify-center mb-4">
                 <info.icon className="w-6 h-6 text-orange" />
               </div>
-              <h4 className="font-inter font-medium text-dark-950 whitespace-pre-line mb-3">
+              <h4 className="font-inter font-medium text-slate-800 whitespace-pre-line mb-3">
                 {info.title}
               </h4>
               <a

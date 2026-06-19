@@ -21,7 +21,7 @@ export default function Home() {
     <>
       <FerrariShowcase />
       <Hero />
-      <section className="relative bg-dark-950 py-14 md:py-20 overflow-hidden">
+      <section className="relative bg-slate-50 py-14 md:py-20 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <YouTubeEmbed videoId="kbaoiROYaB4" />
         </div>

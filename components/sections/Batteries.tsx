@@ -75,19 +75,18 @@ const batteries = [
 
 export default function Batteries() {
   return (
-    <section
-      id="batteries"
-      className="relative bg-light-50 py-20 md:py-28"
-      aria-label="Nos batteries"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          badge="Notre gamme complète"
-          badgeIcon={BatteryIcon}
-          title="Toutes vos batteries, un seul spécialiste"
-          subtitle="Du scooter au poids lourd, de la voiture de collection au bateau, nous avons votre batterie."
-          light
-        />
+      <section
+        id="batteries"
+        className="relative bg-slate-50 py-20 md:py-28"
+        aria-label="Nos batteries"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            badge="Notre gamme complète"
+            badgeIcon={BatteryIcon}
+            title="Toutes vos batteries, un seul spécialiste"
+            subtitle="Du scooter au poids lourd, de la voiture de collection au bateau, nous avons votre batterie."
+          />
 
         <motion.div
           variants={staggerContainerFast}
@@ -115,12 +114,12 @@ export default function Batteries() {
               </motion.div>
 
               {/* Title */}
-              <h3 className="font-rajdhani font-bold text-dark-950 text-lg uppercase tracking-wide mb-2">
+              <h3 className="font-rajdhani font-bold text-slate-800 text-lg uppercase tracking-wide mb-2">
                 {battery.title}
               </h3>
 
               {/* Description */}
-              <p className="text-dark-700 text-sm leading-relaxed">
+              <p className="text-slate-500 text-sm leading-relaxed">
                 {battery.description}
               </p>
 

@@ -23,8 +23,8 @@ export default function Services() {
   const keys = Object.keys(items);
 
   return (
-    <section id="services" className="bg-dark-900 py-20 md:py-28 relative overflow-hidden" aria-label="Nos services">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-orange/5 blur-[120px] rounded-full pointer-events-none" />
+    <section id="services" className="bg-white py-20 md:py-28 relative overflow-hidden" aria-label="Nos services">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-red-50 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionTitle
@@ -71,7 +71,7 @@ export default function Services() {
                     sizes="(max-width: 768px) 100vw, 66vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-dark-950/90 via-dark-950/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-transparent" />
                   <div className="relative z-10 h-full p-8 md:p-10 flex flex-col justify-end">
                     <div className="w-14 h-14 mb-4 flex items-center justify-center rounded-xl bg-orange/20 border border-orange/30 backdrop-blur-sm">
                       <Icon className="w-7 h-7 text-orange" />
@@ -79,7 +79,7 @@ export default function Services() {
                     <h3 className="font-rajdhani font-bold text-2xl md:text-3xl uppercase tracking-wide mb-3 text-white">
                       {service.title}
                     </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed max-w-lg">
+                    <p className="text-slate-300 text-sm leading-relaxed max-w-lg">
                       {service.desc}
                     </p>
                   </div>
@@ -96,15 +96,15 @@ export default function Services() {
                 variants={variant}
                 className="glass-card p-8 group"
               >
-                <div className="relative w-14 h-14 mb-6 flex items-center justify-center rounded-xl bg-dark-700 border border-orange/20 overflow-hidden">
-                  <div className="absolute inset-0 bg-orange/20 scale-0 group-hover:scale-150 transition-transform duration-500 ease-out rounded-full" />
+                <div className="relative w-14 h-14 mb-6 flex items-center justify-center rounded-xl bg-red-50 border border-orange/20 overflow-hidden">
+                  <div className="absolute inset-0 bg-orange/10 scale-0 group-hover:scale-150 transition-transform duration-500 ease-out rounded-full" />
                   <Icon className="w-7 h-7 text-orange relative z-10 group-hover:scale-110 transition-transform duration-300" />
                 </div>
 
-                <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide mb-3 text-white">
+                    <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide mb-3 text-slate-800">
                   {service.title}
                 </h3>
-                <p className="text-muted text-sm leading-relaxed">
+                <p className="text-slate-500 text-sm leading-relaxed">
                   {service.desc}
                 </p>
               </motion.div>

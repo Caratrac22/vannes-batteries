@@ -85,28 +85,26 @@ export default function Navbar() {
         variants={navbarVariants}
         animate={scrolled ? "scrolled" : "top"}
         transition={{ duration: 0.3 }}
-        className={ferrariPast ? "fixed top-0 left-0 right-0 z-50" : "relative"}
+        className={ferrariPast ? "fixed top-0 left-0 right-0 z-50" : "relative bg-white/90 backdrop-blur-md"}
       >
       <nav
-        className="px-1 sm:px-1.5 lg:px-2"
+        className="px-1 sm:px-1.5 lg:px-2 border-b border-slate-200/80"
         aria-label="Navigation principale"
       >
         <div className="flex items-center justify-between h-18 md:h-22">
-          {/* ── Logo ────────────────────────────────────── */}
           <Link href="/" className="flex items-center group" aria-label="Accueil VANNES BATTERIES">
-            <span className="font-rajdhani font-bold text-3xl md:text-4xl lg:text-5xl tracking-wider italic whitespace-nowrap text-white drop-shadow-[0_0_4px_rgba(0,210,255,0.4)] transition-all duration-300">
+            <span className="font-rajdhani font-bold text-3xl md:text-4xl lg:text-5xl tracking-wider italic whitespace-nowrap text-slate-800 drop-shadow-[0_0_4px_rgba(0,210,255,0.4)] transition-all duration-300">
               VANNES BATTERIES
             </span>
           </Link>
 
-          {/* ── Desktop Nav Links ────────────────────────── */}
           <div className="hidden lg:flex items-center gap-1">
             {translatedLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className="relative px-4 py-2 text-sm font-medium
-                           text-muted hover:text-white transition-colors duration-200"
+                           text-slate-500 hover:text-slate-900 transition-colors duration-200"
               >
                 {link.name}
                 {isActive(link.href) && (
@@ -124,15 +122,14 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* ── CTA Phone + Lang ──────────────────────────── */}
           <div className="hidden md:flex items-center gap-3">
             <ShopStatus compact />
             <button
               onClick={toggleLocale}
               className="flex items-center gap-1 px-2.5 py-1.5 rounded-full
                          text-[11px] font-bold uppercase tracking-wider
-                         text-white/60 bg-white/5 border border-white/10
-                         hover:text-white hover:bg-white/10 transition-all"
+                         text-slate-400 bg-slate-100 border border-slate-200
+                         hover:text-slate-700 hover:bg-slate-200 transition-all"
               aria-label={`Switch to ${locale === "fr" ? "English" : "Français"}`}
             >
               <Globe className="w-3 h-3" />
@@ -148,11 +145,10 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ── Burger Button ────────────────────────────── */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden flex items-center justify-center
-                       w-12 h-12 text-white"
+                       w-12 h-12 text-slate-700"
             aria-label={isOpen ? t.nav.menuClose : t.nav.menuOpen}
             aria-expanded={isOpen}
           >
@@ -182,7 +178,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* ── Mobile Menu ────────────────────────────────── */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -191,8 +186,7 @@ export default function Navbar() {
               animate="open"
               exit="closed"
               className="lg:hidden overflow-hidden
-                         bg-dark-700/95 backdrop-blur-xl
-                         border-t border-orange/15 rounded-b-2xl"
+                         bg-white border-t border-slate-200 rounded-b-2xl shadow-lg"
             >
               <div className="px-4 py-6 space-y-1">
                 {translatedLinks.map((link) => (
@@ -203,8 +197,8 @@ export default function Navbar() {
                                  transition-colors duration-200
                                  ${
                                    isActive(link.href)
-                                     ? "text-orange bg-orange/10"
-                                     : "text-muted hover:text-white hover:bg-white/5"
+                                     ? "text-orange bg-red-50"
+                                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                                  }`}
                     >
                       {link.name}
@@ -212,7 +206,6 @@ export default function Navbar() {
                   </motion.div>
                 ))}
 
-                {/* Phone CTA */}
                 <motion.div variants={mobileMenuItemVariants} className="pt-4">
                   <a
                     href="tel:+33297492019"
@@ -224,18 +217,16 @@ export default function Navbar() {
                   </a>
                 </motion.div>
 
-                {/* Social Links */}
                 <motion.div variants={mobileMenuItemVariants} className="pt-4 flex justify-center">
                   <SocialLinks />
                 </motion.div>
 
-                {/* Language Switcher */}
                 <motion.div variants={mobileMenuItemVariants} className="pt-2 flex justify-center">
                   <button
                     onClick={toggleLocale}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl
-                               text-sm font-semibold text-white/60 bg-white/5
-                               border border-white/10 hover:text-white hover:bg-white/10 transition-all"
+                               text-sm font-semibold text-slate-500 bg-slate-100
+                               border border-slate-200 hover:text-slate-700 hover:bg-slate-200 transition-all"
                   >
                     <Globe className="w-4 h-4" />
                     {locale === "fr" ? "English" : "Français"}

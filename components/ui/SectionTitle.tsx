@@ -6,7 +6,7 @@ interface SectionTitleProps {
   title: string;
   subtitle?: string;
   align?: "center" | "left";
-  light?: boolean;
+  dark?: boolean;
 }
 
 export default function SectionTitle({
@@ -15,7 +15,7 @@ export default function SectionTitle({
   title,
   subtitle,
   align = "center",
-  light = false,
+  dark = false,
 }: SectionTitleProps) {
   const alignClass = align === "center" ? "text-center" : "text-left";
 
@@ -25,7 +25,7 @@ export default function SectionTitle({
         <span
           className="inline-flex items-center gap-1.5 px-4 py-1.5 mb-4 text-xs font-semibold
                      uppercase tracking-wider text-orange
-                     bg-orange/10 border border-orange/30 rounded-full
+                     bg-red-50 border border-orange/20 rounded-full
                      animate-scale-in"
         >
           {badgeIcon && React.createElement(badgeIcon, { className: "w-4 h-4" })}
@@ -35,7 +35,7 @@ export default function SectionTitle({
       <h2
         className={`font-rajdhani font-bold uppercase tracking-tight
                    text-3xl md:text-4xl lg:text-5xl
-                   ${light ? "text-dark-950" : "text-white"}`}
+                   ${dark ? "text-white" : "text-slate-800"}`}
       >
         {title}
       </h2>
@@ -43,7 +43,7 @@ export default function SectionTitle({
         <p
           className={`mt-4 text-base md:text-lg max-w-2xl
                      ${align === "center" ? "mx-auto" : ""}
-                     ${light ? "text-dark-700" : "text-muted"}`}
+                     ${dark ? "text-slate-300" : "text-slate-500"}`}
         >
           {subtitle}
         </p>

@@ -8,6 +8,7 @@ import { Inter, Rajdhani, Bebas_Neue } from "next/font/google";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { localBusinessSchema } from "@/lib/schema";
 import Navbar from "@/components/layout/Navbar";
+import TopBanner from "@/components/layout/TopBanner";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import { I18nProvider } from "@/lib/i18n/context";
@@ -110,7 +111,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-inter bg-dark-925 text-white antialiased">
+      <body className="font-inter bg-white text-slate-800 antialiased">
         <I18nProvider>
           <GoogleTagManager gtmId="GTM-T9QDSJSL" />
           <a
@@ -119,6 +120,7 @@ export default function RootLayout({
           >
             Aller au contenu principal
           </a>
+          <TopBanner />
           <Navbar />
           <main id="main-content">{children}</main>
           <Footer />

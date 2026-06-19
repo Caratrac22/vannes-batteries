@@ -41,7 +41,7 @@ export default function Footer() {
             <p className="font-rajdhani font-semibold text-orange text-sm uppercase tracking-wider mb-3">
               MA BATTERIE AU MEILLEUR PRIX
             </p>
-            <p className="text-muted text-sm leading-relaxed mb-6">
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
               {t.footer.description}
             </p>
             <SocialLinks />
@@ -49,7 +49,7 @@ export default function Footer() {
 
           {/* ── Col 2: Navigation ─────────────────────────── */}
           <div>
-            <h3 className="font-rajdhani font-bold text-lg uppercase tracking-wide mb-6">
+            <h3 className="font-rajdhani font-bold text-lg uppercase tracking-wide mb-6 text-white">
               Navigation
             </h3>
             <ul className="space-y-3">
@@ -57,7 +57,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-muted hover:text-orange transition-colors duration-200 text-sm"
+                    className="text-slate-400 hover:text-orange transition-colors duration-200 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -68,13 +68,13 @@ export default function Footer() {
 
           {/* ── Col 3: Contact ────────────────────────────── */}
           <div>
-            <h3 className="font-rajdhani font-bold text-lg uppercase tracking-wide mb-6">
+            <h3 className="font-rajdhani font-bold text-lg uppercase tracking-wide mb-6 text-white">
               {t.footer.contact_title}
             </h3>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-orange mt-0.5 shrink-0" />
-                <span className="text-muted">
+                <span className="text-slate-400">
                   19 rue Denis Papin, Z.A. de Kerniol
                   <br />
                   56000 Vannes
@@ -83,7 +83,7 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+33297492019"
-                  className="flex items-center gap-3 text-muted hover:text-orange transition-colors"
+                  className="flex items-center gap-3 text-slate-400 hover:text-orange transition-colors"
                   aria-label="Appeler le 02 97 49 20 19"
                 >
                   <Phone className="w-4 h-4 text-orange shrink-0" />
@@ -93,7 +93,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:batterie56@hotmail.com?subject=Demande%20de%20renseignement"
-                  className="flex items-center gap-3 text-muted hover:text-orange transition-colors"
+                  className="flex items-center gap-3 text-slate-400 hover:text-orange transition-colors"
                   aria-label="Envoyer un email"
                 >
                   <Mail className="w-4 h-4 text-orange shrink-0" />
@@ -102,7 +102,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-orange mt-0.5 shrink-0" />
-                <span className="text-muted">
+                <span className="text-slate-400">
                   {t.footer.hours_week}
                   <br />
                   {t.footer.hours_sat}
@@ -116,7 +116,7 @@ export default function Footer() {
 
         {/* ── Legal Bar ───────────────────────────────────── */}
         <div className="mt-12 pt-8 border-t border-orange/15">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
             <p className="text-center md:text-left">
               © {new Date().getFullYear()} VANNES BATTERIES SAS · SIRET 804
               235 695 00017 · RCS Vannes · Président : Arnold Lecarpentier
@@ -126,7 +126,7 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="hover:text-orange transition-colors duration-200"
+                  className="text-slate-400 hover:text-orange transition-colors duration-200"
                 >
                   {link.name}
                 </Link>

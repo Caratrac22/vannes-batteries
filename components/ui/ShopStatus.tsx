@@ -310,9 +310,9 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
   }, [isOpen]);
 
   const colors = {
-    open: { dot: "bg-green-500", text: "text-green-400", bg: "bg-green-500/10", border: "border-green-500/30" },
-    "closing-soon": { dot: "bg-orange-500", text: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/30" },
-    closed: { dot: "bg-red-500", text: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/30" },
+    open: { dot: "bg-green-500", text: "text-green-600", bg: "bg-green-50", border: "border-green-200" },
+    "closing-soon": { dot: "bg-orange-500", text: "text-orange-500", bg: "bg-orange-50", border: "border-orange-200" },
+    closed: { dot: "bg-red-500", text: "text-red-500", bg: "bg-red-50", border: "border-red-200" },
   };
 
   const c = colors[status];
@@ -346,10 +346,10 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
           transition={{ duration: 0.2 }}
           className="absolute top-full left-0 mt-2 w-72 z-50"
         >
-          <div className="bg-dark-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-lg shadow-slate-200/50 overflow-hidden">
+            <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
               <Clock className="w-4 h-4 text-orange" />
-              <span className="text-white text-xs font-semibold uppercase tracking-wide">{ts.hoursTitle}</span>
+              <span className="text-slate-700 text-xs font-semibold uppercase tracking-wide">{ts.hoursTitle}</span>
             </div>
             <div className="p-3 space-y-0.5">
               {dayNames.map((label, i) => {
@@ -359,12 +359,12 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
                 return (
                   <div
                     key={i}
-                    className={`flex items-center justify-between px-3 py-1.5 rounded-lg text-[11px] ${
-                      isToday ? "bg-orange/10 border border-orange/20" : ""
-                    }`}
-                  >
-                    <span className={`font-medium ${isToday ? "text-orange" : "text-gray-400"}`}>{label}</span>
-                    <span className={`${isToday ? "text-orange font-semibold" : "text-gray-500"}`}>
+                     className={`flex items-center justify-between px-3 py-1.5 rounded-lg text-[11px] ${
+                       isToday ? "bg-red-50 border border-orange/20" : ""
+                     }`}
+                   >
+                     <span className={`font-medium ${isToday ? "text-orange" : "text-slate-400"}`}>{label}</span>
+                     <span className={`${isToday ? "text-orange font-semibold" : "text-slate-500"}`}>
                       {display}
                     </span>
                   </div>
@@ -372,7 +372,7 @@ export default function ShopStatus({ compact = false, showIcon = true }: ShopSta
               })}
             </div>
             {isHolidayToday() && (
-              <div className="px-4 py-2 bg-red-500/10 border-t border-red-500/20 text-red-400 text-[10px] font-semibold text-center uppercase">
+              <div className="px-4 py-2 bg-red-50 border-t border-red-200 text-red-600 text-[10px] font-semibold text-center uppercase">
                 {ts.holidayToday}
               </div>
             )}

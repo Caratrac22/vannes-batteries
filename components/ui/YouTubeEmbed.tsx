@@ -49,10 +49,9 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden
-                 shadow-[0_0_15px_rgba(0,210,255,0.1)]
-                 border border-white/5 group"
+                 shadow-lg border border-slate-200 group"
     >
-      <div className="relative aspect-video bg-dark-900">
+      <div className="relative aspect-video bg-slate-100">
         {!playing ? (
           <div className="absolute inset-0">
             <img
@@ -61,7 +60,7 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark-950/70 via-dark-950/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full
                              bg-orange/90 backdrop-blur-sm flex items-center justify-center
@@ -88,8 +87,8 @@ export default function YouTubeEmbed({ videoId, title: defaultTitle }: YouTubeEm
         )}
       </div>
       {videoTitle && (
-        <div className="px-4 py-3 bg-dark-800/80 backdrop-blur-sm border-t border-white/5">
-          <p className="text-sm text-white/60 font-medium truncate">{videoTitle}</p>
+        <div className="px-4 py-3 bg-white border-t border-slate-200">
+          <p className="text-sm text-slate-500 font-medium truncate">{videoTitle}</p>
         </div>
       )}
     </motion.div>

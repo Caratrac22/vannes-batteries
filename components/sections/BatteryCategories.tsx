@@ -38,7 +38,7 @@ export default function BatteryCategories() {
   return (
     <section
       id="categories"
-      className="relative bg-dark-950 py-20 md:py-28 overflow-hidden"
+      className="relative bg-slate-50 py-20 md:py-28 overflow-hidden"
       aria-label="Catégories de batteries"
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,8 +77,8 @@ export default function BatteryCategories() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20
-                                group-hover:from-black/95 group-hover:via-black/60 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent
+                                group-hover:from-slate-900/95 group-hover:via-slate-900/50 transition-colors duration-300" />
                 <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
                   <motion.div className="w-10 h-10 text-orange mb-3" whileHover={{ rotate: 8, scale: 1.15 }}>
                     <Icon className="w-full h-full" />
@@ -108,13 +108,13 @@ export default function BatteryCategories() {
           viewport={{ once: true }}
           className="mt-12 text-center"
         >
-          <p className="text-white/40 text-sm mb-4">{t.categories.not_found}</p>
+          <p className="text-slate-400 text-sm mb-4">{t.categories.not_found}</p>
           <a
             href="tel:+33297492019"
             className="inline-flex items-center gap-2 px-6 py-3
                        text-sm font-semibold uppercase tracking-wider
-                       text-white bg-white/10 border border-white/20
-                       rounded-full hover:bg-white/20 transition-colors"
+                       text-slate-700 bg-slate-200 border border-slate-300
+                       rounded-full hover:bg-slate-300 transition-colors"
           >
             {t.categories.call_us}
           </a>

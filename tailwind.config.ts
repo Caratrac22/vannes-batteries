@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         orange: {
-          DEFAULT: "#DC2626", // Red-600
+          DEFAULT: "#DC2626",
           50: "#FEF2F2",
           100: "#FEE2E2",
           200: "#FECACA",
@@ -22,25 +22,39 @@ const config: Config = {
           800: "#991B1B",
           900: "#7F1D1D",
         },
+        blue: {
+          DEFAULT: "#1E40AF",
+          50: "#EFF6FF",
+          100: "#DBEAFE",
+          600: "#2563EB",
+          700: "#1D4ED8",
+          800: "#1E40AF",
+          900: "#1E3A5F",
+        },
+        slate: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#64748B",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A",
+        },
         yellow: {
           DEFAULT: "#FFD700",
         },
         dark: {
-          950: "#0B132B", // Deep Navy Blue (body bg)
-          925: "#111D42", // Slightly lighter navy (new)
-          900: "#1C2541", // Medium Navy Blue
-          850: "#1B2A52", // Light Navy Blue (new)
-          800: "#22305C", // Light Navy Blue
-          700: "#1E293B", // Dark Slate (Footer background)
+          950: "#0B132B",
+          925: "#111D42",
+          900: "#1C2541",
+          800: "#22305C",
+          700: "#1E293B",
           600: "#334155",
-          500: "#475569",
         },
-        light: {
-          50: "#F8FAFC",  // Light Slate
-          100: "#F1F5F9", // Slate-100
-          200: "#E2E8F0", // Slate-200
-        },
-        muted: "#94A3B8", // Slate-400
+        muted: "#64748B",
       },
       fontFamily: {
         rajdhani: ["var(--font-rajdhani)", "sans-serif"],

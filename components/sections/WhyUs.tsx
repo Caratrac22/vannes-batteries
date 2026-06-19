@@ -18,7 +18,7 @@ export default function WhyUs() {
   return (
     <section className="bg-light-50 py-20 md:py-28 section-separator" aria-label="Pourquoi nous choisir">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle title={t.whyUs.title} light />
+        <SectionTitle title={t.whyUs.title} />
 
         <motion.div
           variants={staggerContainerFast}
@@ -33,10 +33,10 @@ export default function WhyUs() {
               <motion.div key={key} variants={fadeInUp} className="flex gap-4 items-start">
                 <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-orange shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-rajdhani font-bold text-dark-950 text-xl uppercase tracking-wide mb-2">
+                    <h3 className="font-rajdhani font-bold text-slate-800 text-xl uppercase tracking-wide mb-2">
                     {adv.title}
                   </h3>
-                  <p className="text-dark-700 text-base leading-relaxed">
+                    <p className="text-slate-500 text-base leading-relaxed">
                     {adv.desc}
                   </p>
                 </div>

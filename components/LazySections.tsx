@@ -7,13 +7,13 @@ const MapSection = dynamic(() => import("@/components/sections/MapSection"), { s
 
 function SkeletonBlock({ className = "" }: { className?: string }) {
   return (
-    <div className={`animate-pulse bg-white/5 rounded-xl ${className}`} />
+    <div className={`animate-pulse bg-slate-200 rounded-xl ${className}`} />
   );
 }
 
 function MapSkeleton() {
   return (
-    <section className="bg-dark-900 py-20 md:py-28">
+    <section className="bg-white py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <SkeletonBlock className="h-6 w-48 mx-auto mb-4 rounded-full" />
