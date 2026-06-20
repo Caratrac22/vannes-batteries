@@ -45,7 +45,7 @@ export default function Hero() {
         >
           {t.hero.title1}
           <br />
-          <span className="text-gradient-modern">{t.hero.title2}</span>
+          <span className="text-slate-800">{t.hero.title2}</span>
         </motion.h1>
 
         <motion.p
