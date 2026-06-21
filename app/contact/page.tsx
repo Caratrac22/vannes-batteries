@@ -1,113 +1,258 @@
-import { generatePageMetadata } from "@/lib/metadata";
-import ContactSection from "@/components/sections/ContactSection";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+"use client";
 
-export const metadata = generatePageMetadata({
-  title: "CONTACT | VANNES BATTERIES",
-  description:
-    "Contactez Vannes Batteries — 02 97 49 20 19 — 19 rue Denis Papin, Z.A. de Kerniol, 56000 Vannes. Devis gratuit, conseil batterie.",
-  path: "/contact",
-});
-
-const contactDetails = [
-  {
-    icon: Phone,
-    label: "Téléphone",
-    value: "02 97 49 20 19",
-    href: "tel:+33297492019",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "batterie56@hotmail.com",
-    href: "mailto:batterie56@hotmail.com?subject=Demande%20de%20renseignement",
-  },
-  {
-    icon: MapPin,
-    label: "Adresse",
-    value: "19 rue Denis Papin, Z.A. de Kerniol\n56000 Vannes",
-    href: "https://maps.app.goo.gl/9UDu2AUPtbS4d1au7",
-  },
-];
+import { useState, FormEvent } from "react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import SocialLinks from "@/components/ui/SocialLinks";
+import ShopStatus from "@/components/ui/ShopStatus";
+import MapSection from "@/components/sections/MapSection";
 
 export default function ContactPage() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", "059c28d6-4dc0-4cb5-ab89-0454b9048faa");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setMessage("Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.");
+        form.reset();
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Une erreur est survenue.");
+      }
+    } catch {
+      setStatus("error");
+      setMessage("Impossible de se connecter au serveur.");
+    }
+  }
+
   return (
     <>
       <section className="bg-dark-950 pt-32 pb-16 relative overflow-hidden">
         <div className="gradient-overlay absolute inset-0 opacity-50" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h1 className="font-rajdhani font-bold uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl text-white mb-6">
-            NOUS CONTACTER
+            CONTACTEZ-NOUS
           </h1>
-          <p className="text-muted text-lg leading-relaxed max-w-3xl mx-auto">
-            Une question ? Besoin d&apos;un devis ? Notre équipe est à votre
-            disposition pour vous conseiller et vous accompagner.
+          <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
+            Besoin de renseignements ? N&apos;hésitez pas à nous contacter par téléphone ou par e-mail.
+            <br />
+            Nos horaires : lun–ven 8h30–18h30, sam 9h–12h.
           </p>
         </div>
       </section>
 
-      <section className="bg-light-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <h2 className="font-rajdhani font-bold text-2xl uppercase text-dark-950">
-                Coordonnées
-              </h2>
-              <div className="space-y-6">
-                {contactDetails.map((detail) => (
-                  <div key={detail.label} className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-orange/10 flex items-center justify-center shrink-0">
-                      <detail.icon className="w-5 h-5 text-orange" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted font-medium uppercase tracking-wider mb-1">
-                        {detail.label}
-                      </p>
-                      <a
-                        href={detail.href}
-                        className="text-slate-800 font-medium hover:text-orange transition-colors whitespace-pre-line"
-                      >
-                        {detail.value}
-                      </a>
-                    </div>
-                  </div>
-                ))}
+      <section className="bg-slate-50 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
+
+            <div className="space-y-12">
+              <div>
+                <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
+                  <MapPin className="w-6 h-6 text-orange" />
+                  Notre Magasin
+                </h3>
+                <p className="text-slate-600 leading-relaxed mb-4">
+                  19 rue Denis Papin, Z.A. de Kerniol<br />
+                  56000 Vannes
+                </p>
+                <div className="mb-4">
+                  <ShopStatus />
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  <a href="https://maps.app.goo.gl/9UDu2AUPtbS4d1au7" target="_blank" rel="noopener noreferrer" className="btn-primary !py-3 !px-4 text-xs">
+                    Google Maps
+                  </a>
+                  <a href="https://waze.com/ul/hgbqp0zwpc" target="_blank" rel="noopener noreferrer" className="btn-secondary !py-3 !px-4 text-xs">
+                    Waze
+                  </a>
+                </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-orange/10 flex items-center justify-center shrink-0">
-                  <Clock className="w-5 h-5 text-orange" />
+              <div>
+                <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
+                  Contact Direct
+                </h3>
+                <ul className="space-y-4">
+                  <li>
+                    <a href="tel:+33297492019" className="flex items-center gap-3 text-slate-600 hover:text-orange transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-orange/10 flex items-center justify-center">
+                        <Phone className="w-5 h-5 text-orange" />
+                      </div>
+                      <span className="font-medium text-lg">02 97 49 20 19</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:batterie56@hotmail.com" className="flex items-center gap-3 text-slate-600 hover:text-orange transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-orange/10 flex items-center justify-center">
+                        <Mail className="w-5 h-5 text-orange" />
+                      </div>
+                      <span className="font-medium text-lg">batterie56@hotmail.com</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
+                  <Clock className="w-6 h-6 text-orange" />
+                  Horaires d&apos;ouverture
+                </h3>
+                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                  <table className="w-full text-left text-sm text-slate-600">
+                    <tbody className="divide-y divide-slate-100">
+                      <tr className="hover:bg-orange/5 transition-colors">
+                        <th className="font-medium px-4 py-3">Lun – Ven</th>
+                        <td className="px-4 py-3 text-right">08h30–12h00 / 14h00–18h30</td>
+                      </tr>
+                      <tr className="hover:bg-orange/5 transition-colors">
+                        <th className="font-medium px-4 py-3">Samedi</th>
+                        <td className="px-4 py-3 text-right">09h00–12h00</td>
+                      </tr>
+                      <tr className="bg-slate-50 text-muted">
+                        <th className="font-medium px-4 py-3">Dimanche</th>
+                        <td className="px-4 py-3 text-right">Fermé</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div>
-                  <p className="text-sm text-muted font-medium uppercase tracking-wider mb-1">
-                    Horaires
-                  </p>
-                  <div className="text-slate-800 font-medium space-y-1">
-                    <p>Lun–Ven : 8h30–12h00 / 14h00–18h30</p>
-                    <p>Sam : 9h00–12h00</p>
-                    <p>Dim : Fermé</p>
-                  </div>
+              </div>
+
+              <div>
+                <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
+                  Suivez-nous
+                </h3>
+                <div className="text-slate-600 [&>div>a]:bg-slate-100 [&>div>a]:border-slate-200 [&>div>a]:text-slate-600">
+                  <SocialLinks />
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl overflow-hidden shadow-lg border border-slate-200 h-[400px] md:h-auto">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2682.123456789!2d-2.771305!3d47.679327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s19%20Rue%20Denis%20Papin%2C%2056000%20Vannes!5e0!3m2!1sfr!2sfr!4v1"
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: "400px" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Carte Vannes Batteries"
-              />
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 md:p-10">
+                <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-slate-800 mb-8">
+                  Envoyez-nous un message
+                </h3>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative group">
+                      <input type="text" name="prenom" id="prenom" required
+                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
+                        placeholder=" " />
+                      <label htmlFor="prenom" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
+                        Prénom *
+                      </label>
+                    </div>
+                    <div className="relative group">
+                      <input type="text" name="nom" id="nom" required
+                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
+                        placeholder=" " />
+                      <label htmlFor="nom" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
+                        Nom *
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative group">
+                      <input type="email" name="email" id="email" required
+                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
+                        placeholder=" " />
+                      <label htmlFor="email" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
+                        Email *
+                      </label>
+                    </div>
+                    <div className="relative group">
+                      <input type="tel" name="telephone" id="telephone"
+                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
+                        placeholder=" " />
+                      <label htmlFor="telephone" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
+                        Téléphone
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <select name="objet" id="objet" required defaultValue=""
+                      className="block w-full px-4 py-3 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange transition-all">
+                      <option value="" disabled>Objet de votre demande *</option>
+                      <option value="Demande de devis">Demande de devis</option>
+                      <option value="Renseignements produit">Renseignements produit</option>
+                      <option value="Demande de devis professionnel">Demande de devis professionnel</option>
+                      <option value="Autre">Autre</option>
+                    </select>
+                  </div>
+
+                  <div className="relative group">
+                    <textarea name="message" id="message" required rows={5}
+                      className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all resize-none"
+                      placeholder=" "></textarea>
+                    <label htmlFor="message" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
+                      Message *
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <input type="checkbox" id="rgpd" name="rgpd" required
+                      className="mt-1 w-4 h-4 text-orange border-slate-300 rounded focus:ring-orange" />
+                    <label htmlFor="rgpd" className="text-xs text-muted leading-relaxed">
+                      J&apos;accepte que les informations saisies soient exploitées dans le cadre de ma demande et de la relation commerciale qui peut en découler.*
+                    </label>
+                  </div>
+
+                  {status === "success" && (
+                    <div className="p-4 bg-green-50 text-green-700 rounded-xl flex items-center gap-3 text-sm">
+                      <CheckCircle2 className="w-5 h-5 shrink-0" />
+                      {message}
+                    </div>
+                  )}
+                  {status === "error" && (
+                    <div className="p-4 bg-red-50 text-red-700 rounded-xl flex items-center gap-3 text-sm">
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                      {message}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="w-full btn-primary !py-4"
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        Envoyer le message
+                        <Send className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      <ContactSection />
+      <MapSection />
     </>
   );
 }
