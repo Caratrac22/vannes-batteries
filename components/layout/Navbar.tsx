@@ -80,7 +80,7 @@ export default function Navbar() {
             ? "fixed top-0 left-0 right-0 z-50"
             : "relative"
         } ${
-          scrolled
+          scrolled || pathname !== "/"
             ? "bg-dark-950/95 backdrop-blur-md border-b border-white/10"
             : "bg-white/90 backdrop-blur-md border-b border-slate-200/80"
         }`}
@@ -91,7 +91,7 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between h-18 md:h-22">
             <Link href="/" className="flex items-center group" aria-label="Accueil VANNES BATTERIES">
-            <span className={`font-rajdhani font-bold text-3xl md:text-4xl lg:text-5xl tracking-wider italic whitespace-nowrap drop-shadow-[0_0_4px_rgba(0,210,255,0.4)] transition-all duration-300 ${scrolled ? "text-white" : "text-slate-800"}`}>
+            <span className={`font-rajdhani font-bold text-3xl md:text-4xl lg:text-5xl tracking-wider italic whitespace-nowrap drop-shadow-[0_0_4px_rgba(0,210,255,0.4)] transition-all duration-300 ${scrolled || pathname !== "/" ? "text-white" : "text-slate-800"}`}>
               VANNES BATTERIES
             </span>
           </Link>
@@ -101,8 +101,11 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative px-4 py-2 text-sm font-medium
-                           text-slate-500 hover:text-slate-900 transition-colors duration-200"
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  scrolled || pathname !== "/"
+                    ? "text-slate-300 hover:text-white"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
               >
                 {link.name}
                 {isActive(link.href) && (

@@ -23,7 +23,7 @@ import {
 const categoryKeys = ["car", "moto", "camper", "boat", "truck", "tractor", "alarm"] as const;
 
 const categoryMeta: Record<string, { icon: typeof CarIcon; count: string; labelKey: string; image: string }> = {
-  car:    { icon: CarIcon,        count: "60+",  labelKey: "models", image: "/media/ferrari california.jpg" },
+  car:    { icon: CarIcon,        count: "60+",  labelKey: "models", image: "/media/ferrari-california.jpg" },
   moto:   { icon: MotorcycleIcon, count: "180",  labelKey: "refs",   image: "/media/moto.png" },
   camper: { icon: CamperIcon,     count: "40+",  labelKey: "models", image: "/media/camping car mercedes.png" },
   boat:   { icon: BoatIcon,       count: "30+",  labelKey: "models", image: "/media/voilier.jpg" },

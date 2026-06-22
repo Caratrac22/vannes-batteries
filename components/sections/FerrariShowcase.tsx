@@ -10,7 +10,7 @@ export default function FerrariShowcase() {
     >
       <div className="absolute inset-0">
         <Image
-          src="/media/ferrari california.jpg"
+          src="/media/ferrari-california.jpg"
           alt="Ferrari California rouge équipée par Vannes Batteries"
           fill
           priority

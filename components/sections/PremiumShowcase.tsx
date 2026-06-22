@@ -11,7 +11,7 @@ import {
 
 const showcaseVehicles = [
   {
-    src: "/media/ferrari california.jpg",
+    src: "/media/ferrari-california.jpg",
     alt: "Voiture rouge équipée en atelier",
   },
   {

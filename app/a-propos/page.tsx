@@ -64,7 +64,7 @@ const categories: Category[] = [
     title: "Batteries voitures",
     images: [
       { src: "/media/Porsche 997.jpg", alt: "Porsche 911 (Type 997)" },
-      { src: "/media/ferrari california.jpg", alt: "Ferrari California rouge" },
+      { src: "/media/ferrari-california.jpg", alt: "Ferrari California rouge" },
       { src: "/media/corvette c7.jfif", alt: "Chevrolet Corvette C7 Stingray" },
       { src: "/media/porche vintage rouge anciene vue de arriere droite.jpg", alt: "Porsche vintage classique de collection" },
       { src: "/media/vue arriere gauche de la porche.jpg", alt: "Détail arrière gauche Porsche classique" },
