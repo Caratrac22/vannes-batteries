@@ -39,9 +39,10 @@ export default function Hero() {
 
         <motion.h1
           variants={clipReveal}
-          className="font-rajdhani font-bold uppercase tracking-tight
+          className="font-rajdhani font-bold uppercase tracking-tight italic
                      text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
-                     text-white leading-[0.95] mb-6"
+                     text-white leading-[0.95] mb-6
+                     drop-shadow-[0_0_4px_rgba(0,210,255,0.4)]"
         >
           {t.hero.title1}
           {t.hero.title2 && (

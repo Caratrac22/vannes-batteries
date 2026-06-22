@@ -80,12 +80,12 @@ export default function Navbar() {
 
   return (
     <>
-      {ferrariPast && <div className="h-18 md:h-22" />}
+      {(pathname === "/" && ferrariPast) && <div className="h-18 md:h-22" />}
       <motion.header
         variants={navbarVariants}
         animate={scrolled ? "scrolled" : "top"}
         transition={{ duration: 0.3 }}
-        className={ferrariPast ? "fixed top-0 left-0 right-0 z-50" : "relative bg-white/90 backdrop-blur-md"}
+        className={pathname !== "/" || ferrariPast ? "fixed top-0 left-0 right-0 z-50" : "relative bg-white/90 backdrop-blur-md"}
       >
       <nav
         className="px-1 sm:px-1.5 lg:px-2 border-b border-slate-200/80"
