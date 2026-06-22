@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-[50vh] flex items-center justify-center
-                 bg-white overflow-hidden py-16 md:py-20"
+                 bg-dark-950 overflow-hidden py-16 md:py-20"
       aria-label="Section héro"
     >
       <motion.div
@@ -29,7 +29,7 @@ export default function Hero() {
           <span
             className="inline-flex items-center gap-2 px-5 py-2
                        text-xs sm:text-sm font-semibold uppercase tracking-wider
-                       text-orange bg-red-50 border border-orange/20
+                       text-orange bg-orange/10 border border-orange/20
                        rounded-full"
           >
             <Zap className="w-4 h-4" />
@@ -41,16 +41,20 @@ export default function Hero() {
           variants={clipReveal}
           className="font-rajdhani font-bold uppercase tracking-tight
                      text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
-                     text-slate-800 leading-[0.95] mb-6"
+                     text-white leading-[0.95] mb-6"
         >
           {t.hero.title1}
-          <br />
-          <span className="text-slate-800">{t.hero.title2}</span>
+          {t.hero.title2 && (
+            <>
+              <br />
+              <span className="text-white">{t.hero.title2}</span>
+            </>
+          )}
         </motion.h1>
 
         <motion.p
           variants={fadeInUp}
-          className="text-slate-500 text-base sm:text-lg md:text-xl
+          className="text-slate-300 text-base sm:text-lg md:text-xl
                      max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           {t.hero.subtitle}
@@ -76,7 +80,7 @@ export default function Hero() {
         <motion.div
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center justify-center
-                     gap-4 sm:gap-8 text-sm text-slate-400"
+                     gap-4 sm:gap-8 text-sm text-slate-300"
         >
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-orange" />
@@ -92,7 +96,7 @@ export default function Hero() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2"
       >
         <a href="#categories" aria-label="Défiler vers le bas">
-          <ChevronDown className="w-6 h-6 text-slate-300 animate-bounce-y" />
+          <ChevronDown className="w-6 h-6 text-slate-500 animate-bounce-y" />
         </a>
       </motion.div>
     </section>
