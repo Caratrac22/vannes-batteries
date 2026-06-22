@@ -1,258 +1,180 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
-import SocialLinks from "@/components/ui/SocialLinks";
-import ShopStatus from "@/components/ui/ShopStatus";
-import MapSection from "@/components/sections/MapSection";
+import { useState, type FormEvent } from "react";
+import { motion } from "framer-motion";
+import { Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { staggerContainerFast, fadeInUp } from "@/lib/animations";
+import ContactSection from "@/components/sections/ContactSection";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  const { t } = useI18n();
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("loading");
-    setMessage("");
+    setStatus("sending");
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.append("access_key", "059c28d6-4dc0-4cb5-ab89-0454b9048faa");
+    const data = new FormData(form);
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData,
+        body: data,
       });
-      const data = await res.json();
-      if (data.success) {
+
+      if (res.ok) {
         setStatus("success");
-        setMessage("Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.");
         form.reset();
       } else {
         setStatus("error");
-        setMessage(data.message || "Une erreur est survenue.");
       }
     } catch {
       setStatus("error");
-      setMessage("Impossible de se connecter au serveur.");
     }
-  }
+  };
 
   return (
     <>
       <section className="bg-dark-950 pt-32 pb-16 relative overflow-hidden">
         <div className="gradient-overlay absolute inset-0 opacity-50" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <span className="inline-block text-orange font-rajdhani font-semibold uppercase tracking-widest text-sm mb-4">
+            {t.contact.badge}
+          </span>
           <h1 className="font-rajdhani font-bold uppercase tracking-tight text-3xl sm:text-4xl md:text-5xl text-white mb-6">
-            CONTACTEZ-NOUS
+            {t.contact.title}
           </h1>
-          <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
-            Besoin de renseignements ? N&apos;hésitez pas à nous contacter par téléphone ou par e-mail.
-            <br />
-            Nos horaires : lun–ven 8h30–18h30, sam 9h–12h.
+          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+            {t.contact.subtitle}
           </p>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
+      <section className="bg-light-50 py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <motion.div
+              variants={staggerContainerFast}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <motion.form
+                variants={fadeInUp}
+                onSubmit={handleSubmit}
+                className="bg-white rounded-xl p-8 shadow-sm border border-gray-200/50 space-y-6"
+              >
+                <input type="hidden" name="access_key" value="059c28d6-4dc0-4cb5-ab89-0454b9048faa" />
+                <input type="hidden" name="subject" value="Nouveau message depuis vannes-batteries.fr" />
 
-            <div className="space-y-12">
-              <div>
-                <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
-                  <MapPin className="w-6 h-6 text-orange" />
-                  Notre Magasin
-                </h3>
-                <p className="text-slate-600 leading-relaxed mb-4">
-                  19 rue Denis Papin, Z.A. de Kerniol<br />
-                  56000 Vannes
-                </p>
-                <div className="mb-4">
-                  <ShopStatus />
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                    {t.contact.name}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-all"
+                  />
                 </div>
-                <div className="flex flex-wrap gap-4">
-                  <a href="https://maps.app.goo.gl/9UDu2AUPtbS4d1au7" target="_blank" rel="noopener noreferrer" className="btn-primary !py-3 !px-4 text-xs">
-                    Google Maps
-                  </a>
-                  <a href="https://waze.com/ul/hgbqp0zwpc" target="_blank" rel="noopener noreferrer" className="btn-secondary !py-3 !px-4 text-xs">
-                    Waze
-                  </a>
-                </div>
-              </div>
 
-              <div>
-                <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
-                  Contact Direct
-                </h3>
-                <ul className="space-y-4">
-                  <li>
-                    <a href="tel:+33297492019" className="flex items-center gap-3 text-slate-600 hover:text-orange transition-colors">
-                      <div className="w-10 h-10 rounded-full bg-orange/10 flex items-center justify-center">
-                        <Phone className="w-5 h-5 text-orange" />
-                      </div>
-                      <span className="font-medium text-lg">02 97 49 20 19</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="mailto:batterie56@hotmail.com" className="flex items-center gap-3 text-slate-600 hover:text-orange transition-colors">
-                      <div className="w-10 h-10 rounded-full bg-orange/10 flex items-center justify-center">
-                        <Mail className="w-5 h-5 text-orange" />
-                      </div>
-                      <span className="font-medium text-lg">batterie56@hotmail.com</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="flex items-center gap-2 font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
-                  <Clock className="w-6 h-6 text-orange" />
-                  Horaires d&apos;ouverture
-                </h3>
-                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-                  <table className="w-full text-left text-sm text-slate-600">
-                    <tbody className="divide-y divide-slate-100">
-                      <tr className="hover:bg-orange/5 transition-colors">
-                        <th className="font-medium px-4 py-3">Lun – Ven</th>
-                        <td className="px-4 py-3 text-right">08h30–12h00 / 14h00–18h30</td>
-                      </tr>
-                      <tr className="hover:bg-orange/5 transition-colors">
-                        <th className="font-medium px-4 py-3">Samedi</th>
-                        <td className="px-4 py-3 text-right">09h00–12h00</td>
-                      </tr>
-                      <tr className="bg-slate-50 text-muted">
-                        <th className="font-medium px-4 py-3">Dimanche</th>
-                        <td className="px-4 py-3 text-right">Fermé</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                    {t.contact.email}
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-all"
+                  />
                 </div>
-              </div>
 
-              <div>
-                <h3 className="font-rajdhani font-bold text-xl uppercase tracking-wide text-slate-800 mb-4">
-                  Suivez-nous
-                </h3>
-                <div className="text-slate-600 [&>div>a]:bg-slate-100 [&>div>a]:border-slate-200 [&>div>a]:text-slate-600">
-                  <SocialLinks />
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                    {t.contact.phone}
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-all"
+                  />
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                    {t.contact.subject}
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    required
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                    {t.contact.message}
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-all resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full bg-orange hover:bg-orange-600 text-white font-rajdhani font-bold uppercase tracking-wider py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60"
+                >
+                  {status === "sending" ? (
+                    <><Loader2 className="w-5 h-5 animate-spin" />{t.contact.sending}</>
+                  ) : (
+                    <><Send className="w-5 h-5" />{t.contact.send}</>
+                  )}
+                </button>
+
+                {status === "success" && (
+                  <div className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg text-sm">
+                    <CheckCircle className="w-5 h-5 shrink-0" />
+                    {t.contact.success}
+                  </div>
+                )}
+
+                {status === "error" && (
+                  <div className="flex items-center gap-2 text-red-600 bg-red-50 p-3 rounded-lg text-sm">
+                    <AlertCircle className="w-5 h-5 shrink-0" />
+                    {t.contact.error}
+                  </div>
+                )}
+              </motion.form>
+            </motion.div>
+
+            <div className="space-y-8">
+              <ContactSection />
+
+              <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200/50 h-[300px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2696.8323!2d-2.7345!3d47.6622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s19%20Rue%20Denis%20Papin%2C%2056000%20Vannes!5e0!3m2!1sfr!2sfr!4v1"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Vannes Batteries - Google Maps"
+                />
               </div>
             </div>
-
-            <div>
-              <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 md:p-10">
-                <h3 className="font-rajdhani font-bold text-2xl uppercase tracking-wide text-slate-800 mb-8">
-                  Envoyez-nous un message
-                </h3>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="relative group">
-                      <input type="text" name="prenom" id="prenom" required
-                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
-                        placeholder=" " />
-                      <label htmlFor="prenom" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
-                        Prénom *
-                      </label>
-                    </div>
-                    <div className="relative group">
-                      <input type="text" name="nom" id="nom" required
-                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
-                        placeholder=" " />
-                      <label htmlFor="nom" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
-                        Nom *
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="relative group">
-                      <input type="email" name="email" id="email" required
-                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
-                        placeholder=" " />
-                      <label htmlFor="email" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
-                        Email *
-                      </label>
-                    </div>
-                    <div className="relative group">
-                      <input type="tel" name="telephone" id="telephone"
-                        className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all"
-                        placeholder=" " />
-                      <label htmlFor="telephone" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
-                        Téléphone
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <select name="objet" id="objet" required defaultValue=""
-                      className="block w-full px-4 py-3 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange transition-all">
-                      <option value="" disabled>Objet de votre demande *</option>
-                      <option value="Demande de devis">Demande de devis</option>
-                      <option value="Renseignements produit">Renseignements produit</option>
-                      <option value="Demande de devis professionnel">Demande de devis professionnel</option>
-                      <option value="Autre">Autre</option>
-                    </select>
-                  </div>
-
-                  <div className="relative group">
-                    <textarea name="message" id="message" required rows={5}
-                      className="block w-full px-4 py-3 pt-6 text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange peer transition-all resize-none"
-                      placeholder=" "></textarea>
-                    <label htmlFor="message" className="absolute text-sm text-muted duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 peer-focus:text-orange">
-                      Message *
-                    </label>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <input type="checkbox" id="rgpd" name="rgpd" required
-                      className="mt-1 w-4 h-4 text-orange border-slate-300 rounded focus:ring-orange" />
-                    <label htmlFor="rgpd" className="text-xs text-muted leading-relaxed">
-                      J&apos;accepte que les informations saisies soient exploitées dans le cadre de ma demande et de la relation commerciale qui peut en découler.*
-                    </label>
-                  </div>
-
-                  {status === "success" && (
-                    <div className="p-4 bg-green-50 text-green-700 rounded-xl flex items-center gap-3 text-sm">
-                      <CheckCircle2 className="w-5 h-5 shrink-0" />
-                      {message}
-                    </div>
-                  )}
-                  {status === "error" && (
-                    <div className="p-4 bg-red-50 text-red-700 rounded-xl flex items-center gap-3 text-sm">
-                      <AlertCircle className="w-5 h-5 shrink-0" />
-                      {message}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="w-full btn-primary !py-4"
-                  >
-                    {status === "loading" ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Envoi en cours...
-                      </>
-                    ) : (
-                      <>
-                        Envoyer le message
-                        <Send className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
-
-      <MapSection />
     </>
   );
 }

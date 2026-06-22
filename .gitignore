@@ -35,6 +35,11 @@ dev-server-out.log
 # vercel
 .vercel
 
+# infra scripts
+deploy/
+tmp-*
+*.log
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
